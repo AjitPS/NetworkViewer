@@ -26,7 +26,7 @@
 <script src="./libs/springy.js"></script>
 
 <!-- <script type="text/javascript" src="./sampleFiles/networkGraph.json"></script> -->
-<script type="text/javascript" src="./sampleFiles/networkGraph.txt"></script>
+<!-- <script type="text/javascript" src="./sampleFiles/networkGraph.txt"></script>-->
 <!-- <script type="text/javascript" src="./sampleFiles/networkGraph_small_new.txt"></script> -->
 <!-- <script type="text/javascript" src="./sampleFiles/networkGraph_20150109042806.txt"></script> -->
 <!-- <script type="text/javascript" src="./sampleFiles/result_poplar.txt"></script> -->
@@ -48,17 +48,17 @@
 <input type="submit" name="action" value="Upload" /><br />
 <iframe id="upload_target" name="upload_target" src="" style="width:0;height:0;border:0px solid #fff;"></iframe>
 </form> -->
-<form id="file_upload_form" method='POST' enctype='multipart/form-data'>
+<!--<form id="file_upload_form" method='POST' enctype='multipart/form-data'>
   Select JSON file to generate network graph: <input type="file" id="file_select" name="jsonFile"/>
-<!--  <button type="submit" id="upload_button" value="Upload File">Upload</button> -->
   <input type="button" id="uploadFile" value="Upload" onclick="uploadSelectedFile(document.getElementById('file_select').value);" title="Upload the selected file"><br>
-</form>
-<br>
-    Show Network: <input type="button" id="showNetGraph" disabled value="Show Network" onclick="showNetwork();" title="Show network graph using cytoscapeJS">
+</form> -->
+<!--  <button type="submit" id="upload_button" value="Upload File">Upload</button> -->
+<!--<br>-->
+    Show Network: <input type="button" id="showNetGraph" value="Show Network" onclick="showNetwork_3('networkGraph.txt');" title="Show network graph using cytoscapeJS">
 </div>
 
-<div id="textarea">
-</div>
+<!--<div id="textarea">
+</div>-->
 
 <hr>
 

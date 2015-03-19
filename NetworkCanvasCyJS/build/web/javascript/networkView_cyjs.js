@@ -6,19 +6,19 @@
  * @returns
  **/
 
-//  var graphJSON= "";
-//  var metadataJSON= "";
-  var selectedJSONfile= "";
+  var selectedJSONfile; // the selected file.
+//  var graphJSON; // to contain network graph JSON data from the selected file.
+//  var allGraphData; // to contain JSON metadata from the selected file.
 
-  var form2= document.getElementById('file_upload_form');
-  var fileSelect= document.getElementById('file_select');
-  var uploadButton= document.getElementById('upload_button');
+//  var form2= document.getElementById('file_upload_form');
+//  var fileSelect= document.getElementById('file_select');
+//  var uploadButton= document.getElementById('upload_button');
   
   // Location of the JSON file on the server.
-  var data_url = "http://localhost:8080/WebApplication2/web/WEB-INF/";
+//  var data_url = "http://localhost:8080/WebApplication2/web/WEB-INF/";
 //  var data_url = "";
 
-  var jsondata_url = data_url +"sampleFiles/";
+//  var jsondata_url = data_url +"sampleFiles/";
 //  var jsondata_url = "https://qtlnetminer-test.rothamsted.ac.uk/poplar_data/";
 
 /*  form2.onsubmit = function(event) {
@@ -178,36 +178,63 @@ client.send();      */
    // Initialize the cytoscapeJS container for Network View.
    initializeNetworkView();
   }
- 
-  function showNetwork() {
 
-/*    var json_File= selectedJSONfile; */
-/*
-//    var fileContents= "";
+  function showNetwork_3(jsonFileName) {
+
+   selectedJSONfile= "./sampleFiles/" + jsonFileName;
+   var json_File= selectedJSONfile;
+   console.log("Read file: json_File: "+ json_File);
+
+   // Include this file's contents at runtime.
+   var script= document.createElement("script");
+   script.setAttribute("type", "text/javascript");
+   script.setAttribute("src", json_File);
+   document.getElementsByTagName("head")[0].appendChild(script); 
+
+   // Initialize the cytoscapeJS container for Network View.
+   initializeNetworkView();
+  }
+
+  function showNetwork(jsonFileName) {
+
+    selectedJSONfile= "./sampleFiles/" + jsonFileName;
+    var json_File= selectedJSONfile;
+    var jsonData= "";
+    console.log("Read file: json_File: "+ json_File);
+
     // Read the JSON file's contents via an Ajax call in jQuery.
-    $.get(json_File, function(respons) {
-     var jsonData = respons;
+/*    $.get(json_File, function(respons) {
+     jsonData= respons;
      console.log("File read: jsonData: "+ jsonData);
-    });*/
-    
-    // 2nd approach:
-/*    var jsonData= "";
+    });
+*/
+
+    // Read the JSON file's contents via a synchronous Ajax call in jQuery to ensure that all the content is loaded before moving ahead.
+    var jsonData= "";
     $.ajax({
     url: json_File, // the file url/ path // e.g., http://qtlnetminer-test.rothamsted.ac.uk/poplar_data/result_1424531346098.json
     type: 'get',
     dataType: 'text',
+    async: false,
     success: function(resp) {
         jsonData= String(resp);
+//        console.log("File read: jsonData: "+ jsonData);
        }
    });
-   console.log("File read: jsonData: "+ jsonData);
 
+   jsonData= jsonData.replace("/\n\t/g", " "); // jsonData.replaceAll("(\\r|\\n)", " "));
+   jsonData= jsonData.trim();
+//   console.log("File read: jsonData: "+ jsonData);
+//   console.log("File read... now split into variables");
+    
    var jsonDataVars= new Array(); //object to hold parsed JSON data.
    jsonDataVars= jsonData.split("]};");
-   graphJSON= jsonDataVars[0];
-   metadataJSON= jsonDataVars[1];
-*/
-//   console.log("graphJSON: "+ graphJSON/* + "\n metadataJSON: "+ metadataJSON*/);
+   graphJSON= jsonDataVars[0].trim();
+   graphJSON= graphJSON.substring(15) +" ]}";
+   allGraphData= jsonDataVars[1].trim();
+   allGraphData= allGraphData.substring(18) +" ]}";
+
+//   console.log("graphJSON: "+ graphJSON +"\n \n allGraphData: "+ allGraphData);
 
    // Initialize the cytoscapeJS container for Network View.
    initializeNetworkView();
@@ -250,13 +277,18 @@ function initializeNetworkView() {
 // On startup
 $(function() { // on dom ready
 
+//  console.log("In initializeNetworkView(): graphJSON: "+ graphJSON + "\n \n allGraphData: "+ allGraphData);
+
 //  var networkJSON= JSON.parse(graphJSON); // to parse JSON object containing node and edge data.
 //  var networkJSON= JSON.stringify(graphJSON); // if already parsed, to convert the JSON object to String.
-  var networkJSON= graphJSON; // using the JSON object directly
-  
-  var metadataJSON= allGraphData; // JSON metadata.
 
-  console.log("networkJSON: "+ networkJSON + "\n metadataJSON: "+ metadataJSON);
+//  var networkJSON= JSON.stringify(eval("(" + graphJSON + ")")); // the network graph's JSON data.
+  var networkJSON= graphJSON; // using the graphJSON object directly.
+
+//  var metadataJSON= JSON.stringify(eval("(" + allGraphData + ")")); // JSON metadata.
+  var metadataJSON= allGraphData; // using the metadata JSON object directly.
+
+  console.log("networkJSON: "+ networkJSON /*+ "\n metadataJSON: "+ metadataJSON*/);
 
   /* Fetch JSON data from the relevant QTLNetMiner server using JQuery and Ajax instead of directly using 
    * the example JSON file (networkGraph.json). This data is located on the QTLNetMiner servers under 
