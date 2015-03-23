@@ -6,211 +6,37 @@
  * @returns
  **/
 
-//  var graphJSON= "";
-//  var metadataJSON= "";
-  var selectedJSONfile= "";
+  var selectedJSONfile; // the selected file.
+//  var graphJSON; // to contain network graph JSON data from the selected file.
+//  var allGraphData; // to contain JSON metadata from the selected file.
 
-  var form2= document.getElementById('file_upload_form');
-  var fileSelect= document.getElementById('file_select');
-  var uploadButton= document.getElementById('upload_button');
-  
   // Location of the JSON file on the server.
-  var data_url = "http://localhost:8080/WebApplication2/web/WEB-INF/";
-//  var data_url = "";
-
-  var jsondata_url = data_url +"sampleFiles/";
+//  var jsondata_url = "http://localhost:8080/NetworkCanvasCyJS/web/WEB-INF/sampleFiles/";
 //  var jsondata_url = "https://qtlnetminer-test.rothamsted.ac.uk/poplar_data/";
 
-/*  form2.onsubmit = function(event) {
-   event.preventDefault();
+  function generateNetworkGraph(jsonFileName) {
 
-   // Update button text.
-   uploadButton.innerHTML = 'Uploading...';
+   selectedJSONfile= "./sampleFiles/" + jsonFileName;
+   var json_File= selectedJSONfile;
 
-   // Get the selected files from the input.
-   var files= fileSelect.files;
-   // Create a new FormData object.
-   var formData= new FormData();
-
-   var file= files[0]; // get the selected file.
-
-   // Add the file to the request.
-   formData.append('jsonFile', file, file.name);
-   
-   console.log("formData: "+ formData);
-
-   // Set up the request.
-   var xhr= new XMLHttpRequest();
-   
-   // Open the connection.
-   xhr.open('POST', 'handler.php', true);
-   
-   // Set up a handler for when the request finishes.
-   xhr.onload= function () {
-    if(xhr.status === 200) {
-       // File uploaded.
-       uploadButton.innerHTML= 'Upload';
-      }
-    else {
-      alert('An error occurred ! File upload failed.');
-     }
-   };
-   
-   // Send the uploaded data.
-   xhr.send(formData);
-  };
-*/
-        $("#file_upload_form").click(function () {
-/*
-            // Create an invisible iframe to upload the selected file's contents to.
-            var iframe= $('<iframe name="postiframe" id="postiframe" style="display: none"></iframe>');
-            
-            $("body").append(iframe);
-
-            var form= $('#file_upload_form');
-            form.attr("action", "/upload.aspx");
-//            form.attr("method", "post");
-
-            form.attr("encoding", "multipart/form-data");
-//            form.attr("enctype", "multipart/form-data");
-
-            form.attr("target", "postiframe");
-            form.attr("file", $('#jsonFile').val());
-            form.submit();
-
-            $("#postiframe").load(function () {
-                iframeContents= this.contentWindow.document.body.innerHTML;
-                $("#textarea").html(iframeContents);
-                console.log("Uploaded file's contents: "+ iframeContents);
-            });
-
-            return false;*/
-         //Enable the "Show Network" button.
-         $("#showNetGraph").disabled= false;
-        });
-
-  function uploadSelectedFile(uploadFile) {
-
-   // Get the selected file's location on the server.
-   selectedJSONfile= jsondata_url + uploadFile;
-
-   console.log("use (upload) selected file: "+ jsondata_url + uploadFile);
-   
-   //Enable the "Show Network" button.
-   document.getElementById("showNetGraph").disabled = false;
-  }
-
-  function showNetwork2(jsonFile) {
-/*var client = new XMLHttpRequest();
-client.open('GET', jsonFile.value);
-client.onreadystatechange= function() {
-  alert(client.responseText);
-}
-client.send();      */
- //  jsonFile.addEventListener('change', function(e) {
- //      var file = jsonFile.files[0];
-       var file= jsonFile;
-       file.type= "text";
-       console.log("Read data from File: "+ file + " ; file.type: "+ file.type);
- //      var textType = /text.*/;
- //      if(file.type.match(textType)) {
-	  var reader= new FileReader();
-          reader.onload= function(e) {
-              var jsonContents= reader.result;
-              console.log("File read: result: "+ jsonContents);
-
-              var jsonDataVars= new Array(); //object to hold parsed JSON data.
-              jsonDataVars= jsonContents.split("]};");
-              graphJSON= jsonDataVars[0];
-              metadataJSON= jsonDataVars[1];
-
-              console.log("graphJSON: "+ graphJSON/* + "\n metadataJSON: "+ metadataJSON*/);
-             }
-
-          reader.readAsText(file); // read file.
-  //       }
-  //     else {
-  //         console.log("File not supported !");
-  //        }
-  //    });
-
-//   console.log("Read data from jsonFile: "+ jsonFile + " ; file.type: "+ jsonFile.type);
-
-/*   var file= jsonFile;
-   // Read data as text from 'jsonFile' (saved in .txt format).
-   var txtReader= new FileReader();
-   txtReader.onload= function(e) {
-//       var dataURL= reader.result;
-       var jsonContents= txtReader.result;
-       console.log("File read: result: "+ jsonContents);
-
-       var jsonDataVars= new Array(); //object to hold parsed JSON data.
-       jsonDataVars= jsonContents.split("]};");
-       graphJSON= jsonDataVars[0];
-       metadataJSON= jsonDataVars[1];
-
-       console.log("graphJSON: "+ graphJSON + "\n metadataJSON: "+ metadataJSON);
-      };
-   txtReader.readAsDataURL(file);*/
-
-   // Read JSON data from 'jsonFile'.
-//   var textType = /text.*/;
-/*   if(jsonFile.type.match(textType)) {
-      var reader= new FileReader();
-      reader.onload= function(evnt) { // Actions to perform after File loading event is complete.
-          var jsonContents= reader.result;
-          console.log("File read: result: "+ jsonContents);
-
-          var jsonDataVars= new Array(); //object to hold parsed JSON data.
-          jsonDataVars= jsonContents.split("]};");
-          graphJSON= jsonDataVars[0];
-          metadataJSON= jsonDataVars[1];
-
-          console.log("graphJSON: "+ graphJSON + "\n metadataJSON: "+ metadataJSON);
-	 };
-      
-      reader.readAsText(file); // read the file.
-     }
-   else {
-       console.log("File not supported !");
-      }
-*/
-   // Initialize the cytoscapeJS container for Network View.
-   initializeNetworkView();
-  }
- 
-  function showNetwork() {
-
-/*    var json_File= selectedJSONfile; */
-/*
-//    var fileContents= "";
-    // Read the JSON file's contents via an Ajax call in jQuery.
-    $.get(json_File, function(respons) {
-     var jsonData = respons;
-     console.log("File read: jsonData: "+ jsonData);
-    });*/
-    
-    // 2nd approach:
-/*    var jsonData= "";
-    $.ajax({
-    url: json_File, // the file url/ path // e.g., http://qtlnetminer-test.rothamsted.ac.uk/poplar_data/result_1424531346098.json
-    type: 'get',
-    dataType: 'text',
-    success: function(resp) {
-        jsonData= String(resp);
-       }
+//   console.log("Read file: json_File: "+ json_File);
+   // Include this file's contents on the page at runtime using jQuery and a callback function.
+   $.getScript(json_File, function() {
+     console.log(json_File +" file included...");
+//     console.log("File included: graphJSON: "+ graphJSON +"\n \n allGraphData: "+ allGraphData);
+     // Initialize the cytoscapeJS container for Network View.
+     initializeNetworkView();
    });
-   console.log("File read: jsonData: "+ jsonData);
-
-   var jsonDataVars= new Array(); //object to hold parsed JSON data.
-   jsonDataVars= jsonData.split("]};");
-   graphJSON= jsonDataVars[0];
-   metadataJSON= jsonDataVars[1];
-*/
-//   console.log("graphJSON: "+ graphJSON/* + "\n metadataJSON: "+ metadataJSON*/);
+   
+   // Javascript-based approach for including the file dynamically at runtime.
+/*   var script= document.createElement("script");
+   script.setAttribute("type", "text/javascript");
+   script.setAttribute("src", json_File);
+   document.getElementsByTagName("head")[0].appendChild(script); 
 
    // Initialize the cytoscapeJS container for Network View.
    initializeNetworkView();
+*/
   }
 
   /** Define the default layout for the network, using CoLa layout from Cola.js (similar to the "Gem" layout in 
@@ -250,42 +76,13 @@ function initializeNetworkView() {
 // On startup
 $(function() { // on dom ready
 
-//  var networkJSON= JSON.parse(graphJSON); // to parse JSON object containing node and edge data.
-//  var networkJSON= JSON.stringify(graphJSON); // if already parsed, to convert the JSON object to String.
-  var networkJSON= graphJSON; // using the JSON object directly
-  
-  var metadataJSON= allGraphData; // JSON metadata.
+  var networkJSON= graphJSON; // using the dynamically included graphJSON object directly.
+  var metadataJSON= allGraphData; // using the dynamically included metadata JSON object directly.
 
-  console.log("networkJSON: "+ networkJSON + "\n metadataJSON: "+ metadataJSON);
-
-  /* Fetch JSON data from the relevant QTLNetMiner server using JQuery and Ajax instead of directly using 
-   * the example JSON file (networkGraph.json). This data is located on the QTLNetMiner servers under 
-   * /var/www/html/{organism}_data/ and can be accessed via the url below. */
-/*  var data_url = "https://ondex.rothamsted.ac.uk/poplar_data/";
-  // For testing via the QTLNetMiner test server, use:
-  //  var data_url = "https://qtlnetminer-test.rothamsted.ac.uk/poplar_data/";
-
-  var jsonFile= "result_1424791328834.json"; // get file name from 
-  var jsonUrl= data_url + jsonFile; // using data_url from utils-config.js and json file name.
-
-  // Read the JSON data from the result.json file generated on the server.
-  $.ajax({
-      type: 'GET',
-      url: jsonUrl, //"html/data/sampleQuery.xml",
-      dataType: "json", // "xml",
-//      contentType: "application/json; charset=utf-8",
-      cache: false, //force cache off
-      success: function(jsonData) {
-          // Parse the values from the recieved .json file into an object.
-          var jsonDataVars= new Array(); //object to hold parsed JSON data
-          jsonDataVars= jsonData.split("]};");
-          graphJSON= jsonDataVars[0];
-          metadataJSON= jsonDataVars[1];
-         }
-     });*/
+  console.log("networkJSON: "+ networkJSON +"\n \n metadataJSON: "+ metadataJSON);
 
   // Display 'networkJSON' elements.nodes data in console.
-  for(var j = 0; j < networkJSON.nodes.length; j++){
+  for(var j = 0; j < networkJSON.nodes.length; j++) {
       var anno= networkJSON.nodes[j].data.annotation;
       if (anno.length>15) {
           anno= anno.substring(0,15) +"..."; 
@@ -676,8 +473,6 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    $('#infoDialog').slideToggle(300);
   });
   
-  // Toggling between various Layout types.
-
   // The actual Item Info. window (<div>).
   
 }); // on dom ready
@@ -804,31 +599,23 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
   function findConcept(conceptName) {
    console.log("Search for concept value: "+ conceptName);
    var foundID;
-//   var foundElements= cy.collection(); // new Array();
    cy.nodes().forEach(function( ele ) {
        if(ele.data('visibleDisplay') === 'element') {
           if(ele.data('value').indexOf(conceptName) > -1) {
-//             foundEles.add(ele); // add to collection
              console.log("Search found: "+ ele.data('value'));
              foundID= ele.id(); // the found node
-
-//             foundElements[foundElements.length]= '#'+foundID;
-//             foundElements.add(cy.$('#'+foundID));
 
              // select the matched concept.
              cy.$('#'+foundID).select();
             }
         }
       });
-//   cy.$('#'+foundID).select();
-//   foundElements.select();
   }
 
  // Export the graph as a JSON object in a new Tab and allow users to save it.
   function exportAsJson() {
 
    var exportJson= cy.json(); // get JSON object for the network graph.
-//   console.log("cy.json: "+ exportJson);
 
    // Display in a new blank browser tab.
 //   window.open().document.write(exportJson); // for text data
@@ -839,10 +626,6 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
   function exportAsImage() {
    // Export as .png image
    var png64= cy.png(); // .setAttribute('crossOrigin', 'anonymous');
-//    console.log("PNG export: "+ png64);
-
-   // Put the png data in an empty img tag on this Tab.
-//   $('#png_image')[0].src= png64;
 
    // Display the exported image in a new blank browser window instead of having it in the same window.
    window.open(png64,'Image','width=1200px,height=600px,resizable=1');
@@ -850,40 +633,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Show concept neighbourhood.
   function showNeighbourhood() {
-   console.log("Show neighborhood...");
-
+   console.log("Show neighborhood: Display concepts in the neighbourhood of the selected concept (node)...");
    cy.nodes(':selected').neighborhood().nodes().show();
-/*
-   var eleID;
-   var neighbourArray= new Array();
-   var neighbours= cy.collection();
-   // Find the selected concept 'node' element.
-   cy.nodes().forEach(function( ele ) {
-       if(ele.selected()) {
-          eleID= ele.id();
-          console.log("Show neighborhood for nodeID: "+ eleID);
-         }
-      });
-
-   // Find its connected neighbours.
-   cy.edges().forEach(function( edg ) {
-       if(edg.data('source') === eleID) {
-          neighbourArray[neighbourArray.length]= '#'+ edg.data('target');
-         }
-       else if(edg.data('target') === eleID) {
-          neighbourArray[neighbourArray.length]= '#'+ edg.data('source');
-         }
-      });
-
-   // Add the array elements to the collection.
-   neighbourArray.forEach(function( eleNeighbour ) {
-       console.log("Neighbour found: node "+ eleNeighbour);
-     neighbours.add(eleNeighbour);
-    });
-
-   // Show neighbourhood.
-   neighbours.show();
-*/
+//   cy.nodes(':selected').neighborhood().edges().show();
   }
   
   // Show/ Hide labels for concepts and relations.
@@ -896,10 +648,4 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
       cy.hideLabelsOnViewport= "false";
      }
   }*/
-
-  function testCollections() {
-   var n_id = cy.nodes().id();//data('pid');
-
-   console.log( cy.nodes()[0].id() + ' == ' + n_id ); // pid is the first node ele's weight
-  }
   
