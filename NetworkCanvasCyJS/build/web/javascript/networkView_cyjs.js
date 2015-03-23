@@ -14,7 +14,7 @@
 //  var jsondata_url = "http://localhost:8080/NetworkCanvasCyJS/web/WEB-INF/sampleFiles/";
 //  var jsondata_url = "https://qtlnetminer-test.rothamsted.ac.uk/poplar_data/";
 
-  function generateNetwork(jsonFileName) {
+  function generateNetworkGraph(jsonFileName) {
 
    selectedJSONfile= "./sampleFiles/" + jsonFileName;
    var json_File= selectedJSONfile;
@@ -373,6 +373,26 @@ cy.elements().qtip({
             }
         },
             
+/*        {
+         content: 'Reset',
+         select: function() {
+             cy.reset(); // reset the graph's zooming & panning properties.
+            }
+        },*/
+   /*     {
+         content: 'Export JSON',
+         select: function() {
+             var export_json= cy.json(); // Export the graph's JSON object.
+             // Export the graphJSON variable from the networkGraph.json file as a JSON object and add all 
+             // the required information to make it compatible for usage with the Cytoscape desktop 
+             // application.
+             var json_for_cytoscape= "{ \"data\" : { \"shared_name\" : \"networkGraph_for_Cytoscape\", \"name\" : \"networkGraph\", \"selected\" : true }, \"elements\" : "+networkJSON +" }";
+             // Write to file on the server.
+             
+             // Open new tab to allow user to download this file.
+             
+            }
+        },*/
         {
          content: 'Show Selections',
          select: function() {
