@@ -27,8 +27,6 @@
 
 <!-- <script type="text/javascript" src="./sampleFiles/networkGraph.json"></script> -->
 <!-- <script type="text/javascript" src="./sampleFiles/networkGraph.txt"></script>-->
-<!-- <script type="text/javascript" src="./sampleFiles/networkGraph_small_new.txt"></script> -->
-<!-- <script type="text/javascript" src="./sampleFiles/networkGraph_20150109042806.txt"></script> -->
 <!-- <script type="text/javascript" src="./sampleFiles/result_poplar.txt"></script> -->
 
 <script src="./javascript/networkView_cyjs.js"></script>
@@ -38,27 +36,8 @@
 <b>Network Graph using CytoscapeJS</b>
 <br/><br/>
 <div>
-<!-- <form action='' method='POST' enctype='multipart/form-data'>
-    Select JSON file to generate network graph: <input type="file" id="jsonFile">
-    <input type="button" id="uploadFile" value="Upload" onclick="uploadSelectedFile(document.getElementById('jsonFile').value);" title="Upload the selected file"><br>
-    Show Network: <input type="button" id="showNetGraph" disabled value="Show Network" onclick="showNetwork();" title="Show network graph using cytoscapeJS">
-</form> -->
-<!-- <form id="file_upload_form" method="post" enctype="multipart/form-data" action="upload.php">
-<input name="file" id="file" size="27" type="file" /><br />
-<input type="submit" name="action" value="Upload" /><br />
-<iframe id="upload_target" name="upload_target" src="" style="width:0;height:0;border:0px solid #fff;"></iframe>
-</form> -->
-<!--<form id="file_upload_form" method='POST' enctype='multipart/form-data'>
-  Select JSON file to generate network graph: <input type="file" id="file_select" name="jsonFile"/>
-  <input type="button" id="uploadFile" value="Upload" onclick="uploadSelectedFile(document.getElementById('file_select').value);" title="Upload the selected file"><br>
-</form> -->
-<!--  <button type="submit" id="upload_button" value="Upload File">Upload</button> -->
-<!--<br>-->
-    Show Network: <input type="button" id="showNetGraph" value="Show Network" onclick="showNetwork_3('networkGraph.txt');" title="Show network graph using cytoscapeJS">
+Show Network: <input type="button" id="showNetGraph" value="Show Network" onclick="generateNetwork('networkGraph.txt');" title="Show network graph using cytoscapeJS">
 </div>
-
-<!--<div id="textarea">
-</div>-->
 
 <hr>
 
@@ -81,8 +60,9 @@
 </div>
 
 <br/>
+
 <div>
-    Annotate relations by attribute: <input type="button" value="Annotate" onclick="annotateByAttribute();" title="Annotate relations by any attribute">
+    Annotate relations by attribute: <input type="button" value="Annotate" disabled onclick="annotateByAttribute();" title="Annotate relations by any attribute">
     Search for concept: <input type="text" id="txtSearch" placeholder="Search..." /> <input type="button" value="Search" onclick="findConcept(document.getElementById('txtSearch').value);" title="Search by concept name">
     Reset graph: <input type="button" value="Reset" onclick="resetGraph();" title="Re-fit, pan and zoom the graph">
 </div>
@@ -154,11 +134,6 @@
         </table>
     </div>
 </div>;
-
-<div>
-    <!-- Empty image tag to hold the exported network graph.png image when "Export Image" feature is used. -->
-<!-- <img id="png_image" title="Exported png Image" alt=""/></a> -->
-</div>
 
 <!-- page footer -->
 <div id="pageFooter">QTLNetMiner: Network View example using Cytoscape.js</div>
