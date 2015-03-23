@@ -186,13 +186,19 @@ client.send();      */
    console.log("Read file: json_File: "+ json_File);
 
    // Include this file's contents at runtime.
-   var script= document.createElement("script");
+   $.getScript(json_File, function() {
+     alert(json_File + " loaded...");
+     console.log("graphJSON: "+ graphJSON +"\n \n allGraphData: "+ allGraphData);
+     // Initialize the cytoscapeJS container for Network View.
+     initializeNetworkView();
+   });
+/*   var script= document.createElement("script");
    script.setAttribute("type", "text/javascript");
    script.setAttribute("src", json_File);
    document.getElementsByTagName("head")[0].appendChild(script); 
-
+*/
    // Initialize the cytoscapeJS container for Network View.
-   initializeNetworkView();
+//   initializeNetworkView();
   }
 
   function showNetwork(jsonFileName) {
@@ -317,7 +323,7 @@ $(function() { // on dom ready
      });*/
 
   // Display 'networkJSON' elements.nodes data in console.
-  for(var j = 0; j < networkJSON.nodes.length; j++){
+  for(var j = 0; j < networkJSON.nodes.length; j++) {
       var anno= networkJSON.nodes[j].data.annotation;
       if (anno.length>15) {
           anno= anno.substring(0,15) +"..."; 
