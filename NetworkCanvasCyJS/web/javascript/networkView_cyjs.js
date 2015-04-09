@@ -7,27 +7,21 @@
  **/
 
   var selectedJSONfile; // the selected file.
-//  var graphJSON; // to contain network graph JSON data from the selected file.
-//  var allGraphData; // to contain JSON metadata from the selected file.
-
   // Location of the JSON file on the server.
 //  var jsondata_url = "http://localhost:8080/NetworkCanvasCyJS/web/WEB-INF/sampleFiles/";
 //  var jsondata_url = "https://qtlnetminer-test.rothamsted.ac.uk/poplar_data/";
 
   function generateNetworkGraph(jsonFileName) {
-
    selectedJSONfile= "./sampleFiles/" + jsonFileName;
    var json_File= selectedJSONfile;
 
-//   console.log("Read file: json_File: "+ json_File);
    // Include this file's contents on the page at runtime using jQuery and a callback function.
    $.getScript(json_File, function() {
      console.log(json_File +" file included...");
-//     console.log("File included: graphJSON: "+ graphJSON +"\n \n allGraphData: "+ allGraphData);
      // Initialize the cytoscapeJS container for Network View.
      initializeNetworkView();
    });
-   
+
    // Javascript-based approach for including the file dynamically at runtime.
 /*   var script= document.createElement("script");
    script.setAttribute("type", "text/javascript");
@@ -35,8 +29,7 @@
    document.getElementsByTagName("head")[0].appendChild(script); 
 
    // Initialize the cytoscapeJS container for Network View.
-   initializeNetworkView();
-*/
+   initializeNetworkView(); */
   }
 
   /** Define the default layout for the network, using CoLa layout from Cola.js (similar to the "Gem" layout in 
@@ -75,7 +68,6 @@
 function initializeNetworkView() {
 // On startup
 $(function() { // on dom ready
-
   var networkJSON= graphJSON; // using the dynamically included graphJSON object directly.
   var metadataJSON= allGraphData; // using the dynamically included metadata JSON object directly.
 
@@ -83,18 +75,10 @@ $(function() { // on dom ready
 
   // Display 'networkJSON' elements.nodes data in console.
   for(var j = 0; j < networkJSON.nodes.length; j++) {
-/*      var anno= networkJSON.nodes[j].data.annotation;
-      if (anno.length>15) {
-          anno= anno.substring(0,15) +"..."; 
-         }*/
-//      console.log("JSON node.data (id, type, conceptColor, shape, visibleDisplay, value, annotation, pid): "+ 
       console.log("JSON node.data (id, type, value, pid): "+ 
               networkJSON.nodes[j].data.id +", "+ networkJSON.nodes[j].data.conceptType +", "+ 
-              /*networkJSON.nodes[j].data.conceptColor +", "+ networkJSON.nodes[j].data.conceptShape +", "+ 
-              networkJSON.nodes[j].data.visibleDisplay +", "+*/ networkJSON.nodes[j].data.value +", "+ 
-              /*anno +", "+*/ networkJSON.nodes[j].data.pid);
+              networkJSON.nodes[j].data.value +", "+ networkJSON.nodes[j].data.pid);
      }
- 
   console.log("\n \n");
   for(var k = 0; k < networkJSON.edges.length; k++){
       console.log("JSON edge.data (id, source, target, edgeColor, label): "+ 
@@ -106,12 +90,10 @@ $(function() { // on dom ready
    var networkStylesheet= cytoscape.stylesheet()
       .selector('node')
         .css({
-          'content': 'data(id)', // 'data(value)',
-                     /*function() {
-                      return this.id() +": "+ this.data('value');
-                     },*/
-     //     'text-valign': 'center', // to have 'content' displayed in the middle of the node.
+          'content': 'data(value)', // 'data(id)',
+                     /*function() { return this.id() +": "+ this.data('value'); },*/
           'outline-colour': 'black', // text outline color
+     //     'text-valign': 'center', // to have 'content' displayed in the middle of the node.
           'border-style': 'solid', // node border
           'border-width': '1px',
           'font-size': '8px',
