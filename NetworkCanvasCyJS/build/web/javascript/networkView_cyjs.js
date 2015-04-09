@@ -101,7 +101,10 @@ $(function() { // on dom ready
           'shape': 'data(conceptShape)', // 'triangle',
           'width': '18px', // '22px', // '30px',
           'height': '18px', // '22px', // '30px',
-          'background-color': 'data(conceptColor)',
+          'background-color': 'data[conceptColor]',
+          /** Using 'data(conceptColor)' leads to a "null" mapping error if that attribute is not defined 
+           * in cytoscapeJS. Using 'data[conceptColor]' is hence preferred as it limits the scope of 
+           * assigning a property value only if it is defined in cytoscapeJS as well. */
           'display': 'data(visibleDisplay)' // display: 'element' (show) or 'none' (hide).
          })
       .selector('edge')
