@@ -86,6 +86,26 @@ $(function() { // on dom ready
               networkJSON.edges[k].data.target +", "+ networkJSON.edges[k].data.edgeColor +", "+ networkJSON.edges[k].data.label);
      }
 
+  // Display concept and relation attributes from JSON json metadata.
+  for(var j = 0; j < metadataJSON.concepts.length; j++) {
+      console.log("JSON concept.data (id, ofType): "+ metadataJSON.concepts[j].id +", "+ 
+              metadataJSON.concepts[j].ofType +"\n Concept attributes: ");
+      for(var k = 0; k < metadataJSON.concepts[j].attributes.length; k++) {
+          console.log(metadataJSON.concepts[j].attributes[k].attrname +": "+ 
+                  metadataJSON.concepts[j].attributes[k].value);
+         }
+     }
+  console.log("\n \n");
+  for(var j = 0; j < metadataJSON.relations.length; j++) {
+      console.log("JSON relation.data (id, fromConcept, toConcept): "+ metadataJSON.relations[j].id +
+              ", "+ metadataJSON.relations[j].fromConcept +", "+ metadataJSON.relations[j].toConcept +
+              "\n Relation attributes: ");
+      for(var k = 0; k < metadataJSON.relations[j].attributes.length; k++) {
+          console.log(metadataJSON.relations[j].attributes[k].attrname +": "+ 
+                  metadataJSON.relations[j].attributes[k].value);
+         }
+     }
+
    // Define the stylesheet to be used for nodes & edges in the cytoscape.js container.
    var networkStylesheet= cytoscape.stylesheet()
       .selector('node')
