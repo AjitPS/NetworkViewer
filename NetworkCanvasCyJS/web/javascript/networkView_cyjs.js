@@ -83,15 +83,16 @@ $(function() { // on dom ready
 
   // Display 'networkJSON' elements.nodes data in console.
   for(var j = 0; j < networkJSON.nodes.length; j++) {
-      var anno= networkJSON.nodes[j].data.annotation;
+/*      var anno= networkJSON.nodes[j].data.annotation;
       if (anno.length>15) {
           anno= anno.substring(0,15) +"..."; 
-         }
-      console.log("JSON node.data (id, type, conceptColor, shape, visibleDisplay, value, annotation, pid): "+ 
+         }*/
+//      console.log("JSON node.data (id, type, conceptColor, shape, visibleDisplay, value, annotation, pid): "+ 
+      console.log("JSON node.data (id, type, value, pid): "+ 
               networkJSON.nodes[j].data.id +", "+ networkJSON.nodes[j].data.conceptType +", "+ 
-              networkJSON.nodes[j].data.conceptColor +", "+ networkJSON.nodes[j].data.conceptShape +", "+ 
-              networkJSON.nodes[j].data.visibleDisplay +", "+ networkJSON.nodes[j].data.value +", "+ 
-              anno +", "+ networkJSON.nodes[j].data.pid);
+              /*networkJSON.nodes[j].data.conceptColor +", "+ networkJSON.nodes[j].data.conceptShape +", "+ 
+              networkJSON.nodes[j].data.visibleDisplay +", "+*/ networkJSON.nodes[j].data.value +", "+ 
+              /*anno +", "+*/ networkJSON.nodes[j].data.pid);
      }
  
   console.log("\n \n");
@@ -105,7 +106,7 @@ $(function() { // on dom ready
    var networkStylesheet= cytoscape.stylesheet()
       .selector('node')
         .css({
-          'content': 'data(value)', // 'data(id)',
+          'content': 'data(id)', // 'data(value)',
                      /*function() {
                       return this.id() +": "+ this.data('value');
                      },*/
