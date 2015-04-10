@@ -109,6 +109,13 @@ $(function() { // on dom ready
      }
   console.log("\n \n");*/
 
+  // Display url mappings (for html accessions) imported from url_mappings.json config file.
+  for(var k = 0; k < url_mappings.html_acc.length; k++){
+      console.log("url_mappings (cv, weblink, cc_restriction): "+ url_mappings.html_acc[k].cv +", "+ 
+              url_mappings.html_acc[k].weblink +", "+ url_mappings.html_acc[k].cc_restriction);
+     }
+  console.log("\n \n");
+
    // Define the stylesheet to be used for nodes & edges in the cytoscape.js container.
    var networkStylesheet= cytoscape.stylesheet()
       .selector('node')
