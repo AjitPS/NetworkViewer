@@ -7,27 +7,21 @@
  **/
 
   var selectedJSONfile; // the selected file.
-//  var graphJSON; // to contain network graph JSON data from the selected file.
-//  var allGraphData; // to contain JSON metadata from the selected file.
-
   // Location of the JSON file on the server.
 //  var jsondata_url = "http://localhost:8080/NetworkCanvasCyJS/web/WEB-INF/sampleFiles/";
 //  var jsondata_url = "https://qtlnetminer-test.rothamsted.ac.uk/poplar_data/";
 
   function generateNetworkGraph(jsonFileName) {
-
    selectedJSONfile= "./sampleFiles/" + jsonFileName;
    var json_File= selectedJSONfile;
 
-//   console.log("Read file: json_File: "+ json_File);
    // Include this file's contents on the page at runtime using jQuery and a callback function.
    $.getScript(json_File, function() {
      console.log(json_File +" file included...");
-//     console.log("File included: graphJSON: "+ graphJSON +"\n \n allGraphData: "+ allGraphData);
      // Initialize the cytoscapeJS container for Network View.
      initializeNetworkView();
    });
-   
+
    // Javascript-based approach for including the file dynamically at runtime.
 /*   var script= document.createElement("script");
    script.setAttribute("type", "text/javascript");
@@ -35,8 +29,7 @@
    document.getElementsByTagName("head")[0].appendChild(script); 
 
    // Initialize the cytoscapeJS container for Network View.
-   initializeNetworkView();
-*/
+   initializeNetworkView(); */
   }
 
   /** Define the default layout for the network, using CoLa layout from Cola.js (similar to the "Gem" layout in 
@@ -75,25 +68,17 @@
 function initializeNetworkView() {
 // On startup
 $(function() { // on dom ready
-
   var networkJSON= graphJSON; // using the dynamically included graphJSON object directly.
   var metadataJSON= allGraphData; // using the dynamically included metadata JSON object directly.
 
-  console.log("networkJSON: "+ networkJSON +"\n \n metadataJSON: "+ metadataJSON);
+  console.log("networkJSON: "+ networkJSON +"\n \n metadataJSON: "+ metadataJSON +"\n");
 
   // Display 'networkJSON' elements.nodes data in console.
   for(var j = 0; j < networkJSON.nodes.length; j++) {
-      var anno= networkJSON.nodes[j].data.annotation;
-      if (anno.length>15) {
-          anno= anno.substring(0,15) +"..."; 
-         }
-      console.log("JSON node.data (id, type, conceptColor, shape, visibleDisplay, value, annotation, pid): "+ 
+      console.log("JSON node.data (id, type, value, pid): "+ 
               networkJSON.nodes[j].data.id +", "+ networkJSON.nodes[j].data.conceptType +", "+ 
-              networkJSON.nodes[j].data.conceptColor +", "+ networkJSON.nodes[j].data.conceptShape +", "+ 
-              networkJSON.nodes[j].data.visibleDisplay +", "+ networkJSON.nodes[j].data.value +", "+ 
-              anno +", "+ networkJSON.nodes[j].data.pid);
+              networkJSON.nodes[j].data.value +", "+ networkJSON.nodes[j].data.pid);
      }
- 
   console.log("\n \n");
   for(var k = 0; k < networkJSON.edges.length; k++){
       console.log("JSON edge.data (id, source, target, edgeColor, label): "+ 
@@ -101,16 +86,37 @@ $(function() { // on dom ready
               networkJSON.edges[k].data.target +", "+ networkJSON.edges[k].data.edgeColor +", "+ networkJSON.edges[k].data.label);
      }
 
+  console.log("\n \n");
+  // Display concept and relation attributes from JSON json metadata.
+  for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
+      console.log("JSON concept.data (id, ofType): "+ metadataJSON.ondexmetadata.concepts[j].id +", "+ 
+              metadataJSON.ondexmetadata.concepts[j].ofType +"\n"+"Concept attributes: ");
+      for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
+          console.log(metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname +": "+ 
+                  metadataJSON.ondexmetadata.concepts[j].attributes[k].value);
+         }
+     }
+  console.log("\n \n");
+  for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
+      console.log("JSON relation.data (id, fromConcept, toConcept): "+ 
+              metadataJSON.ondexmetadata.relations[j].id +", "+ 
+              metadataJSON.ondexmetadata.relations[j].fromConcept +", "+ 
+              metadataJSON.ondexmetadata.relations[j].toConcept +"\n"+"Relation attributes: ");
+      for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
+          console.log(metadataJSON.ondexmetadata.relations[j].attributes[k].attrname +": "+ 
+                  metadataJSON.ondexmetadata.relations[j].attributes[k].value);
+         }
+     }
+  console.log("\n \n");
+
    // Define the stylesheet to be used for nodes & edges in the cytoscape.js container.
    var networkStylesheet= cytoscape.stylesheet()
       .selector('node')
         .css({
           'content': 'data(value)', // 'data(id)',
-                     /*function() {
-                      return this.id() +": "+ this.data('value');
-                     },*/
-     //     'text-valign': 'center', // to have 'content' displayed in the middle of the node.
+                     /*function() { return this.id() +": "+ this.data('value'); },*/
           'outline-colour': 'black', // text outline color
+     //     'text-valign': 'center', // to have 'content' displayed in the middle of the node.
           'border-style': 'solid', // node border
           'border-width': '1px',
           'font-size': '8px',
@@ -118,7 +124,10 @@ $(function() { // on dom ready
           'shape': 'data(conceptShape)', // 'triangle',
           'width': '18px', // '22px', // '30px',
           'height': '18px', // '22px', // '30px',
-          'background-color': 'data(conceptColor)',
+          'background-color': 'data[conceptColor]',
+          /** Using 'data(conceptColor)' leads to a "null" mapping error if that attribute is not defined 
+           * in cytoscapeJS. Using 'data[conceptColor]' is hence preferred as it limits the scope of 
+           * assigning a property value only if it is defined in cytoscapeJS as well. */
           'display': 'data(visibleDisplay)' // display: 'element' (show) or 'none' (hide).
          })
       .selector('edge')
@@ -327,20 +336,51 @@ cy.elements().qtip({
              // Show Item info. in a new window.
              itemInfo.document.write("<html><body><b><u>Node details</u></b><br/>"+ nodeInfo +"</body></html>"); */
              var itemInfo= "";
+             var attrs= "";
+             var attr= "";
              $("#infoDialog").dialog(); // initialize a dialog box.
              try {
              if(this.isNode()) {
+                // Get all metadata for this concept from the metadataJSON variable.
+                for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
+                    // test...
+                    console.log(this.id() + " ?=== "+ metadataJSON.ondexmetadata.concepts[j].id);
+                    if(this.id() === metadataJSON.ondexmetadata.concepts[j].id) {
+                       for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
+                           attr= "<b>"+ metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname +
+                                   ":</b> "+ metadataJSON.ondexmetadata.concepts[j].attributes[k].value;
+                           attrs= attrs + attr +"<br/>";
+                          }
+                      }
+                   }
+                attrs= attrs +"<br/>";
+
                 itemInfo= "Concept Type: "+ this.data('conceptType') +"<br/> Value: "+ this.data('value') +
                      "<br/> <br/><u>Properties:</u> <br/> PID: "+ this.data('pid') +"<br/>Annotation: "+ 
-                     this.data('annotation') +"<br/> <br/><u>Display:</u><br/> Shape: "+ this.data('conceptShape') +
-                     "<br/> Color: "+ this.data('conceptColor');
+                     this.data('annotation') +"<br/> <br/><u>Attributes:</u><br/> "+ attrs;
                }
              else if(this.isEdge()) {
-                     itemInfo= "Relation ID= "+ this.id()+ "<br/> Label: "+ this.data('label');
+                     // Get all metadata for this relation from the metadataJSON variable.
+                     for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
+                         // test...
+                         console.log(this.id() + " ?=== "+ metadataJSON.ondexmetadata.relations[j].id);
+                         if(this.id() === metadataJSON.ondexmetadata.relations[j].id) {
+                            for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
+                                attr= "<b>"+ metadataJSON.ondexmetadata.relations[j].attributes[k].attrname +
+                                        ": </b>"+ metadataJSON.ondexmetadata.relations[j].attributes[k].value;
+                                attrs= attrs + attr +"<br/>";
+                              }
+                           }
+                       }
+                     attrs= attrs +"<br/>";
+
+                     itemInfo= "Relation ID= "+ this.id()+ "<br/> Label: "+ this.data('label') +
+                             "<br/> <br/><u>Attributes:</u><br/> "+ attrs;
                     }
              }
              catch(err) { itemInfo= "Selected element is neither a Concept nor a Relation"; }
              $("#infoDialog").html(itemInfo);
+             return err.stack();
             }
         },
             
