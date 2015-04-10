@@ -85,10 +85,10 @@ $(function() { // on dom ready
               networkJSON.edges[k].data.id +", "+ networkJSON.edges[k].data.source +", "+ 
               networkJSON.edges[k].data.target +", "+ networkJSON.edges[k].data.edgeColor +", "+ networkJSON.edges[k].data.label);
      }
-
   console.log("\n \n");
+
   // Display concept and relation attributes from JSON json metadata.
-  for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
+/*  for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
       console.log("JSON concept.data (id, ofType): "+ metadataJSON.ondexmetadata.concepts[j].id +", "+ 
               metadataJSON.ondexmetadata.concepts[j].ofType +"\n"+"Concept attributes: ");
       for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
@@ -107,6 +107,13 @@ $(function() { // on dom ready
                   metadataJSON.ondexmetadata.relations[j].attributes[k].value);
          }
      }
+  console.log("\n \n");*/
+
+  // Display url mappings (for html accessions) imported from url_mappings.json config file.
+  for(var k = 0; k < url_mappings.html_acc.length; k++){
+      console.log("url_mappings (cv, weblink, cc_restriction): "+ url_mappings.html_acc[k].cv +", "+ 
+              url_mappings.html_acc[k].weblink +", "+ url_mappings.html_acc[k].cc_restriction);
+     }
   console.log("\n \n");
 
    // Define the stylesheet to be used for nodes & edges in the cytoscape.js container.
@@ -115,8 +122,8 @@ $(function() { // on dom ready
         .css({
           'content': 'data(value)', // 'data(id)',
                      /*function() { return this.id() +": "+ this.data('value'); },*/
-          'outline-colour': 'black', // text outline color
      //     'text-valign': 'center', // to have 'content' displayed in the middle of the node.
+          'outline-colour': 'black', // text outline color
           'border-style': 'solid', // node border
           'border-width': '1px',
           'font-size': '8px',
