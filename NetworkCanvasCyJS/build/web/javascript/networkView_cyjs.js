@@ -343,6 +343,8 @@ cy.elements().qtip({
              if(this.isNode()) {
                 // Get all metadata for this concept from the metadataJSON variable.
                 for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
+                    // test...
+                    console.log(this.id() + " ?=== "+ metadataJSON.ondexmetadata.concepts[j].id);
                     if(this.id() === metadataJSON.ondexmetadata.concepts[j].id) {
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
                            attr= "<b>"+ metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname +
@@ -360,6 +362,8 @@ cy.elements().qtip({
              else if(this.isEdge()) {
                      // Get all metadata for this relation from the metadataJSON variable.
                      for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
+                         // test...
+                         console.log(this.id() + " ?=== "+ metadataJSON.ondexmetadata.relations[j].id);
                          if(this.id() === metadataJSON.ondexmetadata.relations[j].id) {
                             for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
                                 attr= "<b>"+ metadataJSON.ondexmetadata.relations[j].attributes[k].attrname +
@@ -376,6 +380,7 @@ cy.elements().qtip({
              }
              catch(err) { itemInfo= "Selected element is neither a Concept nor a Relation"; }
              $("#infoDialog").html(itemInfo);
+             return err.stack();
             }
         },
             
