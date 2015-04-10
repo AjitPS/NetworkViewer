@@ -87,22 +87,23 @@ $(function() { // on dom ready
      }
 
   // Display concept and relation attributes from JSON json metadata.
-  for(var j = 0; j < metadataJSON.concepts.length; j++) {
-      console.log("JSON concept.data (id, ofType): "+ metadataJSON.concepts[j].id +", "+ 
-              metadataJSON.concepts[j].ofType +"\n Concept attributes: ");
-      for(var k = 0; k < metadataJSON.concepts[j].attributes.length; k++) {
-          console.log(metadataJSON.concepts[j].attributes[k].attrname +": "+ 
-                  metadataJSON.concepts[j].attributes[k].value);
+  for(var j = 0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
+      console.log("JSON concept.data (id, ofType): "+ metadataJSON.ondexmetadata.concepts[j].id +", "+ 
+              metadataJSON.ondexmetadata.concepts[j].ofType +"\n Concept attributes: ");
+      for(var k = 0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
+          console.log(metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname +": "+ 
+                  metadataJSON.ondexmetadata.concepts[j].attributes[k].value);
          }
      }
   console.log("\n \n");
-  for(var j = 0; j < metadataJSON.relations.length; j++) {
-      console.log("JSON relation.data (id, fromConcept, toConcept): "+ metadataJSON.relations[j].id +
-              ", "+ metadataJSON.relations[j].fromConcept +", "+ metadataJSON.relations[j].toConcept +
-              "\n Relation attributes: ");
-      for(var k = 0; k < metadataJSON.relations[j].attributes.length; k++) {
-          console.log(metadataJSON.relations[j].attributes[k].attrname +": "+ 
-                  metadataJSON.relations[j].attributes[k].value);
+  for(var j = 0; j < metadataJSON.ondexmetadata.relations.length; j++) {
+      console.log("JSON relation.data (id, fromConcept, toConcept): "+ 
+              metadataJSON.ondexmetadata.relations[j].id +", "+ 
+              metadataJSON.ondexmetadata.relations[j].fromConcept +", "+ 
+              metadataJSON.ondexmetadata.relations[j].toConcept +"\n Relation attributes: ");
+      for(var k = 0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
+          console.log(metadataJSON.ondexmetadata.relations[j].attributes[k].attrname +": "+ 
+                  metadataJSON.ondexmetadata.relations[j].attributes[k].value);
          }
      }
 
