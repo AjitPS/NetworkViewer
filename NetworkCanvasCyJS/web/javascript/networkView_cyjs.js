@@ -342,14 +342,15 @@ cy.elements().qtip({
              // Show Item info. in a new window.
              itemInfo.document.write("<html><body><b><u>Node details</u></b><br/>"+ nodeInfo +"</body></html>"); */
              var itemInfo= "";
-             var elementOf= "";
+/*             var elementOf= "";
              var evidences= ""; // from evidences array in metadataJSON.
              var attrs= ""; // from attributes array in metadataJSON.
              var attr= "";
              var co_accessions= ""; // from co_accessions array in metadataJSON.
              $("#infoDialog").dialog(); // initialize a dialog box.
+*/
              try {
-             if(this.isNode()) {
+/*             if(this.isNode()) {
                 // Get all metadata for this concept from the metadataJSON variable.
                 for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
                     if(this.id() === metadataJSON.ondexmetadata.concepts[j].id) {
@@ -399,7 +400,7 @@ cy.elements().qtip({
                      itemInfo= "Relation ID= "+ this.id()+ "<br/> Label: "+ this.data('label') +
                              "<br/>From: "+ this.data("source") +"<br/>To: "+ this.data("target") +"<br/> <br/><u>Attributes:</u><br/> "+ attrs;
                     }
-
+*/
              // Display item information in the itemInfo <div> in a <table>.
              var table= document.getElementById("itemInfo_Table").getElementsByTagName('tbody')[0]; // get the Item Info. table.
              // Clear the existing table body contents.
@@ -433,9 +434,6 @@ cy.elements().qtip({
                 // Get all metadata for this concept from the metadataJSON variable.
                 for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
                     if(this.id() === metadataJSON.ondexmetadata.concepts[j].id) {
-                       // Get source ('elementOf').
-                       elementOf= "Source:"+ 
-                               metadataJSON.ondexmetadata.concepts[j].elementOf +"<br/>";
                        // Concept 'elementOf'.
                        row= table.insertRow(table.rows.length - 1); // new row.
                        cell1= row.insertCell(0);
@@ -448,7 +446,7 @@ cy.elements().qtip({
                            if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
                                && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "visible")) {
                               // Concept 'Attributes'.
-                              row= table.insertRow(table.rows.length - 1); // new row.
+                              row= table.insertRow(table.rows.length/* - 1*/); // new row.
                               cell1= row.insertCell(0);
                               cell2= row.insertCell(1);
                               cell1.innerHTML= metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname;
@@ -476,7 +474,7 @@ cy.elements().qtip({
                      row= table.insertRow(2);
                      cell1= row.insertCell(0);
                      cell2= row.insertCell(1);
-                     cell1.innerHTML= "From:";
+                     cell1.innerHTML= "To:";
                      cell2.innerHTML= this.data('target'); // relation target ('toConcept').
                      // Get all metadata for this relation from the metadataJSON variable.
                      for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
@@ -485,7 +483,7 @@ cy.elements().qtip({
                                 if((metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "size")
                                     && (metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "visible")) {
                                    // Relation 'Attributes'.
-                                   row= table.insertRow(table.rows.length - 1); // new row.
+                                   row= table.insertRow(table.rows.length/* - 1*/); // new row.
                                    cell1= row.insertCell(0);
                                    cell2= row.insertCell(1);
                                    cell1.innerHTML= metadataJSON.ondexmetadata.relations[j].attributes[k].attrname;
@@ -498,9 +496,10 @@ cy.elements().qtip({
              }
              catch(err) { 
                    itemInfo= "Selected element is neither a Concept nor a Relation"; 
-                   itemInfo+ itemInfo +"<br/>Error details:<br/>"+ err.stack(); // error details
+                   itemInfo= itemInfo +"<br/>Error details:<br/>"+ err.stack(); // error details
+                   console.log(itemInfo);
                   }
-             $("#infoDialog").html(itemInfo);
+//             $("#infoDialog").html(itemInfo); // display in the dialog box.
             }
         },
             
