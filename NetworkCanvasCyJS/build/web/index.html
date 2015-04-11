@@ -87,11 +87,6 @@ Show Network: <input type="button" id="showNetGraph" value="Show Network" onclic
 <div id="infoDialog"></div>
 <br/>
 
-<!-- JTable to show Item Info. -->
-<div id="itemInfo" title="Item Info"></div>
-<!-- <div id="itemInfo" title="Item Info" style="border: thin">Item Info</div> -->
-<br/>
-
 <!-- Legend container with pictures -->
 <div id=legend_picture>
     <div id=legend_container>
@@ -138,6 +133,16 @@ Show Network: <input type="button" id="showNetGraph" value="Show Network" onclic
         </table>
     </div>
 </div>;
+
+<!-- JTable to show Item Info. -->
+<!-- <div id="itemInfo" title="Item Info" style="border: thin">Item Info</div> -->
+<div id="itemInfo" border=1>
+        <table id="itemInfo_Table" cellspacing=1 border=1>
+            <thead><th>Item Info</th></thead>
+            <tbody><!--<tr><td></td></tr> --></tbody>
+        </table>
+</div>
+<br/>
 
 <!-- page footer -->
 <div id="pageFooter">QTLNetMiner: Network View example using Cytoscape.js</div>

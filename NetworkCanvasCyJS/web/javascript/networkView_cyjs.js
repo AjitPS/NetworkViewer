@@ -264,8 +264,7 @@ cy.nodes().forEach(function( ele ) {
 
   // Add these properties to this element's JSON.
   ele.data('nodeImage', eleImage);
-
-  console.log("data.nodeImage "+ ele.data('nodeImage'));
+//  console.log("data.nodeImage "+ ele.data('nodeImage'));
  });
 
  // Update the stylesheet for the Network Graph to show background images for Nodes.
@@ -343,51 +342,164 @@ cy.elements().qtip({
              // Show Item info. in a new window.
              itemInfo.document.write("<html><body><b><u>Node details</u></b><br/>"+ nodeInfo +"</body></html>"); */
              var itemInfo= "";
-             var attrs= "";
+/*             var elementOf= "";
+             var evidences= ""; // from evidences array in metadataJSON.
+             var attrs= ""; // from attributes array in metadataJSON.
              var attr= "";
+             var co_accessions= ""; // from co_accessions array in metadataJSON.
              $("#infoDialog").dialog(); // initialize a dialog box.
+*/
              try {
-             if(this.isNode()) {
+/*             if(this.isNode()) {
                 // Get all metadata for this concept from the metadataJSON variable.
                 for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
-                    // test...
-                    console.log(this.id() + " ?=== "+ metadataJSON.ondexmetadata.concepts[j].id);
                     if(this.id() === metadataJSON.ondexmetadata.concepts[j].id) {
+                       // Get source ('elementOf').
+                       elementOf= "Source:"+ 
+                               metadataJSON.ondexmetadata.concepts[j].elementOf +"<br/>";
+                       // Get evidence information.
+                       // ???
+
+                       // Get concept attributes.
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
-                           attr= "<b>"+ metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname +
-                                   ":</b> "+ metadataJSON.ondexmetadata.concepts[j].attributes[k].value;
-                           attrs= attrs + attr +"<br/>";
+                           if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
+                               && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "visible")) {
+                              attr= "<b>"+ metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname +
+                                      ":</b> "+ metadataJSON.ondexmetadata.concepts[j].attributes[k].value;
+                              attrs= attrs + attr +"<br/>";
+                             }
                           }
+                       // Get concept accessions.
+                       // ???
                       }
                    }
                 attrs= attrs +"<br/>";
-
-                itemInfo= "Concept Type: "+ this.data('conceptType') +"<br/> Value: "+ this.data('value') +
-                     "<br/> <br/><u>Properties:</u> <br/> PID: "+ this.data('pid') +"<br/>Annotation: "+ 
-                     this.data('annotation') +"<br/> <br/><u>Attributes:</u><br/> "+ attrs;
+                // Show concept type, value, pid, annotation, evidences, attributes & co-accessions.
+                itemInfo= "Concept Type: "+ this.data('conceptType') +"<br/>Value: "+ this.data('value') 
+                        +"<br/>PID: "+ this.data('pid') + "<br/>Annotation: "+ this.data('annotation') + 
+                        elementOf + "<br/> <br/><u>Attributes:</u><br/> "+ attrs;
                }
              else if(this.isEdge()) {
                      // Get all metadata for this relation from the metadataJSON variable.
                      for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
-                         // test...
-                         console.log(this.id() + " ?=== "+ metadataJSON.ondexmetadata.relations[j].id);
                          if(this.id() === metadataJSON.ondexmetadata.relations[j].id) {
+                            // Get relation attributes.
                             for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
-                                attr= "<b>"+ metadataJSON.ondexmetadata.relations[j].attributes[k].attrname +
-                                        ": </b>"+ metadataJSON.ondexmetadata.relations[j].attributes[k].value;
-                                attrs= attrs + attr +"<br/>";
+                                if((metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "size")
+                                    && (metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "visible")) {
+                                   attr= "<b>"+ metadataJSON.ondexmetadata.relations[j].attributes[k].attrname +
+                                           ": </b>"+ metadataJSON.ondexmetadata.relations[j].attributes[k].value;
+                                   attrs= attrs + attr +"<br/>";
+                                  }
                               }
                            }
                        }
                      attrs= attrs +"<br/>";
 
+                     // Show relation label, source, target and its attributes.
                      itemInfo= "Relation ID= "+ this.id()+ "<br/> Label: "+ this.data('label') +
-                             "<br/> <br/><u>Attributes:</u><br/> "+ attrs;
+                             "<br/>From: "+ this.data("source") +"<br/>To: "+ this.data("target") +"<br/> <br/><u>Attributes:</u><br/> "+ attrs;
+                    }
+*/
+             // Display item information in the itemInfo <div> in a <table>.
+             var table= document.getElementById("itemInfo_Table").getElementsByTagName('tbody')[0]; // get the Item Info. table.
+             // Clear the existing table body contents.
+             table.innerHTML= "";
+             if(this.isNode()) {
+                var row= table.insertRow(0); // create a new, empty row.
+                // Insert new cells in this row.
+                var cell1= row.insertCell(0);
+                var cell2= row.insertCell(1);
+                // Store the necessary data in the cells.
+                cell1.innerHTML= "Concept Type:";
+                cell2.innerHTML= this.data('conceptType'); // concept Type
+                // Concept 'value'.
+                row= table.insertRow(1);
+                cell1= row.insertCell(0);
+                cell2= row.insertCell(1);
+                cell1.innerHTML= "Value:";
+                cell2.innerHTML= this.data('value');
+                // Concept 'PID'.
+                row= table.insertRow(2);
+                cell1= row.insertCell(0);
+                cell2= row.insertCell(1);
+                cell1.innerHTML= "PID:";
+                cell2.innerHTML= this.data('pid');
+                // Concept 'Annotation'.
+                row= table.insertRow(2);
+                cell1= row.insertCell(0);
+                cell2= row.insertCell(1);
+                cell1.innerHTML= "Annotation:";
+                cell2.innerHTML= this.data('annotation');
+                // Get all metadata for this concept from the metadataJSON variable.
+                for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
+                    if(this.id() === metadataJSON.ondexmetadata.concepts[j].id) {
+                       // Concept 'elementOf'.
+                       row= table.insertRow(table.rows.length - 1); // new row.
+                       cell1= row.insertCell(0);
+                       cell2= row.insertCell(1);
+                       cell1.innerHTML= "Source:";
+                       cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].elementOf;
+                       // Get evidence information.
+                       // ???
+                       for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
+                           if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
+                               && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "visible")) {
+                              // Concept 'Attributes'.
+                              row= table.insertRow(table.rows.length/* - 1*/); // new row.
+                              cell1= row.insertCell(0);
+                              cell2= row.insertCell(1);
+                              cell1.innerHTML= metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname;
+                              cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].attributes[k].value;
+                             }
+                          }
+                      }
+                   }
+               }
+             else if(this.isEdge()) {
+                     var row= table.insertRow(0);
+                     // Insert new cells in this row.
+                     var cell1= row.insertCell(0);
+                     var cell2= row.insertCell(1);
+                     // Store the necessary data in the cells.
+                     cell1.innerHTML= "Relation Label:";
+                     cell2.innerHTML= this.data('label'); // relation label
+                     // Relation 'source'.
+                     row= table.insertRow(1);
+                     cell1= row.insertCell(0);
+                     cell2= row.insertCell(1);
+                     cell1.innerHTML= "From:";
+                     cell2.innerHTML= this.data('source'); // relation source ('fromConcept').
+                     // Relation 'target'.
+                     row= table.insertRow(2);
+                     cell1= row.insertCell(0);
+                     cell2= row.insertCell(1);
+                     cell1.innerHTML= "To:";
+                     cell2.innerHTML= this.data('target'); // relation target ('toConcept').
+                     // Get all metadata for this relation from the metadataJSON variable.
+                     for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
+                         if(this.id() === metadataJSON.ondexmetadata.relations[j].id) {
+                            for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
+                                if((metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "size")
+                                    && (metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "visible")) {
+                                   // Relation 'Attributes'.
+                                   row= table.insertRow(table.rows.length/* - 1*/); // new row.
+                                   cell1= row.insertCell(0);
+                                   cell2= row.insertCell(1);
+                                   cell1.innerHTML= metadataJSON.ondexmetadata.relations[j].attributes[k].attrname;
+                                   cell2.innerHTML= metadataJSON.ondexmetadata.relations[j].attributes[k].value;
+                                  }
+                              }
+                           }
+                       }
                     }
              }
-             catch(err) { itemInfo= "Selected element is neither a Concept nor a Relation"; }
-             $("#infoDialog").html(itemInfo);
-             return err.stack();
+             catch(err) { 
+                   itemInfo= "Selected element is neither a Concept nor a Relation"; 
+                   itemInfo= itemInfo +"<br/>Error details:<br/>"+ err.stack(); // error details
+                   console.log(itemInfo);
+                  }
+//             $("#infoDialog").html(itemInfo); // display in the dialog box.
             }
         },
             
@@ -519,9 +631,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
  $('#infoDialog').click(function() {
    $('#infoDialog').slideToggle(300);
   });
-  
-  // The actual Item Info. window (<div>).
-  
+
 }); // on dom ready
 }
 
