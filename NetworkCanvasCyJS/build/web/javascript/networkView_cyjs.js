@@ -398,7 +398,10 @@ cy.elements().qtip({
                                   for(var u=0; u < url_mappings.html_acc.length; u++) {
                                       if(url_mappings.html_acc[u].cv === "TX"/*attrName*/) {
                                          attrUrl= url_mappings.html_acc[u].weblink + attrValue; // Taxonomy ID url.
-                                         attrValue= "<a href="+ attrUrl +">"+ attrValue +"</a>";
+                                         // open attribute url in new blank tab.
+//                                         attrValue= "<a href=\""+ attrUrl +"\" target=\"_blank\">"+ attrValue +"</a>";
+                                         attrValue= "<a href=\""+ attrUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ attrValue +"</a>";
+                                         console.log("\n \t Concept Attribute: TaxID url: "+ attrUrl +" --> "+ attrValue);
                                         }
                                      }
                                  }
@@ -908,7 +911,10 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                                for(var u=0; u < url_mappings.html_acc.length; u++) {
                                    if(url_mappings.html_acc[u].cv === "TX"/*attrName*/) {
                                       attrUrl= url_mappings.html_acc[u].weblink + attrValue; // Taxonomy ID url.
-                                      attrValue= "<a href="+ attrUrl +">"+ attrValue +"</a>";
+                                      // open attribute url in new blank tab.
+//                                      attrValue= "<a href=\""+ attrUrl +"\" target=\"_blank\">"+ attrValue +"</a>";
+                                      attrValue= "<a href=\""+ attrUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ attrValue +"</a>";
+                                      console.log("\n \t Concept Attribute: TaxID url: "+ attrUrl +" --> "+ attrValue);
                                      }
                                   }
                               }
