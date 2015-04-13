@@ -391,8 +391,22 @@ cy.elements().qtip({
                                row= table.insertRow(table.rows.length); // new row.
                                cell1= row.insertCell(0);
                                cell2= row.insertCell(1);
-                               cell1.innerHTML= metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname;
-                               cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].attributes[k].value;
+                               attrName= metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname;
+                               attrValue= metadataJSON.ondexmetadata.concepts[j].attributes[k].value;
+                               // For Taxonomy ID, display url (created via config>> url_mappings.json).
+                               if((attrName === "TAXID") || (attrName === "TX")) {
+                                  for(var u=0; u < url_mappings.html_acc.length; u++) {
+                                      if((url_mappings.html_acc[u].cv === attrName) || (url_mappings.html_acc[u].cv === "TX")) {
+                                         attrUrl= url_mappings.html_acc[u].weblink + attrValue; // Taxonomy ID url.
+                                         // open attribute url in new blank tab.
+//                                         attrValue= "<a href=\""+ attrUrl +"\" target=\"_blank\">"+ attrValue +"</a>";
+                                         attrValue= "<a href=\""+ attrUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ attrValue +"</a>";
+                                         console.log("\n \t Concept Attribute: TaxID url: "+ attrUrl +" --> "+ attrValue);
+                                        }
+                                     }
+                                 }
+                               cell1.innerHTML= attrName;
+                               cell2.innerHTML= attrValue;
                               }
                            }
                        // Get concept accessions.
@@ -400,8 +414,18 @@ cy.elements().qtip({
                            row= table.insertRow(table.rows.length); // new row.
                            cell1= row.insertCell(0);
                            cell2= row.insertCell(1);
-                           cell1.innerHTML= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].elementOf;
-                           cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].accession;
+                           accessionID= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].elementOf;
+                           co_acc= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].accession;
+                           for(var u=0; u < url_mappings.html_acc.length; u++) {
+                               if(url_mappings.html_acc[u].cv === accessionID) {
+                                  coAccUrl= url_mappings.html_acc[u].weblink + co_acc; // co-accession url.
+                                  // open attribute url in new blank tab.
+//                                  attrValue= "<a href=\""+ coAccUrl +"\" target=\"_blank\">"+ co_acc +"</a>";
+                                  co_acc= "<a href=\""+ coAccUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ co_acc +"</a>";
+                                 }
+                               }
+                           cell1.innerHTML= accessionID;
+                           cell2.innerHTML= co_acc;
                           }
                       }
                    }
@@ -890,8 +914,22 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                             row= table.insertRow(table.rows.length/* - 1*/); // new row.
                             cell1= row.insertCell(0);
                             cell2= row.insertCell(1);
-                            cell1.innerHTML= metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname;
-                            cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].attributes[k].value;
+                            attrName= metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname;
+                            attrValue= metadataJSON.ondexmetadata.concepts[j].attributes[k].value;
+                            // For Taxonomy ID, display url (created via config>> url_mappings.json).
+                            if((attrName === "TAXID") || (attrName === "TX")) {
+                               for(var u=0; u < url_mappings.html_acc.length; u++) {
+                                   if((url_mappings.html_acc[u].cv === attrName) || (url_mappings.html_acc[u].cv === "TX")) {
+                                      attrUrl= url_mappings.html_acc[u].weblink + attrValue; // Taxonomy ID url.
+                                      // open attribute url in new blank tab.
+//                                        attrValue= "<a href=\""+ attrUrl +"\" target=\"_blank\">"+ attrValue +"</a>";
+                                      attrValue= "<a href=\""+ attrUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ attrValue +"</a>";
+                                      console.log("\n \t Concept Attribute: TaxID url: "+ attrUrl +" --> "+ attrValue);
+                                     }
+                                  }
+                              }
+                            cell1.innerHTML= attrName;
+                            cell2.innerHTML= attrValue;
                            }
                         }
                     // Get concept accessions.
@@ -899,8 +937,18 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                         row= table.insertRow(table.rows.length/* - 1*/); // new row.
                         cell1= row.insertCell(0);
                         cell2= row.insertCell(1);
-                        cell1.innerHTML= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].elementOf;
-                        cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].accession;
+                        accessionID= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].elementOf;
+                        co_acc= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].accession;
+                        for(var u=0; u < url_mappings.html_acc.length; u++) {
+                            if(url_mappings.html_acc[u].cv === accessionID) {
+                               coAccUrl= url_mappings.html_acc[u].weblink + co_acc; // co-accession url.
+                               // open attribute url in new blank tab.
+//                               attrValue= "<a href=\""+ coAccUrl +"\" target=\"_blank\">"+ co_acc +"</a>";
+                               co_acc= "<a href=\""+ coAccUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ co_acc +"</a>";
+                              }
+                            }
+                        cell1.innerHTML= accessionID;
+                        cell2.innerHTML= co_acc;
                        }
                    }
                }
