@@ -6,7 +6,7 @@ var url_mappings= {
      {"cv": "CHEBI", "weblink": "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=", "cc_restriction": ""},
      {"cv": "EC", "weblink": "http://www.expasy.org/enzyme/", "cc_restriction": ""},
      {"cv": "EMBL", "weblink": "http://www.ebi.ac.uk/ena/data/view/", "cc_restriction": ""},
-     {"cv": "ENSEMBL_PLANTS", "weblink": "http://plants.ensembl.org/Search/Results?q=", "cc_restriction": ""},
+     {"cv": "ENSEMBL", "weblink": "http://plants.ensembl.org/Search/Results?q=", "cc_restriction": ""},
      {"cv": "GENB", "weblink": "http://www.ncbi.nlm.nih.gov/sites/entrez?db=nuccore&cmd=search&term=", "cc_restriction": ""},
      {"cv": "GENOSCOPE", "weblink": "http://www.genoscope.cns.fr/brassicanapus/cgi-bin/gbrowse/colza/?name=", "cc_restriction": ""},
      {"cv": "GO", "weblink": "http://www.ebi.ac.uk/QuickGO/GTerm?id=", "cc_restriction": ""},
