@@ -389,6 +389,9 @@ cy.elements().qtip({
                        cell2.innerHTML= evidences.substring(0, evidences.length-2);
 
                        // Get concept attributes.
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
                            if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
                                && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "visible")) {
@@ -405,16 +408,32 @@ cy.elements().qtip({
                                          // open attribute url in new blank tab.
 //                                         attrValue= "<a href=\""+ attrUrl +"\" target=\"_blank\">"+ attrValue +"</a>";
                                          attrValue= "<a href=\""+ attrUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ attrValue +"</a>";
-                                         console.log("\n \t Concept Attribute: TaxID url: "+ attrUrl +" --> "+ attrValue);
                                         }
                                      }
                                  }
+                               // For Aminoacid sequence (AA).
+                               if(attrName === "AA") {
+                                  attrName= "Aminoacid sequence (AA)";
+                                  aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
+                                  counter= 0;
+                                  for(var k=0; k < aaSeq.length; k++) {
+                                      attrValue= aaSeq[k] +"     ";
+                                      counter= counter + 1;
+                                      if(counter%3 === 0) {
+                                         attrValue= attrValue +"\n";
+                                        }
+                                     }
+                                   console.log("aaSeq: "+ aaSeq +"\n AA: "+ attrValue);
+                                  }
                                cell1.innerHTML= attrName;
                                cell2.innerHTML= attrValue;
                               }
                            }
 
                        // Get concept accessions.
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell1.innerHTML= "<b>Accessions:</b>"; // sub-heading
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].coaccessions.length; k++) {
                            row= table.insertRow(table.rows.length); // new row.
                            cell1= row.insertCell(0);
@@ -470,6 +489,9 @@ cy.elements().qtip({
                             cell2.innerHTML= relationEvidences.substring(0, relationEvidences.length-2);
 
                             // Get relation 'attributes'.
+                            row= table.insertRow(table.rows.length); // new row.
+                            cell1= row.insertCell(0);
+                            cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
                             for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
                                 if((metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "size")
                                     && (metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "visible")) {
@@ -920,6 +942,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                     cell2.innerHTML= evidences.substring(0, evidences.length-2);
 
                     // Get concept attributes.
+                    row= table.insertRow(table.rows.length); // new row.
+                    cell1= row.insertCell(0);
+                    cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
                     for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
                         if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
                             && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "visible")) {
@@ -940,12 +965,28 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                                      }
                                   }
                               }
+                            // For Aminoacid sequence (AA).
+                            if(attrName === "AA") {
+                               attrName= "Aminoacid sequence (AA)";
+                               aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
+                               counter= 0;
+                               for(var k=0; k < aaSeq.length; k++) {
+                                   attrValue= aaSeq[k] +"     ";
+                                   counter= counter + 1;
+                                   if(counter%3 === 0) {
+                                      attrValue= attrValue +"\n";
+                                     }
+                                  }
+                               }
                             cell1.innerHTML= attrName;
                             cell2.innerHTML= attrValue;
                            }
                         }
 
                     // Get concept accessions.
+                    row= table.insertRow(table.rows.length); // new row.
+                    cell1= row.insertCell(0);
+                    cell1.innerHTML= "<b>Accessions:</b>"; // sub-heading
                     for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].coaccessions.length; k++) {
                         row= table.insertRow(table.rows.length/* - 1*/); // new row.
                         cell1= row.insertCell(0);
@@ -1001,6 +1042,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                        cell2.innerHTML= relationEvidences.substring(0, relationEvidences.length-2);
 
                         // Get relation attributes.
+                        row= table.insertRow(table.rows.length); // new row.
+                        cell1= row.insertCell(0);
+                        cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
                         for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
                             if((metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "size")
                                && (metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "visible")) {
