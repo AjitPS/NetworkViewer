@@ -45,7 +45,7 @@ Show Network: <input type="button" id="showNetGraph" value="Show Network" onclic
 <hr>
 
 <div id=layouts_container>
-<table id=layouts_frame cellspacing=1>
+<table id=layouts_table cellspacing=1>
 <thead><u>Layouts:</u></thead>
 <tr>
     <td align=center><input type="radio" name="layoutButton" id="default" value="Default layout" onclick="setDefaultLayout();" checked>Default (CoLa)</td>
@@ -133,17 +133,19 @@ Show Network: <input type="button" id="showNetGraph" value="Show Network" onclic
     </div>
 </div>;
 
+<br/><br/>
+
 <!-- JTable to show Item Info. -->
 <!-- <div id="itemInfo" title="Item Info" style="border: thin">Item Info</div> -->
-<div id="itemInfo" border=1>
-        <table id="itemInfo_Table" cellspacing=1 border=1>
-            <thead><th>Item Info</th></thead>
+<div id="itemInfo" class="infoDiv">
+        <table id="itemInfo_Table" class="infoTable" cellspacing=1>
+            <thead><th>Item Info:</th><th>information about selected concept(s) or relation(s)</th></thead>
             <tbody><!--<tr><td></td></tr> --></tbody>
         </table>
 </div>
-<br/>
+<br/><br/>
 
 <!-- page footer -->
-<div id="pageFooter">QTLNetMiner: Network View example using Cytoscape.js</div>
+<div id="pageFooter"><b>QTLNetMiner</b>: Network View example using Cytoscape.js</div>
 </body>
 </html>

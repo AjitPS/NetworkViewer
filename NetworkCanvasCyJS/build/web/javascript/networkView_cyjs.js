@@ -371,19 +371,23 @@ cy.elements().qtip({
                 for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
                     if(this.id() === metadataJSON.ondexmetadata.concepts[j].id) {
                        // Concept 'elementOf'.
-                       row= table.insertRow(table.rows.length - 1); // new row.
+                       row= table.insertRow(table.rows.length); // new row.
                        cell1= row.insertCell(0);
                        cell2= row.insertCell(1);
                        cell1.innerHTML= "Source:";
                        cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].elementOf;
+
                        // Get evidence information.
+                       var evidences= "";
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell2= row.insertCell(1);
+                       cell1.innerHTML= "Evidence:";
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].evidences.length; k++) {
-                           row= table.insertRow(table.rows.length); // new row.
-                           cell1= row.insertCell(0);
-                           cell2= row.insertCell(1);
-                           cell1.innerHTML= "Evidence";
-                           cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].evidences[k];
+                           evidences= evidences + metadataJSON.ondexmetadata.concepts[j].evidences[k] +", ";
                           }
+                       cell2.innerHTML= evidences.substring(0, evidences.length-2);
+
                        // Get concept attributes.
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
                            if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
@@ -409,6 +413,7 @@ cy.elements().qtip({
                                cell2.innerHTML= attrValue;
                               }
                            }
+
                        // Get concept accessions.
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].coaccessions.length; k++) {
                            row= table.insertRow(table.rows.length); // new row.
@@ -454,13 +459,16 @@ cy.elements().qtip({
                      for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
                          if(this.id() === metadataJSON.ondexmetadata.relations[j].id) {
                             // Get evidence information.
+                            var relationEvidences= "";
+                            row= table.insertRow(table.rows.length); // new row.
+                            cell1= row.insertCell(0);
+                            cell2= row.insertCell(1);
+                            cell1.innerHTML= "Evidence:";
                             for(var k=0; k < metadataJSON.ondexmetadata.relations[j].evidences.length; k++) {
-                                row= table.insertRow(table.rows.length); // new row.
-                                cell1= row.insertCell(0);
-                                cell2= row.insertCell(1);
-                                cell1.innerHTML= "Evidence";
-                                cell2.innerHTML= metadataJSON.ondexmetadata.relations[j].evidences[k];
+                                relationEvidences= relationEvidences + metadataJSON.ondexmetadata.relations[j].evidences[k] +", ";
                                }
+                            cell2.innerHTML= relationEvidences.substring(0, relationEvidences.length-2);
+
                             // Get relation 'attributes'.
                             for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
                                 if((metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "size")
@@ -894,19 +902,23 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
             for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
                 if(selectedElement.id() === metadataJSON.ondexmetadata.concepts[j].id) {
                     // Concept 'elementOf'.
-                    row= table.insertRow(table.rows.length - 1); // new row.
+                    row= table.insertRow(table.rows.length/* - 1*/); // new row.
                     cell1= row.insertCell(0);
                     cell2= row.insertCell(1);
                     cell1.innerHTML= "Source:";
                     cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].elementOf;
+
                     // Get evidence information.
+                    var evidences= "";
+                    row= table.insertRow(table.rows.length); // new row.
+                    cell1= row.insertCell(0);
+                    cell2= row.insertCell(1);
+                    cell1.innerHTML= "Evidence:";
                     for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].evidences.length; k++) {
-                        row= table.insertRow(table.rows.length/* - 1*/); // new row.
-                        cell1= row.insertCell(0);
-                        cell2= row.insertCell(1);
-                        cell1.innerHTML= "Evidence";
-                        cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].evidences[k];
+                        evidences= evidences + metadataJSON.ondexmetadata.concepts[j].evidences[k] +", ";
                        }
+                    cell2.innerHTML= evidences.substring(0, evidences.length-2);
+
                     // Get concept attributes.
                     for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
                         if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
@@ -932,6 +944,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                             cell2.innerHTML= attrValue;
                            }
                         }
+
                     // Get concept accessions.
                     for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].coaccessions.length; k++) {
                         row= table.insertRow(table.rows.length/* - 1*/); // new row.
@@ -976,14 +989,17 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                 // Get all metadata for this relation from the metadataJSON variable.
                 for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
                     if(selectedElement.id() === metadataJSON.ondexmetadata.relations[j].id) {
-                        // Get evidence information.
-                        for(var k=0; k < metadataJSON.ondexmetadata.relations[j].evidences.length; k++) {
-                            row= table.insertRow(table.rows.length/* - 1*/); // new row.
-                            cell1= row.insertCell(0);
-                            cell2= row.insertCell(1);
-                            cell1.innerHTML= "Evidence";
-                            cell2.innerHTML= metadataJSON.ondexmetadata.relations[j].evidences[k];
-                           }
+                       // Get evidence information.
+                       var relationEvidences= "";
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell2= row.insertCell(1);
+                       cell1.innerHTML= "Evidence:";
+                       for(var k=0; k < metadataJSON.ondexmetadata.relations[j].evidences.length; k++) {
+                           relationEvidences= relationEvidences + metadataJSON.ondexmetadata.relations[j].evidences[k] +", ";
+                          }
+                       cell2.innerHTML= relationEvidences.substring(0, relationEvidences.length-2);
+
                         // Get relation attributes.
                         for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
                             if((metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "size")
