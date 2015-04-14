@@ -962,7 +962,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                                     attrName= "Aminoacid sequence (AA)";
                                     aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
                                     counter= 0;
-                                    attrValue= "";
+                                    attrValue= "<font size=\"1\">";
                                     for(var p=0; p < aaSeq.length; p++) {
                                         attrValue= attrValue + aaSeq[p] +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                                         counter= counter + 1;
@@ -970,6 +970,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                                            attrValue= attrValue +"<br/>";
                                           }
                                        }
+                                    attrValue= attrValue +"</font>";
                                    }
                             cell1.innerHTML= attrName;
                             cell2.innerHTML= attrValue;
