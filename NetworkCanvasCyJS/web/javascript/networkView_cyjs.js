@@ -86,26 +86,18 @@ $(function() { // on dom ready
               networkJSON.edges[k].data.target +", "+ networkJSON.edges[k].data.edgeColor +", "+ networkJSON.edges[k].data.label);
      }
   console.log("\n \n");
-/*
-  // Display concept and relation attributes from JSON json metadata.
+
+  // Display concept accessions from JSON metadata.
   for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
+      displayAccessionsString= "";
       console.log("JSON concept.data (id, ofType): "+ metadataJSON.ondexmetadata.concepts[j].id +", "+ 
-              metadataJSON.ondexmetadata.concepts[j].ofType +"\n"+"Concept attributes: ");
-      for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
-          console.log(metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname +": "+ 
-                  metadataJSON.ondexmetadata.concepts[j].attributes[k].value);
+              metadataJSON.ondexmetadata.concepts[j].ofType +"\n"+"Concept accessions: ");
+      for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].coaccessions.length; k++) {
+          displayAccessionsString= displayAccessionsString + 
+                  metadataJSON.ondexmetadata.concepts[j].coaccessions[k].elementOf +": "+ 
+                  metadataJSON.ondexmetadata.concepts[j].coaccessions[k].accession +", ";
          }
-     }
-  console.log("\n \n");
-  for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
-      console.log("JSON relation.data (id, fromConcept, toConcept): "+ 
-              metadataJSON.ondexmetadata.relations[j].id +", "+ 
-              metadataJSON.ondexmetadata.relations[j].fromConcept +", "+ 
-              metadataJSON.ondexmetadata.relations[j].toConcept +"\n"+"Relation attributes: ");
-      for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
-          console.log(metadataJSON.ondexmetadata.relations[j].attributes[k].attrname +": "+ 
-                  metadataJSON.ondexmetadata.relations[j].attributes[k].value);
-         }
+      console.log(displayAccessionsString.substring(0, displayAccessionsString.length-2));
      }
   console.log("\n \n");
 
@@ -115,7 +107,7 @@ $(function() { // on dom ready
               url_mappings.html_acc[k].weblink +", "+ url_mappings.html_acc[k].cc_restriction);
      }
   console.log("\n \n");
-*/
+
    // Define the stylesheet to be used for nodes & edges in the cytoscape.js container.
    var networkStylesheet= cytoscape.stylesheet()
       .selector('node')
@@ -412,19 +404,19 @@ cy.elements().qtip({
                                      }
                                  }
                                // For Aminoacid sequence (AA).
-                               if(attrName === "AA") {
-                                  attrName= "Aminoacid sequence (AA)";
-                                  aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
-                                  counter= 0;
-                                  attrValue= "";
-                                  for(var k=0; k < aaSeq.length; k++) {
-                                      attrValue= attrValue + aaSeq[k] +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                                      counter= counter + 1;
-                                      if(counter%3 === 0) {
-                                         attrValue= attrValue +"<br/>";
-                                        }
-                                     }
-                                  }
+                               else if(attrName === "AA") {
+                                       attrName= "Aminoacid sequence (AA)";
+                                       aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
+                                       counter= 0;
+                                       attrValue= "";
+                                       for(var p=0; p < aaSeq.length; p++) {
+                                           attrValue= attrValue + aaSeq[p] +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                                           counter= counter + 1;
+                                           if(counter%3 === 0) {
+                                              attrValue= attrValue +"<br/>";
+                                             }
+                                          }
+                                      }
                                cell1.innerHTML= attrName;
                                cell2.innerHTML= attrValue;
                               }
@@ -965,19 +957,19 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                                   }
                               }
                             // For Aminoacid sequence (AA).
-                            if(attrName === "AA") {
-                               attrName= "Aminoacid sequence (AA)";
-                               aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
-                               counter= 0;
-                               attrValue= "";
-                               for(var k=0; k < aaSeq.length; k++) {
-                                   attrValue= attrValue + aaSeq[k] +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                                   counter= counter + 1;
-                                   if(counter%3 === 0) {
-                                      attrValue= attrValue +"<br/>";
-                                     }
-                                  }
-                               }
+                            else if(attrName === "AA") {
+                                    attrName= "Aminoacid sequence (AA)";
+                                    aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
+                                    counter= 0;
+                                    attrValue= "";
+                                    for(var p=0; p < aaSeq.length; p++) {
+                                        attrValue= attrValue + aaSeq[p] +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                                        counter= counter + 1;
+                                        if(counter%3 === 0) {
+                                           attrValue= attrValue +"<br/>";
+                                          }
+                                       }
+                                   }
                             cell1.innerHTML= attrName;
                             cell2.innerHTML= attrValue;
                            }
