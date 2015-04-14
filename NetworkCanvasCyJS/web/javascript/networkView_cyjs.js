@@ -86,7 +86,7 @@ $(function() { // on dom ready
               networkJSON.edges[k].data.target +", "+ networkJSON.edges[k].data.edgeColor +", "+ networkJSON.edges[k].data.label);
      }
   console.log("\n \n");
-
+/*
   // Display concept and relation attributes from JSON json metadata.
   for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
       console.log("JSON concept.data (id, ofType): "+ metadataJSON.ondexmetadata.concepts[j].id +", "+ 
@@ -115,7 +115,7 @@ $(function() { // on dom ready
               url_mappings.html_acc[k].weblink +", "+ url_mappings.html_acc[k].cc_restriction);
      }
   console.log("\n \n");
-
+*/
    // Define the stylesheet to be used for nodes & edges in the cytoscape.js container.
    var networkStylesheet= cytoscape.stylesheet()
       .selector('node')
@@ -416,14 +416,14 @@ cy.elements().qtip({
                                   attrName= "Aminoacid sequence (AA)";
                                   aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
                                   counter= 0;
+                                  attrValue= "";
                                   for(var k=0; k < aaSeq.length; k++) {
-                                      attrValue= aaSeq[k] +"     ";
+                                      attrValue= attrValue + aaSeq[k] +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                                       counter= counter + 1;
                                       if(counter%3 === 0) {
-                                         attrValue= attrValue +"\n";
+                                         attrValue= attrValue +"<br/>";
                                         }
                                      }
-                                   console.log("aaSeq: "+ aaSeq +"\n AA: "+ attrValue);
                                   }
                                cell1.innerHTML= attrName;
                                cell2.innerHTML= attrValue;
@@ -961,7 +961,6 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                                       // open attribute url in new blank tab.
 //                                        attrValue= "<a href=\""+ attrUrl +"\" target=\"_blank\">"+ attrValue +"</a>";
                                       attrValue= "<a href=\""+ attrUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ attrValue +"</a>";
-                                      console.log("\n \t Concept Attribute: TaxID url: "+ attrUrl +" --> "+ attrValue);
                                      }
                                   }
                               }
@@ -970,11 +969,12 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                                attrName= "Aminoacid sequence (AA)";
                                aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
                                counter= 0;
+                               attrValue= "";
                                for(var k=0; k < aaSeq.length; k++) {
-                                   attrValue= aaSeq[k] +"     ";
+                                   attrValue= attrValue + aaSeq[k] +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                                    counter= counter + 1;
                                    if(counter%3 === 0) {
-                                      attrValue= attrValue +"\n";
+                                      attrValue= attrValue +"<br/>";
                                      }
                                   }
                                }
