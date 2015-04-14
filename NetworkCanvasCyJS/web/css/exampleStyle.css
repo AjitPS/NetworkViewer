@@ -15,6 +15,10 @@ root {
         margin: 0px;
         padding: 0px;
       }
+      
+/*      #layouts_table {
+       cellspacing: 1px;
+      }*/
 
       /* CytoscapeJS "core" container */
       #cy {
@@ -36,6 +40,72 @@ root {
       #png_image {
         border: solid 1px #191919;
        }*/
+
+     /* #itemInfo {
+       border: 1px;
+      }
+
+      #itemInfo_Table {
+       font-family: arial;
+       background-color: #C0C0C0;
+       margin: 10px 0pt 15px;
+       font-size: 10pt;
+       width: 100%;
+       text-align: left;
+       overflow:auto;
+       max-height:280px;
+       overflow-x:hidden;
+      }*/
+      
+      div.infoDiv {
+	width:100%;       /* table width will be 99% of this*/
+	max-height:400px;    /* must be greater than tbody*/
+	overflow:auto;
+	margin:0 auto;
+        border: 1px;
+      }
+
+      div.infoDiv table {
+        width:99%;  /*100% of container produces horiz. scroll in Mozilla*/
+	/*border:none;*/
+	border-spacing:0px;
+	background-color:transparent;
+	border:1px solid #C2C2C2;
+	border-collapse:collapse;
+      }
+
+      div.infoDiv th, div.infoDiv td {
+        padding:4px;
+        border:1px solid #C2C2C2;
+      }
+
+      table.infoTable thead th {
+	background-color:#C0C0C0;
+	color:black;
+	font-size:10pt;
+	padding:4px;
+      }
+
+      div.infoDiv tbody {
+	overflow: auto;
+	max-height: 280px;
+	overflow-x: hidden;
+      }
+
+     div.infoDiv table>tbody {
+       overflow:auto;
+       max-height:280px;
+       overflow-x:hidden;
+     }
+
+     div.infoDiv table>tbody tr {
+       height:auto;
+     }
+
+     div.infoDiv table>thead tr {
+       position:relative;
+       top: 0px;/*expression(offsetParent.scrollTop); IE5+ only*/
+     }
 
       /* Legend */
       #legend_picture {

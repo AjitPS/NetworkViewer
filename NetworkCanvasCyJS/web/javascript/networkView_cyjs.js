@@ -86,7 +86,7 @@ $(function() { // on dom ready
               networkJSON.edges[k].data.target +", "+ networkJSON.edges[k].data.edgeColor +", "+ networkJSON.edges[k].data.label);
      }
   console.log("\n \n");
-
+/*
   // Display concept and relation attributes from JSON json metadata.
   for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
       console.log("JSON concept.data (id, ofType): "+ metadataJSON.ondexmetadata.concepts[j].id +", "+ 
@@ -115,7 +115,7 @@ $(function() { // on dom ready
               url_mappings.html_acc[k].weblink +", "+ url_mappings.html_acc[k].cc_restriction);
      }
   console.log("\n \n");
-
+*/
    // Define the stylesheet to be used for nodes & edges in the cytoscape.js container.
    var networkStylesheet= cytoscape.stylesheet()
       .selector('node')
@@ -371,20 +371,27 @@ cy.elements().qtip({
                 for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
                     if(this.id() === metadataJSON.ondexmetadata.concepts[j].id) {
                        // Concept 'elementOf'.
-                       row= table.insertRow(table.rows.length - 1); // new row.
+                       row= table.insertRow(table.rows.length); // new row.
                        cell1= row.insertCell(0);
                        cell2= row.insertCell(1);
                        cell1.innerHTML= "Source:";
                        cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].elementOf;
+
                        // Get evidence information.
+                       var evidences= "";
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell2= row.insertCell(1);
+                       cell1.innerHTML= "Evidence:";
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].evidences.length; k++) {
-                           row= table.insertRow(table.rows.length); // new row.
-                           cell1= row.insertCell(0);
-                           cell2= row.insertCell(1);
-                           cell1.innerHTML= "Evidence";
-                           cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].evidences[k];
+                           evidences= evidences + metadataJSON.ondexmetadata.concepts[j].evidences[k] +", ";
                           }
+                       cell2.innerHTML= evidences.substring(0, evidences.length-2);
+
                        // Get concept attributes.
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
                            if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
                                && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "visible")) {
@@ -401,15 +408,32 @@ cy.elements().qtip({
                                          // open attribute url in new blank tab.
 //                                         attrValue= "<a href=\""+ attrUrl +"\" target=\"_blank\">"+ attrValue +"</a>";
                                          attrValue= "<a href=\""+ attrUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ attrValue +"</a>";
-                                         console.log("\n \t Concept Attribute: TaxID url: "+ attrUrl +" --> "+ attrValue);
                                         }
                                      }
                                  }
+                               // For Aminoacid sequence (AA).
+                               if(attrName === "AA") {
+                                  attrName= "Aminoacid sequence (AA)";
+                                  aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
+                                  counter= 0;
+                                  attrValue= "";
+                                  for(var k=0; k < aaSeq.length; k++) {
+                                      attrValue= attrValue + aaSeq[k] +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                                      counter= counter + 1;
+                                      if(counter%3 === 0) {
+                                         attrValue= attrValue +"<br/>";
+                                        }
+                                     }
+                                  }
                                cell1.innerHTML= attrName;
                                cell2.innerHTML= attrValue;
                               }
                            }
+
                        // Get concept accessions.
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell1.innerHTML= "<b>Accessions:</b>"; // sub-heading
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].coaccessions.length; k++) {
                            row= table.insertRow(table.rows.length); // new row.
                            cell1= row.insertCell(0);
@@ -454,14 +478,20 @@ cy.elements().qtip({
                      for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
                          if(this.id() === metadataJSON.ondexmetadata.relations[j].id) {
                             // Get evidence information.
+                            var relationEvidences= "";
+                            row= table.insertRow(table.rows.length); // new row.
+                            cell1= row.insertCell(0);
+                            cell2= row.insertCell(1);
+                            cell1.innerHTML= "Evidence:";
                             for(var k=0; k < metadataJSON.ondexmetadata.relations[j].evidences.length; k++) {
-                                row= table.insertRow(table.rows.length); // new row.
-                                cell1= row.insertCell(0);
-                                cell2= row.insertCell(1);
-                                cell1.innerHTML= "Evidence";
-                                cell2.innerHTML= metadataJSON.ondexmetadata.relations[j].evidences[k];
+                                relationEvidences= relationEvidences + metadataJSON.ondexmetadata.relations[j].evidences[k] +", ";
                                }
+                            cell2.innerHTML= relationEvidences.substring(0, relationEvidences.length-2);
+
                             // Get relation 'attributes'.
+                            row= table.insertRow(table.rows.length); // new row.
+                            cell1= row.insertCell(0);
+                            cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
                             for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
                                 if((metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "size")
                                     && (metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "visible")) {
@@ -894,20 +924,27 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
             for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
                 if(selectedElement.id() === metadataJSON.ondexmetadata.concepts[j].id) {
                     // Concept 'elementOf'.
-                    row= table.insertRow(table.rows.length - 1); // new row.
+                    row= table.insertRow(table.rows.length/* - 1*/); // new row.
                     cell1= row.insertCell(0);
                     cell2= row.insertCell(1);
                     cell1.innerHTML= "Source:";
                     cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].elementOf;
+
                     // Get evidence information.
+                    var evidences= "";
+                    row= table.insertRow(table.rows.length); // new row.
+                    cell1= row.insertCell(0);
+                    cell2= row.insertCell(1);
+                    cell1.innerHTML= "Evidence:";
                     for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].evidences.length; k++) {
-                        row= table.insertRow(table.rows.length/* - 1*/); // new row.
-                        cell1= row.insertCell(0);
-                        cell2= row.insertCell(1);
-                        cell1.innerHTML= "Evidence";
-                        cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].evidences[k];
+                        evidences= evidences + metadataJSON.ondexmetadata.concepts[j].evidences[k] +", ";
                        }
+                    cell2.innerHTML= evidences.substring(0, evidences.length-2);
+
                     // Get concept attributes.
+                    row= table.insertRow(table.rows.length); // new row.
+                    cell1= row.insertCell(0);
+                    cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
                     for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
                         if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
                             && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "visible")) {
@@ -924,15 +961,32 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                                       // open attribute url in new blank tab.
 //                                        attrValue= "<a href=\""+ attrUrl +"\" target=\"_blank\">"+ attrValue +"</a>";
                                       attrValue= "<a href=\""+ attrUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ attrValue +"</a>";
-                                      console.log("\n \t Concept Attribute: TaxID url: "+ attrUrl +" --> "+ attrValue);
                                      }
                                   }
                               }
+                            // For Aminoacid sequence (AA).
+                            if(attrName === "AA") {
+                               attrName= "Aminoacid sequence (AA)";
+                               aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
+                               counter= 0;
+                               attrValue= "";
+                               for(var k=0; k < aaSeq.length; k++) {
+                                   attrValue= attrValue + aaSeq[k] +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                                   counter= counter + 1;
+                                   if(counter%3 === 0) {
+                                      attrValue= attrValue +"<br/>";
+                                     }
+                                  }
+                               }
                             cell1.innerHTML= attrName;
                             cell2.innerHTML= attrValue;
                            }
                         }
+
                     // Get concept accessions.
+                    row= table.insertRow(table.rows.length); // new row.
+                    cell1= row.insertCell(0);
+                    cell1.innerHTML= "<b>Accessions:</b>"; // sub-heading
                     for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].coaccessions.length; k++) {
                         row= table.insertRow(table.rows.length/* - 1*/); // new row.
                         cell1= row.insertCell(0);
@@ -976,15 +1030,21 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                 // Get all metadata for this relation from the metadataJSON variable.
                 for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
                     if(selectedElement.id() === metadataJSON.ondexmetadata.relations[j].id) {
-                        // Get evidence information.
-                        for(var k=0; k < metadataJSON.ondexmetadata.relations[j].evidences.length; k++) {
-                            row= table.insertRow(table.rows.length/* - 1*/); // new row.
-                            cell1= row.insertCell(0);
-                            cell2= row.insertCell(1);
-                            cell1.innerHTML= "Evidence";
-                            cell2.innerHTML= metadataJSON.ondexmetadata.relations[j].evidences[k];
-                           }
+                       // Get evidence information.
+                       var relationEvidences= "";
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell2= row.insertCell(1);
+                       cell1.innerHTML= "Evidence:";
+                       for(var k=0; k < metadataJSON.ondexmetadata.relations[j].evidences.length; k++) {
+                           relationEvidences= relationEvidences + metadataJSON.ondexmetadata.relations[j].evidences[k] +", ";
+                          }
+                       cell2.innerHTML= relationEvidences.substring(0, relationEvidences.length-2);
+
                         // Get relation attributes.
+                        row= table.insertRow(table.rows.length); // new row.
+                        cell1= row.insertCell(0);
+                        cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
                         for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
                             if((metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "size")
                                && (metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "visible")) {
