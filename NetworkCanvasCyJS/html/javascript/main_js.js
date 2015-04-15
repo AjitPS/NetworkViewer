@@ -10,7 +10,7 @@ function generateCyJSNetwork(jsonFileName){
     try {
          var cyjs_networkView= window.open("cyjs_networkView.html", "Network View", 
                     "height=600, width=1200, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, titlebar=yes, directories=yes, status=yes");
-         var cyjs_network= '<html><head>'+
+/*         var cyjs_network= '<html><head>'+
                 '<link href="html/css/cyjsNetworkViewer_Style.css" rel="stylesheet" />' +
                 '<meta charset=utf-8 /><title>Network View - Cytoscape.js</title>'+
                 '<script src="html/libs/jquery-1.11.2.min.js"></script>'+
@@ -90,7 +90,29 @@ function generateCyJSNetwork(jsonFileName){
                         '</table></div><br/><br/>'+
                 '<div id="pageFooter"><b>QTLNetMiner</b>: Network View example using Cytoscape.js</div>'+
                 '</body></html>';
-
+*/
+         var cyjs_network= '<html><head>'+
+                '<link href="html/css/cyjsNetworkViewer_Style.css" rel="stylesheet" />' +
+                '<meta charset=utf-8 /><title>Network View - Cytoscape.js</title>'+
+                '<script src="html/libs/jquery-1.11.2.min.js"></script>'+
+                '<script src="html/libs/cytoscape.min.js"></script>'+
+                '<script src="html/libs/jquery-ui.js"></script>'+
+                '<script src="html/libs/cytoscape-cxtmenu.js"></script>'+
+                '<script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>'+
+                '<link href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet" type="text/css" />'+
+                '<script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/70964f0306e770837dbe2b81197c12fdc7804e38/cytoscape-qtip.js"></script>'+
+                '<script src="http://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.js" type="text/javascript"></script>'+
+                '<link href="http://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.css" rel="stylesheet" type="text/css" />'+
+                '<script src="http://medialize.github.io/jQuery-contextMenu/src/jquery.ui.position.js" type="text/javascript"></script>'+
+                '<script src="html/libs/cola.v3.min.js"></script>'+
+                '<script src="html/libs/cola.adaptor.js"></script>'+
+                '<script src="html/libs/arbor.js"></script>'+
+                '<script src="html/libs/dagre.js"></script>'+
+                '<script src="html/libs/springy.js"></script>'+
+                '<script type="text/javascript" src="html/config/url_mappings.json"></script>'+
+                '<script src="html/javascript/networkView_cyjs.js"></script>'+
+                '</head>'+
+                '</body>demo</body></html>';
          // Show the new Network Viewer in a new window.
          cyjs_networkView.document.write(cyjs_network);
         }
