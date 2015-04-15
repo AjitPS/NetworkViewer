@@ -82,7 +82,7 @@ function generateCyJSNetwork(jsonFileName){
                 		'<td align=center><font size=1.8px>Trait Ontology</font></td>'+
                 		'<td align=center><font size=1.8px>Mol. Function</font></td>'+
                 		'<td align=center><font size=1.8px>Enzyme Classification</font></td>'+
-                            '</tr></table></div></div>;<br/><br/>'+
+                            '</tr></table></div></div><br/><br/>'+
                 '<div id="itemInfo" class="infoDiv">'+
                         '<table id="itemInfo_Table" class="infoTable" cellspacing=1>'+
                             '<thead><th>Item Info:</th><th>information about selected concept(s) or relation(s)</th></thead>'+
