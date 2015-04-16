@@ -7,11 +7,11 @@ function generateCyJSNetwork(jsonFileName){
     var json_File= jsonFileName; // the JSON file generated on the server.
     console.log("generateCyJSNetwork>> jsonFile: "+ json_File);
 
-    try {
-         var cyjs_networkView= window.open("cyjs_networkView.html", "Network View", 
+  //  try {
+         var cyjs_networkView= window.open("NewNetworkViewer.html", "Network View", 
                     "height=600, width=1200, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, titlebar=yes, directories=yes, status=yes");
          var cyjsPageStart= '<html>';
-         var cyjsHead= '<head><link href="css/cyjsNetworkViewer_Style.css" rel="stylesheet" />' +
+         var cyjsHead= /*'<head>'*/ '<link href="css/cyjsNetworkViewer_Style.css" rel="stylesheet" />' +
                 '<meta charset=utf-8 />'+
                 '<script src="libs/jquery-1.11.2.min.js"></script>'+
                 '<script src="libs/cytoscape.min.js"></script>'+
@@ -32,10 +32,10 @@ function generateCyJSNetwork(jsonFileName){
                 '<script src="libs/springy.js"></script>'+
                 '<script type="text/javascript" src="config/url_mappings.json"></script>'+
                 '<script src="javascript/networkView_cyjs.js"></script>'+
-                '<title>Network View - Cytoscape.js</title></head>';
+                '<title>Network View - Cytoscape.js</title>'; // </head>';
         var cyjsBody= '<body>';
         var cyjsNetworkButton= '<b>Network Graph using CytoscapeJS</b><br/><br/><div>'+
-                'Show Network: <input type="button" id="showNetGraph" value="Show Network" onclick="generateNetworkGraph("'+ json_File +'");" title="Show network graph using cytoscapeJS">';
+                'Show Network: <input type="button" id="showNetGraph" value="Show Network" onclick="generateNetworkGraph();" title="Show network graph using cytoscapeJS">';
         var cyjsLayouts= '</div><hr><div id=layouts_container><table id=layouts_table cellspacing=1>'+
                 '<thead><u>Layouts:</u></thead><tr>'+
                     '<td align=center><input type="radio" name="layoutButton" id="default" value="Default layout" onclick="setDefaultLayout();" checked>Default (CoLa)</td>'+
@@ -96,6 +96,7 @@ function generateCyJSNetwork(jsonFileName){
         var cyjsPageEnd= '</body></html>';
 
         console.log("NetworkButton code: "+ cyjsNetworkButton +"\n"+"Other functionality (Search) code: "+ cyjsFunctionality);
+
         // Show the new Network Viewer in a new window.
         cyjs_networkView.document.write(cyjsPageStart);
         cyjs_networkView.document.write(cyjsHead); // required scripts and libraries
@@ -109,9 +110,32 @@ function generateCyJSNetwork(jsonFileName){
         cyjs_networkView.document.write(cyjsItemInfo); // item info
         cyjs_networkView.document.write(cyjsFooter);
         cyjs_networkView.document.write(cyjsPageEnd);
-        }
+
+/*
+        // Using .innerHTML instead of the insecure document.write().
+//        cyjs_networkView.document.open();
+//        cyjs_networkView.document.write("<html><head></head><body></body></html>");
+        cyjs_networkView.onload= function() {
+        cyjs_networkView.document.createElement("head");
+        cyjs_networkView.document.createElement("body");
+//        cyjs_networkView.document.body.innerHTML(cyjsPageStart);
+        cyjs_networkView.document.getElementsByTagName("head")[0].innerHTML(cyjsHead); // required scripts and libraries
+//        cyjs_networkView.document.body.innerHTML(cyjsBody);
+        cyjs_networkView.document.body.innerHTML(cyjsNetworkButton);
+        cyjs_networkView.document.body.innerHTML(cyjsLayouts); // layout options
+        cyjs_networkView.document.body.innerHTML(cyjsFunctionality); // other functionality
+        cyjs_networkView.document.body.innerHTML(cyjsGraph); // the cytoscapeJS graph container
+        cyjs_networkView.document.body.innerHTML(cyjsItemInfoDialog);
+        cyjs_networkView.document.body.innerHTML(cyjsLegend); // graph legend
+        cyjs_networkView.document.body.innerHTML(cyjsItemInfo); // item info
+        cyjs_networkView.document.body.innerHTML(cyjsFooter);
+//        cyjs_networkView.document.body.innerHTML(cyjsPageEnd);
+        cyjs_networkView.document.close();
+        };
+*/
+/*        }
     catch(err) { 
           var errorMsg= err.stack(); 
           console.log("Error: \n"+"Details: "+ errorMsg);
-         }
+         }*/
   }
