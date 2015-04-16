@@ -10,7 +10,7 @@ function generateCyJSNetwork(jsonFileName){
     try {
          var cyjs_networkView= window.open("cyjs_networkView.html", "Network View", 
                     "height=600, width=1200, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, titlebar=yes, directories=yes, status=yes");
-         var cyjsPageStart= '<!DOCTYPE html><html>';
+         var cyjsPageStart= '<html>';
          var cyjsHead= '<head><link href="css/cyjsNetworkViewer_Style.css" rel="stylesheet" />' +
                 '<meta charset=utf-8 />'+
                 '<script src="libs/jquery-1.11.2.min.js"></script>'+
@@ -35,7 +35,7 @@ function generateCyJSNetwork(jsonFileName){
                 '<title>Network View - Cytoscape.js</title></head>';
         var cyjsBody= '<body>';
         var cyjsNetworkButton= '<b>Network Graph using CytoscapeJS</b><br/><br/><div>'+
-                'Show Network: <input type="button" id="showNetGraph" value="Show Network" onclick="generateNetworkGraph("+ json_File +");" title="Show network graph using cytoscapeJS">';
+                'Show Network: <input type="button" id="showNetGraph" value="Show Network" onclick="generateNetworkGraph("'+ json_File +'");" title="Show network graph using cytoscapeJS">';
         var cyjsLayouts= '</div><hr><div id=layouts_container><table id=layouts_table cellspacing=1>'+
                 '<thead><u>Layouts:</u></thead><tr>'+
                     '<td align=center><input type="radio" name="layoutButton" id="default" value="Default layout" onclick="setDefaultLayout();" checked>Default (CoLa)</td>'+
@@ -95,19 +95,20 @@ function generateCyJSNetwork(jsonFileName){
         var cyjsFooter= '<div id="pageFooter"><b>QTLNetMiner</b>: Network View example using Cytoscape.js</div>';
         var cyjsPageEnd= '</body></html>';
 
-         // Show the new Network Viewer in a new window.
-         cyjs_networkView.document.write(cyjsPageStart);
-         cyjs_networkView.document.write(cyjsHead); // required scripts and libraries
-         cyjs_networkView.document.write(cyjsBody);
-         cyjs_networkView.document.write(cyjsNetworkButton);
-         cyjs_networkView.document.write(cyjsLayouts); // layout options
-//         cyjs_networkView.document.write(cyjsFunctionality); // other functionality
-         cyjs_networkView.document.write(cyjsGraph); // the cytoscapeJS graph container
-         cyjs_networkView.document.write(cyjsItemInfoDialog);
-         cyjs_networkView.document.write(cyjsLegend); // graph legend
-         cyjs_networkView.document.write(cyjsItemInfo); // item info
-         cyjs_networkView.document.write(cyjsFooter);
-         cyjs_networkView.document.write(cyjsPageEnd);
+        console.log("NetworkButton code: "+ cyjsNetworkButton +"\n"+"Other functionality (Search) code: "+ cyjsFunctionality);
+        // Show the new Network Viewer in a new window.
+        cyjs_networkView.document.write(cyjsPageStart);
+        cyjs_networkView.document.write(cyjsHead); // required scripts and libraries
+        cyjs_networkView.document.write(cyjsBody);
+        cyjs_networkView.document.write(cyjsNetworkButton);
+        cyjs_networkView.document.write(cyjsLayouts); // layout options
+        cyjs_networkView.document.write(cyjsFunctionality); // other functionality
+        cyjs_networkView.document.write(cyjsGraph); // the cytoscapeJS graph container
+        cyjs_networkView.document.write(cyjsItemInfoDialog);
+        cyjs_networkView.document.write(cyjsLegend); // graph legend
+        cyjs_networkView.document.write(cyjsItemInfo); // item info
+        cyjs_networkView.document.write(cyjsFooter);
+        cyjs_networkView.document.write(cyjsPageEnd);
         }
     catch(err) { 
           var errorMsg= err.stack(); 

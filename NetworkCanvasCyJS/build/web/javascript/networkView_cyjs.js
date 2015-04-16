@@ -6,6 +6,8 @@
  * @returns
  **/
 
+  function generateNetG() { alert("working"); }
+  
   function generateNetworkGraph(jsonFileName) {
    var json_File= jsonFileName;
 
