@@ -7,9 +7,11 @@
  **/
 
   function generateNetG() { alert("working"); }
-  
-  function generateNetworkGraph(jsonFileName) {
-   var json_File= jsonFileName;
+
+//  function generateNetworkGraph(jsonFileName) {
+  function generateNetworkGraph() {
+//   var json_File= jsonFileName;
+   var json_File= "./sampleFiles/result_boleracea3.json";
 
    // Include this file's contents on the page at runtime using jQuery and a callback function.
    $.getScript(json_File, function() {
@@ -62,8 +64,10 @@
    };
 
 function initializeNetworkView() {
+console.log("In initializeNetworkView() before dom ready");
+
 // On startup
-$(function() { // on dom ready
+//$(function() { // on dom ready
   var networkJSON= graphJSON; // using the dynamically included graphJSON object directly.
   var metadataJSON= allGraphData; // using the dynamically included metadata JSON object directly.
 
@@ -157,6 +161,7 @@ $(function() { // on dom ready
   layout: defaultNetworkLayout,
   ready: function() { console.log('ready'); window.cy= this; }
 });*/
+  console.log("networkStylesheet defined...");
 
 // Initialise a cystoscape container instance on the HTML DOM using JQuery.
 $('#cy').cytoscape({
@@ -195,8 +200,12 @@ $('#cy').cytoscape({
   }
 });
 
+console.log("cy contained initialized...");
+
 // Get the cystoscape instance as a Javascript object from JQuery.
 var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+
+console.log("global cy: "+ cy);
 
 // Pan & zooms the graph to fit all the elements (concept nodes) in the graph.
 //cy.fit();
@@ -632,7 +641,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    $('#infoDialog').slideToggle(300);
   });
 
-}); // on dom ready
+//}); // on dom ready
 }
 
   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
