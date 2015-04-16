@@ -10,7 +10,7 @@ function generateCyJSNetwork(jsonFileName){
     try {
          var cyjs_networkView= window.open("cyjs_networkView.html", "Network View", 
                     "height=600, width=1200, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, titlebar=yes, directories=yes, status=yes");
-         var cyjsPageStart= '<html>';
+         var cyjsPageStart= '<!DOCTYPE html><html>';
          var cyjsHead= '<head><link href="css/cyjsNetworkViewer_Style.css" rel="stylesheet" />' +
                 '<meta charset=utf-8 />'+
                 '<script src="libs/jquery-1.11.2.min.js"></script>'+
@@ -99,7 +99,7 @@ function generateCyJSNetwork(jsonFileName){
          cyjs_networkView.document.write(cyjsBody);
          cyjs_networkView.document.write(cyjsNetworkButton);
          cyjs_networkView.document.write(cyjsLayouts); // layout options
-         cyjs_networkView.document.write(cyjsFunctionality); // other functionality
+//         cyjs_networkView.document.write(cyjsFunctionality); // other functionality
          cyjs_networkView.document.write(cyjsGraph); // the cytoscapeJS graph container
          cyjs_networkView.document.write(cyjsItemInfoDialog);
          cyjs_networkView.document.write(cyjsLegend); // graph legend

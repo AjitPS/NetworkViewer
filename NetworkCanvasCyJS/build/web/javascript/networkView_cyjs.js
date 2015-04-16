@@ -495,7 +495,7 @@ cy.elements().qtip({
              }
              catch(err) { 
                    itemInfo= "Selected element is neither a Concept nor a Relation"; 
-                   itemInfo= itemInfo +"<br/>Error details:<br/>"+ err.stack(); // error details
+                   itemInfo= itemInfo +"<br/>Error details:<br/>"+ err.stack; // error details
                    console.log(itemInfo);
                   }
             }
@@ -1047,9 +1047,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                    }
                }
         }
-    catch(err) { 
+    catch(err) {
           itemInfo= "Selected element is neither a Concept nor a Relation"; 
-          itemInfo= itemInfo +"<br/>Error details:<br/>"+ err.stack(); // error details
+          itemInfo= itemInfo +"<br/>Error details:<br/>"+ err.stack; // error details
           console.log(itemInfo);
          }
 //    $("#infoDialog").html(itemInfo); // display in the dialog box.
