@@ -95,7 +95,7 @@ function generateCyJSNetwork(jsonFileName){
 
          // Show the new Network Viewer in a new window.
          cyjs_networkView.document.write(cyjsPageStart);
-         cyjs_networkView.document.write(cyjsHead);
+         cyjs_networkView.document.write(cyjsHead); // required scripts and libraries
          cyjs_networkView.document.write(cyjsBody);
          cyjs_networkView.document.write(cyjsNetworkButton);
          cyjs_networkView.document.write(cyjsLayouts); // layout options
