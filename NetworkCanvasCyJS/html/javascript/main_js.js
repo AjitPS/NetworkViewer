@@ -15,6 +15,8 @@ function generateCyJSNetwork(jsonFileName){
                 '<meta charset=utf-8 />'+
                 '<script src="libs/jquery-1.11.2.min.js"></script>'+
                 '<script src="libs/cytoscape.min.js"></script>'+
+//                '<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>'+
+//		'<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>'+
                 '<script src="libs/jquery-ui.js"></script>'+
                 '<script src="libs/cytoscape-cxtmenu.js"></script>'+
                 '<script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>'+
