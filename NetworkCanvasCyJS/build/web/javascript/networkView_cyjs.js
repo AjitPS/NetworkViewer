@@ -14,7 +14,7 @@
    var json_File= "./sampleFiles/result_boleracea3.json";
 
    // Include this file's contents on the page at runtime using jQuery and a callback function.
-   $.getScript(json_File, function() {
+   jQuery.getScript(json_File, function() {
      console.log(json_File +" file included...");
      // Initialize the cytoscapeJS container for Network View.
      initializeNetworkView();
@@ -67,7 +67,7 @@ function initializeNetworkView() {
 console.log("In initializeNetworkView() before dom ready");
 
 // On startup
-//$(function() { // on dom ready
+//jQuery(function() { // on dom ready
   var networkJSON= graphJSON; // using the dynamically included graphJSON object directly.
   var metadataJSON= allGraphData; // using the dynamically included metadata JSON object directly.
 
@@ -164,7 +164,7 @@ console.log("In initializeNetworkView() before dom ready");
   console.log("networkStylesheet defined...");
 
 // Initialise a cystoscape container instance on the HTML DOM using JQuery.
-$('#cy').cytoscape({
+jQuery('#cy').cytoscape({
   container: document.getElementById('cy'),
 
   style: networkStylesheet,
@@ -203,7 +203,7 @@ $('#cy').cytoscape({
 console.log("cy contained initialized...");
 
 // Get the cystoscape instance as a Javascript object from JQuery.
-var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+var cy= jQuery('#cy').cytoscape('get'); // now we have a global reference to `cy`
 
 console.log("global cy: "+ cy);
 
@@ -564,7 +564,7 @@ cy.elements().qtip({
         {
          content: 'Show Selections',
          select: function() {
-             $("#infoDialog").dialog(); // initialize a dialog box.
+             jQuery("#infoDialog").dialog(); // initialize a dialog box.
              // Display details of all the selected elements: nodes & edges.
              var selections= "";
 //             console.log("ShowSelections (Shift+click): selections= "+ selections);
@@ -583,7 +583,7 @@ cy.elements().qtip({
                   }
              });
              console.log("ShowSelections (Shift+click): selections= "+ selections);
-             $("#infoDialog").html(selections);
+             jQuery("#infoDialog").html(selections);
             }
         }
     ], 
@@ -604,12 +604,12 @@ cy.elements().qtip({
 cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
 /* // JQuery Context Menu plugin.
- $.contextMenu({
-// $('#cy').contextMenu({
+ jQuery.contextMenu({
+// jQuery('#cy').contextMenu({
 // cy.elements('node').contextMenu({
    selector: '#cy', 
    callback: function(key, options) {
-    var msg= "Clicked: " + key + " on " + $(this).text();
+    var msg= "Clicked: " + key + " on " + jQuery(this).text();
     console.log(msg); 
    },
    items: {
@@ -637,14 +637,16 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
 
  // Show the popup Info. dialog box.
- $('#infoDialog').click(function() {
-   $('#infoDialog').slideToggle(300);
+ jQuery('#infoDialog').click(function() {
+   jQuery('#infoDialog').slideToggle(300);
   });
 
 //}); // on dom ready
 }
 
-  var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+  var cy= jQuery('#cy').cytoscape('get'); // now we have a global reference to `cy`
+
+  console.log("global cy... create other functions");
 
   // Reset: Re-position the network graph.
   function resetGraph() {
@@ -772,7 +774,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
              foundID= ele.id(); // the found node
 
              // select the matched concept.
-             cy.$('#'+foundID).select();
+             cy.jQuery('#'+foundID).select();
             }
         }
       });
@@ -834,7 +836,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     var attrs= ""; // from attributes array in metadataJSON.
     var attr= "";
     var co_accessions= ""; // from co_accessions array in metadataJSON.
-    $("#infoDialog").dialog(); // initialize a dialog box.
+    jQuery("#infoDialog").dialog(); // initialize a dialog box.
 */
     try {
 /*         if(selectedElement.isNode()) {
@@ -1063,6 +1065,6 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
           itemInfo= itemInfo +"<br/>Error details:<br/>"+ err.stack; // error details
           console.log(itemInfo);
          }
-//    $("#infoDialog").html(itemInfo); // display in the dialog box.
+//    jQuery("#infoDialog").html(itemInfo); // display in the dialog box.
    }
   
