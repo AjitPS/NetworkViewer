@@ -10,13 +10,13 @@ function generateCyJSNetwork(jsonFileName){
   //  try {
          var cyjs_networkView= window.open("NewNetworkViewer.html", "Network View", 
                     "height=600, width=1200, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, titlebar=yes, directories=yes, status=yes");
-         var networkDoc= cyjs_networkView.document;
-
          var cyjsPageStart= '<html>';
          var cyjsHead= /*'<head>'*/ '<link href="css/cyjsNetworkViewer_Style.css" rel="stylesheet" />' +
                 '<meta charset=utf-8 />'+
                 '<script src="libs/jquery-1.11.2.min.js"></script>'+
                 '<script src="libs/cytoscape.min.js"></script>'+
+//                '<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>'+
+//		'<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>'+
                 '<script src="libs/jquery-ui.js"></script>'+
                 '<script src="libs/cytoscape-cxtmenu.js"></script>'+
                 '<script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>'+
@@ -97,66 +97,25 @@ function generateCyJSNetwork(jsonFileName){
 
         console.log("NetworkButton code: "+ cyjsNetworkButton +"\n"+"Other functionality (Search) code: "+ cyjsFunctionality);
 
+        // Show the new Network Viewer in a new window.
+        cyjs_networkView.document.write(cyjsPageStart);
+        cyjs_networkView.document.write(cyjsHead); // required scripts and libraries
+        cyjs_networkView.document.write(cyjsBody);
+        cyjs_networkView.document.write(cyjsNetworkButton);
+        cyjs_networkView.document.write(cyjsLayouts); // layout options
+        cyjs_networkView.document.write(cyjsFunctionality); // other functionality
+        cyjs_networkView.document.write(cyjsGraph); // the cytoscapeJS graph container
+        cyjs_networkView.document.write(cyjsItemInfoDialog);
+        cyjs_networkView.document.write(cyjsLegend); // graph legend
+        cyjs_networkView.document.write(cyjsItemInfo); // item info
+        cyjs_networkView.document.write(cyjsFooter);
+        cyjs_networkView.document.write(cyjsPageEnd);
 
-        // Using DOPM manipulation via createELement and appendChild instead of the insecure document.write().
-//        networkDoc.open();
-
-//        cyjs_networkView.onload= function() {
-        var docHTML= networkDoc.createElement("<html></html>");
-        var docHead= networkDoc.createElement("<head></head>");
-        var docBody= networkDoc.createElement("<body></body");
-// e.g. 1: 
-/*        var node = networkDoc.createElement("LI");
-        var textnode = networkDoc.createTextNode("Water");
-        node.appendChild(textnode);
-        document.getElementById("myList").appendChild(node);
-*/
-
-// e.g. 2: 
-/*        // HTML string
-        var s = '<li>text</li>';
-        var div = document.createElement('div');
-        div.innerHTML = s;
-        var elements = div.childNodes;
-*/        
-        
-// e.g. 3: 
-/*<html>
-  <head>
-    <script type = "text/javascript">
-      var date = new Date();
-      var month = date.getMonth() + 1;
-      if (month >= 3 && month <= 5)
-      {
-        var NewScript = document.createElement("script");
-        NewScript.type = "text/javascript";
-        NewScript.src = "source1.js";
-        var NewStyles = document.createElement("link");
-        NewStyles.rel = "stylesheet";
-        NewStyles.type = "text/css";
-        NewStyles.href = "css1.css";
-        document.head.appendChild(NewScript);
-        document.head.appendChild(NewStyles);
-      }
-      else
-      {
-        var NewScript = document.createElement("script");
-        NewScript.type = "text/javascript";
-        NewScript.src = "source2.js";
-        var NewStyles = document.createElement("link");
-        NewStyles.rel = "stylesheet";
-        NewStyles.type = "text/css";
-        NewStyles.href = "css2.css";
-        document.head.appendChild(NewScript);
-        document.head.appendChild(NewStyles);
-      }
-    </script>
-  </head>
-  <body>
-  <!-- MY CONTENT GOES HERE -->
-  </body>
-</html>*/        
-        // TO DO        
+/*
+        // Using .innerHTML instead of the insecure document.write().
+//        cyjs_networkView.document.open();
+//        cyjs_networkView.document.write("<html><head></head><body></body></html>");
+        cyjs_networkView.onload= function() {
         cyjs_networkView.document.createElement("head");
         cyjs_networkView.document.createElement("body");
 //        cyjs_networkView.document.body.innerHTML(cyjsPageStart);
@@ -172,8 +131,8 @@ function generateCyJSNetwork(jsonFileName){
         cyjs_networkView.document.body.innerHTML(cyjsFooter);
 //        cyjs_networkView.document.body.innerHTML(cyjsPageEnd);
         cyjs_networkView.document.close();
-//        };
-
+        };
+*/
 /*        }
     catch(err) { 
           var errorMsg= err.stack(); 
