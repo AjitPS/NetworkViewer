@@ -5,13 +5,9 @@
  * multi-select (using Shift + click), CoLa.js & JSON.
  * @returns
  **/
-
-  function generateNetG() { alert("working"); }
-
-//  function generateNetworkGraph(jsonFileName) {
-  function generateNetworkGraph() {
-//   var json_File= jsonFileName;
-   var json_File= "./sampleFiles/result_boleracea3.json";
+function generateNetworkGraph(jsonFileName) {
+   var json_File= jsonFileName;
+   console.log("Received json_File: "+ json_File);
 
    // Include this file's contents on the page at runtime using jQuery and a callback function.
    jQuery.getScript(json_File, function() {
@@ -20,14 +16,6 @@
      initializeNetworkView();
    });
 
-   // Javascript-based approach for including the file dynamically at runtime.
-/*   var script= document.createElement("script");
-   script.setAttribute("type", "text/javascript");
-   script.setAttribute("src", json_File);
-   document.getElementsByTagName("head")[0].appendChild(script); 
-
-   // Initialize the cytoscapeJS container for Network View.
-   initializeNetworkView(); */
   }
 
   /** Define the default layout for the network, using CoLa layout from Cola.js (similar to the "Gem" layout in 
@@ -64,10 +52,10 @@
    };
 
 function initializeNetworkView() {
-console.log("In initializeNetworkView() before dom ready");
+//console.log("In initializeNetworkView() before dom ready");
 
 // On startup
-//jQuery(function() { // on dom ready
+$(function() { // on dom ready
   var networkJSON= graphJSON; // using the dynamically included graphJSON object directly.
   var metadataJSON= allGraphData; // using the dynamically included metadata JSON object directly.
 
@@ -161,10 +149,11 @@ console.log("In initializeNetworkView() before dom ready");
   layout: defaultNetworkLayout,
   ready: function() { console.log('ready'); window.cy= this; }
 });*/
-  console.log("networkStylesheet defined...");
+
+//  console.log("networkStylesheet defined...");
 
 // Initialise a cystoscape container instance on the HTML DOM using JQuery.
-jQuery('#cy').cytoscape({
+$('#cy').cytoscape({
   container: document.getElementById('cy'),
 
   style: networkStylesheet,
@@ -200,12 +189,12 @@ jQuery('#cy').cytoscape({
   }
 });
 
-console.log("cy contained initialized...");
+//console.log("cy container initialized...");
 
 // Get the cystoscape instance as a Javascript object from JQuery.
-var cy= jQuery('#cy').cytoscape('get'); // now we have a global reference to `cy`
+var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
 
-console.log("global cy: "+ cy);
+//console.log("global cy: "+ cy);
 
 // Pan & zooms the graph to fit all the elements (concept nodes) in the graph.
 //cy.fit();
@@ -564,7 +553,7 @@ cy.elements().qtip({
         {
          content: 'Show Selections',
          select: function() {
-             jQuery("#infoDialog").dialog(); // initialize a dialog box.
+             $("#infoDialog").dialog(); // initialize a dialog box.
              // Display details of all the selected elements: nodes & edges.
              var selections= "";
 //             console.log("ShowSelections (Shift+click): selections= "+ selections);
@@ -583,7 +572,7 @@ cy.elements().qtip({
                   }
              });
              console.log("ShowSelections (Shift+click): selections= "+ selections);
-             jQuery("#infoDialog").html(selections);
+             $("#infoDialog").html(selections);
             }
         }
     ], 
@@ -605,11 +594,11 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
 /* // JQuery Context Menu plugin.
  jQuery.contextMenu({
-// jQuery('#cy').contextMenu({
+// $('#cy').contextMenu({
 // cy.elements('node').contextMenu({
    selector: '#cy', 
    callback: function(key, options) {
-    var msg= "Clicked: " + key + " on " + jQuery(this).text();
+    var msg= "Clicked: " + key + " on " + $(this).text();
     console.log(msg); 
    },
    items: {
@@ -637,14 +626,14 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
 
  // Show the popup Info. dialog box.
- jQuery('#infoDialog').click(function() {
-   jQuery('#infoDialog').slideToggle(300);
+ $('#infoDialog').click(function() {
+   $('#infoDialog').slideToggle(300);
   });
 
-//}); // on dom ready
+}); // on dom ready
 }
 
-  var cy= jQuery('#cy').cytoscape('get'); // now we have a global reference to `cy`
+  var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
 
   console.log("global cy... create other functions");
 
@@ -774,7 +763,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
              foundID= ele.id(); // the found node
 
              // select the matched concept.
-             cy.jQuery('#'+foundID).select();
+             cy.$('#'+foundID).select();
             }
         }
       });
@@ -836,7 +825,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     var attrs= ""; // from attributes array in metadataJSON.
     var attr= "";
     var co_accessions= ""; // from co_accessions array in metadataJSON.
-    jQuery("#infoDialog").dialog(); // initialize a dialog box.
+    $("#infoDialog").dialog(); // initialize a dialog box.
 */
     try {
 /*         if(selectedElement.isNode()) {
@@ -1065,6 +1054,6 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
           itemInfo= itemInfo +"<br/>Error details:<br/>"+ err.stack; // error details
           console.log(itemInfo);
          }
-//    jQuery("#infoDialog").html(itemInfo); // display in the dialog box.
+//    $("#infoDialog").html(itemInfo); // display in the dialog box.
    }
   
