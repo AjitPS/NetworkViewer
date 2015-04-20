@@ -7,7 +7,7 @@
  **/
 function generateNetworkGraph(jsonFileName) {
    var json_File= jsonFileName;
-   console.log("Received json_File: "+ json_File);
+   console.log("Received json_File: file path: "+ json_File);
 
    // Include this file's contents on the page at runtime using jQuery and a callback function.
    jQuery.getScript(json_File, function() {
