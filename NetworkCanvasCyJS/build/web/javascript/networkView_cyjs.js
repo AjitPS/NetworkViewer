@@ -370,6 +370,7 @@ cy.elements().qtip({
                        cell2= row.insertCell(1);
                        cell1.innerHTML= "Evidence:";
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].evidences.length; k++) {
+                           console.log("Concept Evidence, length= "+ metadataJSON.ondexmetadata.concepts[j].evidences[k] +" -> "+ metadataJSON.ondexmetadata.concepts[j].evidences[k].length);
                            if(metadataJSON.ondexmetadata.concepts[j].evidences[k] !== "") {
                               evidences= evidences + metadataJSON.ondexmetadata.concepts[j].evidences[k] +", ";
                              }
@@ -473,6 +474,7 @@ cy.elements().qtip({
                             cell2= row.insertCell(1);
                             cell1.innerHTML= "Evidence:";
                             for(var k=0; k < metadataJSON.ondexmetadata.relations[j].evidences.length; k++) {
+                                console.log("Relation Evidence, length= "+ metadataJSON.ondexmetadata.relations[j].evidences[k] +" -> "+ metadataJSON.ondexmetadata.relations[j].evidences[k].length);
                                 if(metadataJSON.ondexmetadata.relations[j].evidences[k] !== "") {
                                    relationEvidences= relationEvidences + metadataJSON.ondexmetadata.relations[j].evidences[k] +", ";
                                   }
