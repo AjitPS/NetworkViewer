@@ -322,11 +322,164 @@ cy.elements().qtip({
          select: // showItemInfo(this)
             function() {
              var itemInfo= "";
+             var selectedConceptsCount= 0;
+             var selectedRelationsCount= 0;
+             var selectedElements= new Array();
              try {
              // Display item information in the itemInfo <div> in a <table>.
              var table= document.getElementById("itemInfo_Table").getElementsByTagName('tbody')[0]; // get the Item Info. table.
              // Clear the existing table body contents.
              table.innerHTML= "";
+             cy.nodes().forEach(function( ele ) {
+                if(ele.selected()) {
+                   selectedConceptsCount= selectedConceptsCount + 1;
+                   selectedElements.push(ele.id()); // add to array of selected Elements.
+                  }
+             });
+
+             cy.edges().forEach(function( ele ) {
+                if(ele.selected()) {
+                   selectedRelationsCount= selectedRelationsCount + 1;
+                   if(selectedConceptsCount === 0) { // If no concepts were selected.
+                      selectedElements.push(ele.id()); // add to array of selected Elements.
+                     }
+                  }
+             });
+             console.log("Item Info.: selectedConceptsCount= "+ selectedConceptsCount +" , selectedRelationsCount= "+ selectedRelationsCount);
+             for(i=0; i< selectedElements.length; i++) {
+                 console.log(selectedElements[i] +" , ");
+                }
+             if((selectedConceptsCount>0) && (selectedRelationsCount>0)) {
+                // Cannot display Item Info. for multiple concepts and relations at the same time.
+                itemInfo= "Cannot display Item Info. for multiple concepts and relations at the same time !"+
+                        "<br/>To view item info for multiple graph elements, select either multiple Concepts or Relations."; 
+                console.log(itemInfo);
+               }
+             else {/*
+              if(selectedConceptsCount>0) {
+                 // Show concept(s) Item Info.
+                 for(i=0; i< selectedElements.length; i++) {
+                var row= table.insertRow(0); // create a new, empty row.
+                // Insert new cells in this row.
+                var cell1= row.insertCell(0);
+                var cell2= row.insertCell(1);
+                // Store the necessary data in the cells.
+                cell1.innerHTML= "Concept Type:";
+                cell2.innerHTML= this.data('conceptType'); // concept Type
+                // Concept 'value'.
+                row= table.insertRow(1);
+                cell1= row.insertCell(0);
+                cell2= row.insertCell(1);
+                cell1.innerHTML= "Value:";
+                cell2.innerHTML= this.data('value');
+                // Concept 'PID'.
+                row= table.insertRow(2);
+                cell1= row.insertCell(0);
+                cell2= row.insertCell(1);
+                cell1.innerHTML= "PID:";
+                cell2.innerHTML= this.data('pid');
+                // Concept 'Annotation'.
+                row= table.insertRow(3);
+                cell1= row.insertCell(0);
+                cell2= row.insertCell(1);
+                cell1.innerHTML= "Annotation:";
+                cell2.innerHTML= this.data('annotation');
+                // Get all metadata for this concept from the metadataJSON variable.
+                for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
+                    if(this.id() === metadataJSON.ondexmetadata.concepts[j].id) {
+                       // Concept 'elementOf'.
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell2= row.insertCell(1);
+                       cell1.innerHTML= "Source:";
+                       cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].elementOf;
+
+                       // Get evidence information.
+                       var evidences= "";
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell2= row.insertCell(1);
+                       cell1.innerHTML= "Evidence:";
+                       for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].evidences.length; k++) {
+                           if(metadataJSON.ondexmetadata.concepts[j].evidences[k] !== "") {
+                              evidences= evidences + metadataJSON.ondexmetadata.concepts[j].evidences[k] +", ";
+                             }
+                          }
+                       cell2.innerHTML= evidences.substring(0, evidences.length-2);
+
+                       // Get concept attributes.
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
+                       for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
+                           if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
+                               && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "visible")) {
+                               row= table.insertRow(table.rows.length); // new row.
+                               cell1= row.insertCell(0);
+                               cell2= row.insertCell(1);
+                               attrName= metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname;
+                               attrValue= metadataJSON.ondexmetadata.concepts[j].attributes[k].value;
+                               // For Taxonomy ID, display url (created via config>> url_mappings.json).
+                               if((attrName === "TAXID") || (attrName === "TX")) {
+                                  for(var u=0; u < url_mappings.html_acc.length; u++) {
+                                      if((url_mappings.html_acc[u].cv === attrName) || (url_mappings.html_acc[u].cv === "TX")) {
+                                         attrUrl= url_mappings.html_acc[u].weblink + attrValue; // Taxonomy ID url.
+                                         // open attribute url in new blank tab.
+//                                         attrValue= "<a href=\""+ attrUrl +"\" target=\"_blank\">"+ attrValue +"</a>";
+                                         attrValue= "<a href=\""+ attrUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ attrValue +"</a>";
+                                        }
+                                     }
+                                 }
+                               // For Aminoacid sequence (AA).
+                               else if(attrName === "AA") {
+                                       attrName= "Aminoacid sequence (AA)";
+                                       aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
+                                       counter= 0;
+                                       attrValue= "<font size=\"1\">";
+                                       for(var p=0; p < aaSeq.length; p++) {
+                                           attrValue= attrValue + aaSeq[p] +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                                           counter= counter + 1;
+                                           if(counter%3 === 0) {
+                                              attrValue= attrValue +"<br/>";
+                                             }
+                                          }
+                                       attrValue= attrValue +"</font>";
+                                      }
+                               cell1.innerHTML= attrName;
+                               cell2.innerHTML= attrValue;
+                              }
+                           }
+
+                       // Get concept accessions.
+                       row= table.insertRow(table.rows.length); // new row.
+                       cell1= row.insertCell(0);
+                       cell1.innerHTML= "<b>Accessions:</b>"; // sub-heading
+                       for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].coaccessions.length; k++) {
+                           row= table.insertRow(table.rows.length); // new row.
+                           cell1= row.insertCell(0);
+                           cell2= row.insertCell(1);
+                           accessionID= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].elementOf;
+                           co_acc= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].accession;
+                           for(var u=0; u < url_mappings.html_acc.length; u++) {
+                               if(url_mappings.html_acc[u].cv === accessionID) {
+                                  coAccUrl= url_mappings.html_acc[u].weblink + co_acc; // co-accession url.
+                                  // open attribute url in new blank tab.
+//                                  attrValue= "<a href=\""+ coAccUrl +"\" target=\"_blank\">"+ co_acc +"</a>";
+                                  co_acc= "<a href=\""+ coAccUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ co_acc +"</a>";
+                                 }
+                               }
+                           cell1.innerHTML= accessionID;
+                           cell2.innerHTML= co_acc;
+                          }
+                      }
+                   }
+               }
+                }
+              else {
+               // Show relation(s) Item Info.
+              }*/
+             }
+             
              if(this.isNode()) {
                 var row= table.insertRow(0); // create a new, empty row.
                 // Insert new cells in this row.
@@ -504,7 +657,7 @@ cy.elements().qtip({
                   }
             }
         },
-            
+
         {
          content: 'Show All',
          select: function() {
@@ -889,7 +1042,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
             cell1.innerHTML= "PID:";
             cell2.innerHTML= selectedElement.data('pid');
             // Concept 'Annotation'.
-            row= table.insertRow(2);
+            row= table.insertRow(3);
             cell1= row.insertCell(0);
             cell2= row.insertCell(1);
             cell1.innerHTML= "Annotation:";
