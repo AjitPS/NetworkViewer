@@ -877,7 +877,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
       name: 'circle', // Circle layout (Ondex Web: Circular)
       directed: true, roots: undefined, // '#n12',
       padding: 10, avoidOverlap: true, handleDisconnected: true,
-      animate: animate_layout /*true*/
+      animate: animate_layout /*false*/
    };
    cy.layout(circleNetworkLayout); // run the Circle layout.
   }
