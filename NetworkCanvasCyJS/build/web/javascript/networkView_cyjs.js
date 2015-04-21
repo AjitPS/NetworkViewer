@@ -792,12 +792,14 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Relayout: Set default (CoLa) layout.
   function setDefaultLayout() {
+   console.log("setDefaultLayout()>> animate_layout= "+ animate_layout);
    cy.layout(defaultNetworkLayout); // run the default (CoLa) layout algorithm.
   }
 
   // Set Cose layout.
   /* Slow and performance-hampering */
   function setCoseLayout() {
+   console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
    var coseNetworkLayout= {
     name: 'cose', // CytoscapeJS Cose layout
     animate: animate_layout /*true*/, animationDuration: 500, avoidOverlap: true, handleDisconnected: true, 
@@ -810,6 +812,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Set Arbor layout.
   function setArborLayout() {
+   console.log("setArborLayout()>> animate_layout= "+ animate_layout);
    var arborNetworkLayout= {
     name: 'arbor', // Arbor layout using Arbor.js (Ondex Web: Kamada Kawai).
     animate: animate_layout /*true*/, animationDuration: 500, maxSimulationTime: 5000, fit: true, padding: 30, 
@@ -835,6 +838,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Set Springy layout.
   function setSpringyLayout() {
+   console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
    var springyNetworkLayout= {
     name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
     animate: animate_layout /*false*/, animationDuration: 500, maxSimulationTime: 1000, ungrabifyWhileSimulating: false, 
@@ -848,6 +852,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Set Dagre layout.
   function setTreeLayout() {
+   console.log("setTreeLayout()>> animate_layout= "+ animate_layout);
    var dagreNetworkLayout= {
     name: 'dagre', // Dagre layout, using the Ranking algorithm from dagre.js (Ondex Web: RadialTree).
     // dagre algorithm options, uses default value on undefined
@@ -867,6 +872,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Set Circle layout.
   function setCircleLayout() {
+   console.log("setCircleLayout()>> animate_layout= "+ animate_layout);
    var circleNetworkLayout= {
       name: 'circle', // Circle layout (Ondex Web: Circular)
       directed: true, roots: undefined, // '#n12',
@@ -878,6 +884,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Set Breadthfirst layout.
   function setBreadthfirstLayout() {
+   console.log("setBreadthfirstLayout()>> animate_layout= "+ animate_layout);
    var bfNetworkLayout= {
       name: 'breadthfirst', // Breadth first layout (Ondex Web: Hierarchial)
       fit: true, directed: true, padding: 10, circle: false, boundingBox: undefined, avoidOverlap: true, 
@@ -890,6 +897,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Set Grid layout.
   function setGridLayout() {
+   console.log("setGridLayout()>> animate_layout= "+ animate_layout);
    var gridNetworkLayout= {
     name: 'grid', // CytoscapeJS Grid layout
     fit: true, padding: 30, boundingBox: undefined, avoidOverlap: true, handleDisconnected: true, 
