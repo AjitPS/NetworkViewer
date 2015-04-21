@@ -491,7 +491,7 @@ cy.elements().qtip({
                // Show relation(s) Item Info.
               }*/
              }
-             
+
              if(this.isNode()) {
                 var row= table.insertRow(0); // create a new, empty row.
                 // Insert new cells in this row.
