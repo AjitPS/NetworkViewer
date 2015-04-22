@@ -41,7 +41,7 @@ function generateNetworkGraph(jsonFileName) {
     name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     animate: animate_layout, // true, // false, 
     animationDuration: 500, 
-    fit: true, padding: 10, // padding around the simulation
+    fit: true, padding: 2/*10*/, // padding around the simulation
     boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     refresh: 1, // number of ticks per frame; higher is faster but more jerky
     maxSimulationTime: 8000, // 5000, // max length in ms to run the layout
@@ -53,7 +53,7 @@ function generateNetworkGraph(jsonFileName) {
     randomize: false, // use random node positions at beginning of layout
     avoidOverlap: true,
     handleDisconnected: true, // if true, avoids disconnected components from overlapping
-    nodeSpacing: function( node ){ return 10; }, // for extra spacing around nodes
+    nodeSpacing: function( node ){ return 20; /*10;*/ }, // for extra spacing around nodes
     flow: undefined, // use DAG/ tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
     alignment: undefined, // relative alignment constraints on nodes, e.g. function( node ){ return { x: 0, y: 1 } }
     // different methods of specifying edge length, each can be a constant numerical value or a function like `function( edge ){ return 2; }`
@@ -117,8 +117,8 @@ $(function() { // on dom ready
    var networkStylesheet= cytoscape.stylesheet()
       .selector('node')
         .css({
-          'content': 'data(value)', // 'data(id)',
-                     /*function() { return this.id() +": "+ this.data('value'); },*/
+          'content': "<html>"+'data(value)'+"</html>", // 'data(value)',
+                    // function() { return "<html>"+ this.data('value') +"</html>"; },
      //     'text-valign': 'center', // to have 'content' displayed in the middle of the node.
           'outline-colour': 'black', // text outline color
           'border-style': 'solid', // node border
@@ -138,8 +138,10 @@ $(function() { // on dom ready
         .css({
           'content': 'data(label)', // label for edges (arrows).
           'font-size': '8px',
-          'curve-style': 'bezier', // default. /* options: bezier, unbundled-bezier, haystack (straight edges) */
-          'width': '1px', // '3px', // use mapData() mapper to allow for curved edges for inter-connected nodes.
+          'curve-style': 'bezier', // default. /* options: bezier (curved), unbundled-bezier (curved with manual control points), haystack (straight edges) */
+          // 'width': use mapData() mapper to allow for curved edges for inter-connected nodes.
+          'width': 'mapData(70, 70, 100, 2, 6)', // '1px', // '3px', 
+//          'control-point-step-size': '2px', // From the line perpendicular from source to target, this value specifies the distance between successive bezier edges.
           'line-color': 'data(edgeColor)', // 'gray',
           'line-style': 'solid', // 'solid' or 'dotted' or 'dashed'
           'target-arrow-shape': 'triangle',
@@ -190,6 +192,9 @@ $('#cy').cytoscape({
 
   // interpolate on high density displays instead of increasing resolution.
   pixelRatio: 1,
+
+  // Zoom
+  zoom: 1,
 
   // a "motion blur" effect that increases perceived performance for little or no cost.
   motionBlur: true,

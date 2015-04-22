@@ -25,15 +25,20 @@ root {
         width: 1200px;
         margin: auto;
         position: relative;
-        top: 1px;
-        bottom: 1px;
+        top: 2px;
+        bottom: 2px;
         padding-bottom: 25px;
         border: solid 1px #888;
 /*        left: 0px;
         float: left;
+        background-color: white;
         border-radius: 6px;
         border: solid 1px gray;*/
        }
+
+/*     [draggable=true] {
+      cursor: move;
+     }*/
        
       /* CSS border for the empty Image tag for exported .png images.
       #png_image {
