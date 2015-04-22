@@ -16,6 +16,9 @@ function generateCyJSNetwork(jsonFileName) {
             console.log("WindowAlreadyOpen>> cyjs_networkView.jsonFile= "+ cyjs_networkView.jsonFile);
             // clear the cytoscapeJS container <div>.
             cyjs_networkView.document.getElementById('cy').innerHTML= "";
+            cyjs_networkView.document.reload();
+            // generate the graph
+//            generateNetworkGraph(cyjs_networkView.jsonFile);
            }
          else {
            cyjs_networkView= window.open("networkGraph.html", "Network View", 
