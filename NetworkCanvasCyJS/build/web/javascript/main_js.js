@@ -11,7 +11,7 @@ function generateCyJSNetwork(jsonFileName) {
 
   //  try {
          if(cyjs_networkView && !cyjs_networkView.closed) {
-            // If the window is alreayd open.
+            // If the window is already open.
 /*            cyjs_networkView.jsonFile= jsonFile; // re-assign the JSON file path.
             cyjs_networkView.focus();
             console.log("WindowAlreadyOpen>> cyjs_networkView.jsonFile= "+ cyjs_networkView.jsonFile);
