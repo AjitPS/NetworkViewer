@@ -5,6 +5,11 @@
  * QTip, multi-select (using Shift + click), JSON, CoLa.js & other layout algorithms.
  * @returns
  **/
+window.onload= function () {
+     // Generate the Network Graph after the page load event.
+     generateNetworkGraph(window.jsonFile);
+    }
+
 function generateNetworkGraph(jsonFileName) {
    var json_File= jsonFileName;
    console.log("Received json_File: file path: "+ json_File);
