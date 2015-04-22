@@ -255,7 +255,7 @@ cy.nodes().forEach(function( ele ) {
   else if(conType === "Molecular_Function") {
      imgName= 'Molecular_function';
     }
-  else if(conType === "Enzyme_Classification") {
+  else if((conType === "Enzyme_Classification") || (conType === "Enzyme Classification")) {
      imgName= 'Enzyme_clasification';
     }
   else if(conType === "Trait Ontology") {
