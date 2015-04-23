@@ -226,12 +226,12 @@ var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
 cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning, i.e., dragging the entire graph.
 
 // Set requisite background image for each concept (node) instead of using cytoscapeJS shapes.
-/*
+
  cy.nodes().forEach(function( ele ) {
   var conType= ele.data('conceptType');
   var imgName= 'Gene'; // default
   if(conType === "Biological_Process") {
-     imgName= 'Bioogical_proccess';
+     imgName= 'Biological_process';
     }
   else if(conType === "Cellular_Component") {
        imgName= 'Cellular_component';
@@ -264,7 +264,7 @@ cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning
      imgName= 'Molecular_function';
     }
   else if((conType === "Enzyme_Classification") || (conType === "Enzyme Classification")) {
-     imgName= 'Enzyme_clasification';
+     imgName= 'Enzyme_classification';
     }
   else if(conType === "Trait Ontology") {
      imgName= 'Trait_ontology';
@@ -275,8 +275,8 @@ cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning
   else if(conType === "Phenotype") {
      imgName= 'Phenotype';
     }
-  var eleImage= 'image/'+ imgName +'.png';
-//  var eleImage= data_url +'image/'+ imgName +'.png';
+  var eleImage= 'image/new_images/'+ imgName +'.png';
+//  var eleImage= data_url +'image/new_images/'+ imgName +'.png';
 
   // Add these properties to this element's JSON.
   ele.data('nodeImage', eleImage);
@@ -288,7 +288,7 @@ cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning
            'background-image': 'data(nodeImage)',
            'background-fit': 'none' // can be 'none' (for original size), 'contain' (to fit inside node) or 'cover' (to cover the node).
           }).update();
-*/
+
 
 /** Add a Qtip message to all the nodes & edges using QTip displaying their Concept Type & value when a 
  * node/ edge is clicked.
