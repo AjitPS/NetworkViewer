@@ -226,7 +226,7 @@ var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
 cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning, i.e., dragging the entire graph.
 
 // Set requisite background image for each concept (node) instead of using cytoscapeJS shapes.
-
+/*
  cy.nodes().forEach(function( ele ) {
   var conType= ele.data('conceptType');
   var imgName= 'Gene'; // default
@@ -288,7 +288,7 @@ cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning
            'background-image': 'data(nodeImage)',
            'background-fit': 'none' // can be 'none' (for original size), 'contain' (to fit inside node) or 'cover' (to cover the node).
           }).update();
-
+*/
 
 /** Add a Qtip message to all the nodes & edges using QTip displaying their Concept Type & value when a 
  * node/ edge is clicked.
