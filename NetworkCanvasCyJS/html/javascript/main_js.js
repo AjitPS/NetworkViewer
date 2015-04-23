@@ -18,7 +18,12 @@ function generateCyJSNetwork(jsonFileName) {
             // clear the cytoscapeJS container <div>.
             cyjs_networkView.document.getElementById('cy').innerHTML= "";
 
-//            cyjs_networkView.document.location.reload(); // reload the graph window using new graph.
+//            cyjs_networkView.document.location.reload(true); // reload the graph window using new graph.
+
+            // trigger the Load() event of the Network Graph window to call the function that generates 
+            // the network graph to generate a new one using the new JSON file (dataset).
+//            $(cyjs_networkView).trigger('load');
+
             // re-generate the network graph using the new JSON dataset (file) in the already open window.
 //            generateNetworkGraph(cyjs_networkView.jsonFile);
 */
