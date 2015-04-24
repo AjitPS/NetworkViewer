@@ -87,14 +87,17 @@ $(function() { // on dom ready
       console.log("JSON node.data (id, type, value, pid): "+ 
               networkJSON.nodes[j].data.id +", "+ networkJSON.nodes[j].data.conceptType +", "+ 
               networkJSON.nodes[j].data.value +", "+ networkJSON.nodes[j].data.pid +
-              " ; Shape, Colour, visible: "+ networkJSON.nodes[j].data.conceptShape +" , "+
-              networkJSON.nodes[j].data.conceptColor +" , "+ networkJSON.nodes[j].data.visibleDisplay);
+              " ; Size, Shape, Colour, visibleDisplay: "+ networkJSON.nodes[j].data.conceptSize +" , "+ 
+              networkJSON.nodes[j].data.conceptShape +" , "+ networkJSON.nodes[j].data.conceptColor +
+              " , "+ networkJSON.nodes[j].data.visibleDisplay);
      }
   console.log("\n \n");
   for(var k = 0; k < networkJSON.edges.length; k++){
-      console.log("JSON edge.data (id, source, target, edgeColor, label): "+ 
-              networkJSON.edges[k].data.id +", "+ networkJSON.edges[k].data.source +", "+ 
-              networkJSON.edges[k].data.target +", "+ networkJSON.edges[k].data.edgeColor +", "+ networkJSON.edges[k].data.label);
+      console.log("JSON edge.data (id, label, From, To, Color, Size, visibleDisplay): "+ 
+              networkJSON.edges[k].data.id +", "+ networkJSON.edges[k].data.label +", "+ 
+              networkJSON.edges[k].data.source +", "+ networkJSON.edges[k].data.target +", "+ 
+              networkJSON.edges[k].data.relationColor +", "+ networkJSON.edges[k].data.relationSize +
+              ", "+ networkJSON.edges[k].data.visibleDisplay);
      }
   console.log("\n \n");
 
@@ -152,7 +155,8 @@ $(function() { // on dom ready
           'line-color': 'data(relationColor)', // 'gray',
           'line-style': 'solid', // 'solid' or 'dotted' or 'dashed'
           'target-arrow-shape': 'triangle',
-          'target-arrow-color': 'gray'
+          'target-arrow-color': 'gray',
+          'display': 'data(visibleDisplay)' // display: 'element' (show) or 'none' (hide).
         })
       .selector('.highlighted')
         .css({
