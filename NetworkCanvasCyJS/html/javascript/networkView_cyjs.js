@@ -8,13 +8,13 @@
 window.onload= function () {
      // Generate the Network Graph after the page load event.
      generateNetworkGraph(window.jsonFile);
-    }
+    };
 
 // Generate the network graph using a new JSON dataset (file) when the graph is refreshed by the user.
 /*window.opener.location.reload= function () {
      // Generate the Network Graph after the page load event.
      generateNetworkGraph(window.jsonFile);
-    }*/
+    };*/
 
 function generateNetworkGraph(jsonFileName) {
    var json_File= jsonFileName;
@@ -273,6 +273,9 @@ cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning
     }
   else if(conType === "Trait Ontology") {
      imgName= 'Trait_ontology';
+    }
+  else if(conType === "Scaffold") {
+     imgName= 'Scaffold';
     }
   else if((conType === "Compound") || (conType === "SNP")) {
      imgName= 'Compound';
