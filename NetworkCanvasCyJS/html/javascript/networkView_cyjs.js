@@ -126,7 +126,7 @@ $(function() { // on dom ready
    var networkStylesheet= cytoscape.stylesheet()
       .selector('node')
         .css({
-          'content': "<html>"+'data(value)'+"</html>", // 'data(value)',
+          'content': 'data(value)', // '<html>'+ 'data(value)' +'</html>',
                     // function() { return "<html>"+ this.data('value') +"</html>"; },
      //     'text-valign': 'center', // to have 'content' displayed in the middle of the node.
           'outline-colour': 'black', // text outline color
@@ -183,6 +183,10 @@ $(function() { // on dom ready
 // Initialise a cystoscape container instance on the HTML DOM using JQuery.
 $('#cy').cytoscape({
   container: document.getElementById('cy'),
+
+  /* Using the cytoscape-css-renderer extension (plugin) to allow node & edge labels to use HTML 
+   * content instead of just plain text. */
+//  'renderer': { name: "css" },
 
   style: networkStylesheet,
 
