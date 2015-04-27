@@ -149,9 +149,10 @@ $(function() { // on dom ready
           'content': 'data(label)', // label for edges (arrows).
           'font-size': '8px',
           'curve-style': 'bezier', // default. /* options: bezier (curved), unbundled-bezier (curved with manual control points), haystack (straight edges) */
+          'control-point-step-size': '2px', // specifies the distance between successive bezier edges.
+          'control-point-weight': '1', // '0': curve towards source node, '1': curve towards target node.
           // 'width': use mapData() mapper to allow for curved edges for inter-connected nodes.
           'width': 'data(relationSize)', // '1px', // 'mapData(70, 70, 100, 2, 6)', // '3px',
-//          'control-point-step-size': '2px', // From the line perpendicular from source to target, this value specifies the distance between successive bezier edges.
           'line-color': 'data(relationColor)', // 'gray',
           'line-style': 'solid', // 'solid' or 'dotted' or 'dashed'
           'target-arrow-shape': 'triangle',
