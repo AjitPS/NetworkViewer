@@ -5,9 +5,9 @@
         CSS for the cytoscapeJS Network Viewer page.
 */
 
-root { 
-    display: block;
-}
+      root { 
+         display: block;
+      }
 
       body {
         font: 14px helvetica neue, helvetica, arial, sans-serif;
@@ -23,13 +23,14 @@ root {
       #cy {
         height: 600px;
         width: 1200px;
-        margin: auto;
         position: relative;
+        margin: auto;
         top: 2px;
         bottom: 2px;
         padding-bottom: 25px;
-        border: solid 1px #888;
-/*        left: 0px;
+        background: white;
+        border: 1px solid #888;
+/*        left: 0px; //2px;
         float: left;
         background-color: white;
         border-radius: 6px;

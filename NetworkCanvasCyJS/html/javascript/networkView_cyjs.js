@@ -41,6 +41,14 @@ function generateNetworkGraph(jsonFileName) {
     console.log("setLayoutAnimationSetting()>> checkbox checked: "+ document.getElementById("animateLayout").checked +" --> animate_layout= "+ animate_layout);
    }
 
+/*
+   // Event occurring when the cytoscapeJS container <div> is dragged.
+   function dragCyContainer() {
+//    console.log("cy container dragged.");
+    // resize the cytoscapeJS container.
+    $('#cy').cytoscape('get').pan();
+   }*/
+
   /** Define the default layout for the network, using CoLa layout from Cola.js (similar to the "Gem" layout in 
     * Ondex Web). */
    var defaultNetworkLayout= {
@@ -187,7 +195,7 @@ $('#cy').cytoscape({
 
   /* Using the cytoscape-css-renderer extension (plugin) to allow node & edge labels to use HTML 
    * content instead of just plain text. */
-//  'renderer': { name: "css" },
+//  'renderer': { name: "css" }, // default renderer: 'canvas'.
 
   style: networkStylesheet,
 
@@ -202,21 +210,25 @@ $('#cy').cytoscape({
 //  hideLabelsOnViewport: true,
 
   // this is an alternative that uses a bitmap during interaction.
-  textureOnViewport: true,
+  textureOnViewport: false, // true,
+  /* the colour of the area outside the viewport texture when initOptions.textureOnViewport === true can
+   * be set by: e.g., outside-texture-bg-color: white, */
 
   // interpolate on high density displays instead of increasing resolution.
   pixelRatio: 1,
 
   // Zoom settings
-  zoom: 1,
-  zoomingEnabled: true, // both by user and programmatically
-  userZoomingEnabled: true,
-  minZoom: 1e-50,
-  maxZoom: 1e50,
-  wheelSensitivity: 1, // mouse wheel sensitivity settings to enable a more gradual Zooming process.
+  zoomingEnabled: true, // zooming: both by user and programmatically.
+  userZoomingEnabled: true, // user-enabled zooming.
+  zoom: 1, // the initial zoom level of the graph before the layout is set.
+//  minZoom: 1e-50,
+//  maxZoom: 1e50,
+  /* mouse wheel sensitivity settings to enable a more gradual Zooming process. A value between 0 and 1 
+   * reduces the sensitivity (zooms slower) & a value greater than 1 increases the sensitivity. */
+  wheelSensitivity: 0.05,
 
-  panningEnabled: true,
-  userPanningEnabled: true,
+  panningEnabled: true, // panning: both by user and programmatically.
+  userPanningEnabled: true, // user-enabled panning.
 
   // a "motion blur" effect that increases perceived performance for little or no cost.
   motionBlur: true,
