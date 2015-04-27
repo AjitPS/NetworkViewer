@@ -149,8 +149,8 @@ $(function() { // on dom ready
           'content': 'data(label)', // label for edges (arrows).
           'font-size': '8px',
           'curve-style': 'bezier', // default. /* options: bezier (curved), unbundled-bezier (curved with manual control points), haystack (straight edges) */
-          'control-point-step-size': '2px', // specifies the distance between successive bezier edges.
-          'control-point-weight': '1', // '0': curve towards source node, '1': curve towards target node.
+//          'control-point-step-size': '2px', // specifies the distance between successive bezier edges.
+//          'control-point-weight': '1', // '0': curve towards source node, '1': curve towards target node.
           // 'width': use mapData() mapper to allow for curved edges for inter-connected nodes.
           'width': 'data(relationSize)', // '1px', // 'mapData(70, 70, 100, 2, 6)', // '3px',
           'line-color': 'data(relationColor)', // 'gray',
@@ -172,8 +172,8 @@ $(function() { // on dom ready
         'border-width': '3px',
         'border-color': '#CCCC33' // '#333'
       });
-      
-// Initialise a cystoscape container instance as a Javascript object.
+
+// Initialise a cytoscape container instance as a Javascript object.
 /* var cy= cytoscape({
   container: document.getElementById('cy'),
   elements: networkJSON,
@@ -210,6 +210,13 @@ $('#cy').cytoscape({
   // Zoom settings
   zoom: 1,
   zoomingEnabled: true, // both by user and programmatically
+  userZoomingEnabled: true,
+  minZoom: 1e-50,
+  maxZoom: 1e50,
+  wheelSensitivity: 1, // mouse wheel sensitivity settings to enable a more gradual Zooming process.
+
+  panningEnabled: true,
+  userPanningEnabled: true,
 
   // a "motion blur" effect that increases perceived performance for little or no cost.
   motionBlur: true,
@@ -221,7 +228,6 @@ $('#cy').cytoscape({
 
   ready: function() {
 //   console.log('ready');
-//   testCollections();
    window.cy= this;
   }
 });
