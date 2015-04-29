@@ -141,7 +141,7 @@ $(function() { // on dom ready
           'outline-colour': 'black', // text outline color
           'border-style': 'solid', // node border
           'border-width': '1px',
-          'font-size': '12px',
+          'font-size': '30px',
 //          'min-zoomed-font-size': '8px',
           // Set node shape, color & display (visibility) depending on settings in the JSON var.
           'shape': 'data(conceptShape)', // 'triangle'
@@ -157,7 +157,7 @@ $(function() { // on dom ready
       .selector('edge')
         .css({
           'content': 'data(label)', // label for edges (arrows).
-          'font-size': '12px',
+          'font-size': '30px',
 //          'min-zoomed-font-size': '8px',
           'curve-style': 'unbundled-bezier', // default. /* options: bezier (curved), unbundled-bezier (curved with manual control points), haystack (straight edges) */
           'control-point-step-size': '1px', // specifies the distance between successive bezier edges.
@@ -207,7 +207,7 @@ $('#cy').cytoscape({
   
   // Layout of the Network.
   layout: defaultNetworkLayout,
-  
+
   // these options hide parts of the graph during interaction.
 //  hideEdgesOnViewport: true,
 //  hideLabelsOnViewport: true,
@@ -844,6 +844,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 //   cy.center();
   }
 
+/*
   // Reset: Re-position the network graph.
   function onlyResetGraph() {
    cy.reset(); // reset the graph's zooming & panning properties.
@@ -871,6 +872,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
      renderedPosition: { x: 50, y: 50 }
     });
   }
+*/
 
   // Relayout: Set default (CoLa) layout.
   function setDefaultLayout() {
@@ -888,7 +890,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     fit: true, boundingBox: undefined, ready: function() {}, stop: function() {}, 
     roots: undefined, padding: 30 /*5*/, randomize: true,  debug: false, nodeRepulsion: 400000, 
     numIter: 100, idealEdgeLength: 10, nodeOverlap: 10, edgeElasticity: 100, nestingFactor: 5, 
-    gravity: 250, initialTemp: 200, coolingFactor: 0.95, minTemp: 1.0, edgeLength: 5 };
+    gravity: 250, initialTemp: 200, coolingFactor: 0.95, minTemp: 1.0, edgeLength: 10 };
    cy.layout(coseNetworkLayout); // run the CoSE layout algorithm.
   }
 
@@ -897,8 +899,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    console.log("setArborLayout()>> animate_layout= "+ animate_layout);
    var arborNetworkLayout= {
     name: 'arbor', // Arbor layout using Arbor.js (Ondex Web: Kamada Kawai).
-    animate: animate_layout /*true*/, animationDuration: 500, maxSimulationTime: 4000, fit: true, 
-    padding: 30, boundingBox: undefined, ungrabifyWhileSimulating: false, ready: undefined, 
+    animate: animate_layout /*true*/, animationDuration: 500, 
+    maxSimulationTime: 5000 /* 1.7976931348623157E+10308 // (infinite, constant simultaion) */, 
+    fit: true, padding: 30, boundingBox: undefined, ungrabifyWhileSimulating: false, ready: undefined, 
     stop: undefined, avoidOverlap: true, handleDisconnected: true, 
 //    liveUpdate: false, 
     // forces used by arbor (use arbor default on undefined)
@@ -910,13 +913,13 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     nodeMass: undefined,
     stepSize: 0.1, // smoothing of arbor bounding box
     // function that returns true if the system is stable to indicate that the layout can be stopped
-    stableEnergy: function( energy ) {
+    stableEnergy: function() { return false; } /*function( energy ) {
      var e = energy; 
      return (e.max <= 0.5) || (e.mean <= 0.3);
-    },
+    }*/,
     // infinite layout options
     infinite: false,
-    idealEdgeLength: 5 /*undefined*/
+    idealEdgeLength: 10 /*undefined*/
    };
    cy.layout(arborNetworkLayout); // run the Arbor layout algorithm.
   }
@@ -932,7 +935,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     // springy forces
     stiffness: 400, repulsion: 400 /*1000*/, // to avoid overlap
     damping: 0.5,
-    edgeLength: 5
+    edgeLength: 10
    };
    cy.layout(springyNetworkLayout); // run the Springy layout algorithm.
   }
@@ -952,7 +955,8 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     fit: true, padding: 30, animate: animate_layout /*false*/, animationDuration: 500, // duration of animation in ms if enabled
     avoidOverlap: true, handleDisconnected: true, 
     boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-    ready: function(){}, stop: function(){}
+    ready: function(){}, stop: function(){},
+    edgeLength: 10
    };
    cy.layout(dagreNetworkLayout); // run the Dagre layout algorithm.
   }
@@ -962,9 +966,11 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    console.log("setCircleLayout()>> animate_layout= "+ animate_layout);
    var circleNetworkLayout= {
       name: 'circle', // Circle layout (Ondex Web: Circular)
-      directed: true, roots: undefined, // '#n12',
-      padding: 10, avoidOverlap: true, handleDisconnected: true,
-      animate: animate_layout /*false*/
+      /*directed: true, roots: undefined, */
+      padding: 30, avoidOverlap: true, boundingBox: undefined, /*handleDisconnected: true,*/
+      animate: animate_layout /*false*/, fit: true, counterclockwise: false,
+      radius: /*undefined*/ function() { return 2; },
+      startAngle: 3/2 * Math.PI
    };
    cy.layout(circleNetworkLayout); // run the Circle layout.
   }
@@ -979,7 +985,8 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
       animationDuration: 500, 
       spacingFactor: 1.75, // positive spacing factor, larger= more space between nodes.
       roots: undefined, // '#n12', 
-      ready: undefined, stop: undefined
+      ready: undefined, stop: undefined,
+      edgeLength: 10
    };
    cy.layout(bfNetworkLayout); // run the Breadthfirst layout.
   }
@@ -994,7 +1001,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     rows: undefined, // force num of rows in the grid
     columns: undefined, // force num of cols in the grid
     position: function( node ){}, // returns { row, col } for element
-    ready: undefined, stop: undefined };
+    ready: undefined, stop: undefined,
+    edgeLength: 10
+   };
    cy.layout(gridNetworkLayout); // run the Grid layout.
   }
 
@@ -1009,8 +1018,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     concentric: function(){ // returns numeric value for each node, placing higher nodes in levels towards the centre
      return this.degree(); },
     levelWidth: function(nodes){ // the variation of concentric values in each level
-     return nodes.maxDegree() / 4; },
-    animate: animate_layout /*false*/, animationDuration: 500, ready: undefined, stop: undefined
+     return 0.5 /*nodes.maxDegree() / 4*/; },
+    animate: animate_layout /*false*/, animationDuration: 500, ready: undefined, stop: undefined,
+    radius: 5 /*undefined*/
    };
    cy.layout(concentricNetworkLayout); // run the CoSE layout algorithm.
   }
