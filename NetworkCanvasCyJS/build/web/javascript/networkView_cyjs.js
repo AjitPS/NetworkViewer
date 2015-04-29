@@ -55,10 +55,10 @@ function generateNetworkGraph(jsonFileName) {
     name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     animate: animate_layout, // true, // false, 
     animationDuration: 500, 
-    fit: true, padding: 30 /*2*/ /*10*/, // padding around the simulation
+    fit: true, padding: 10 /*30*/ /*2*/, // padding around the simulation
     boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     refresh: 1, // number of ticks per frame; higher is faster but more jerky
-    maxSimulationTime: 8000, // 5000, // max length in ms to run the layout
+    maxSimulationTime: 4000, // 8000, // max length in ms to run the layout
     ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
     // layout event callbacks
     ready: function() {}, // on layoutready
@@ -71,7 +71,7 @@ function generateNetworkGraph(jsonFileName) {
     flow: undefined, // use DAG/ tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
     alignment: undefined, // relative alignment constraints on nodes, e.g. function( node ){ return { x: 0, y: 1 } }
     // different methods of specifying edge length, each can be a constant numerical value or a function like `function( edge ){ return 2; }`
-    edgeLength: 10 /*undefined*/, // sets edge length directly in simulation
+    edgeLength: undefined /*10*/, // sets edge length directly in simulation
     /*linkDistance: 2, */
     edgeSymDiffLength: undefined, // symmetric diff edge length in simulation
     edgeJaccardLength: undefined, // jaccard edge length in simulation
@@ -888,9 +888,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     name: 'cose', // CytoscapeJS Cose layout
     animate: animate_layout /*true*/, animationDuration: 500, avoidOverlap: true, handleDisconnected: true, 
     fit: true, boundingBox: undefined, ready: function() {}, stop: function() {}, 
-    roots: undefined, padding: 30 /*5*/, randomize: true,  debug: false, nodeRepulsion: 400000, 
+    roots: undefined, padding: 30 /*5*/, /*randomize: true, debug: false, nodeRepulsion: 400000, 
     numIter: 100, idealEdgeLength: 10, nodeOverlap: 10, edgeElasticity: 100, nestingFactor: 5, 
-    gravity: 250, initialTemp: 200, coolingFactor: 0.95, minTemp: 1.0, edgeLength: 10 };
+    gravity: 250, initialTemp: 200, coolingFactor: 0.95, minTemp: 1.0,*/ edgeLength: 10 };
    cy.layout(coseNetworkLayout); // run the CoSE layout algorithm.
   }
 
@@ -969,7 +969,8 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
       /*directed: true, roots: undefined, */
       padding: 30, avoidOverlap: true, boundingBox: undefined, /*handleDisconnected: true,*/
       animate: animate_layout /*false*/, fit: true, counterclockwise: false,
-      radius: /*undefined*/ function() { return 2; },
+      radius: 2, /*function() { return 2; }, */ /*undefined*/
+      rStepSize: 10,
       startAngle: 3/2 * Math.PI
    };
    cy.layout(circleNetworkLayout); // run the Circle layout.
