@@ -55,7 +55,7 @@ function generateNetworkGraph(jsonFileName) {
     name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     animate: animate_layout, // true, // false, 
     animationDuration: 500, 
-    fit: true, padding: 2/*10*/, // padding around the simulation
+    fit: true, padding: 30 /*2*/ /*10*/, // padding around the simulation
     boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     refresh: 1, // number of ticks per frame; higher is faster but more jerky
     maxSimulationTime: 8000, // 5000, // max length in ms to run the layout
@@ -67,11 +67,12 @@ function generateNetworkGraph(jsonFileName) {
     randomize: false, // use random node positions at beginning of layout
     avoidOverlap: true,
     handleDisconnected: true, // if true, avoids disconnected components from overlapping
-    nodeSpacing: function( node ){ return 20; /*10;*/ }, // for extra spacing around nodes
+    nodeSpacing: function( node ){ return 10; /*20;*/ }, // for extra spacing around nodes
     flow: undefined, // use DAG/ tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
     alignment: undefined, // relative alignment constraints on nodes, e.g. function( node ){ return { x: 0, y: 1 } }
     // different methods of specifying edge length, each can be a constant numerical value or a function like `function( edge ){ return 2; }`
-    edgeLength: undefined, // sets edge length directly in simulation
+    edgeLength: 10 /*undefined*/, // sets edge length directly in simulation
+    /*linkDistance: 2, */
     edgeSymDiffLength: undefined, // symmetric diff edge length in simulation
     edgeJaccardLength: undefined, // jaccard edge length in simulation
     // iterations of the cola algorithm; uses default values on undefined
@@ -79,7 +80,7 @@ function generateNetworkGraph(jsonFileName) {
     userConstIter: undefined, // initial layout iterations with user-specified constraints
     allConstIter: undefined, // initial layout iterations with all constraints including non-overlap
     // infinite layout options
-    infinite: false // overrides all other options for a forces-all-the-time mode
+    infinite: false, // overrides all other options for a forces-all-the-time mode
    };
 
 function initializeNetworkView() {
@@ -140,7 +141,8 @@ $(function() { // on dom ready
           'outline-colour': 'black', // text outline color
           'border-style': 'solid', // node border
           'border-width': '1px',
-          'font-size': '8px',
+          'font-size': '12px',
+//          'min-zoomed-font-size': '8px',
           // Set node shape, color & display (visibility) depending on settings in the JSON var.
           'shape': 'data(conceptShape)', // 'triangle'
           // 'width' & 'height': use mapData() mapper.
@@ -155,10 +157,11 @@ $(function() { // on dom ready
       .selector('edge')
         .css({
           'content': 'data(label)', // label for edges (arrows).
-          'font-size': '8px',
-          'curve-style': 'bezier', // default. /* options: bezier (curved), unbundled-bezier (curved with manual control points), haystack (straight edges) */
-//          'control-point-step-size': '2px', // specifies the distance between successive bezier edges.
-//          'control-point-weight': '1', // '0': curve towards source node, '1': curve towards target node.
+          'font-size': '12px',
+//          'min-zoomed-font-size': '8px',
+          'curve-style': 'unbundled-bezier', // default. /* options: bezier (curved), unbundled-bezier (curved with manual control points), haystack (straight edges) */
+          'control-point-step-size': '1px', // specifies the distance between successive bezier edges.
+          'control-point-weight': '0.7', // '0': curve towards source node, '1': curve towards target node.
           // 'width': use mapData() mapper to allow for curved edges for inter-connected nodes.
           'width': 'data(relationSize)', // '1px', // 'mapData(70, 70, 100, 2, 6)', // '3px',
           'line-color': 'data(relationColor)', // 'gray',
@@ -219,7 +222,7 @@ $('#cy').cytoscape({
 
   // Zoom settings
   zoomingEnabled: true, // zooming: both by user and programmatically.
-  userZoomingEnabled: true, // user-enabled zooming.
+//  userZoomingEnabled: true, // user-enabled zooming.
   zoom: 1, // the initial zoom level of the graph before the layout is set.
 //  minZoom: 1e-50,
 //  maxZoom: 1e50,
@@ -228,7 +231,7 @@ $('#cy').cytoscape({
   wheelSensitivity: 0.05,
 
   panningEnabled: true, // panning: both by user and programmatically.
-  userPanningEnabled: true, // user-enabled panning.
+//  userPanningEnabled: true, // user-enabled panning.
 
   // a "motion blur" effect that increases perceived performance for little or no cost.
   motionBlur: true,
@@ -248,7 +251,7 @@ $('#cy').cytoscape({
 var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
 
 // Pan & zooms the graph to fit all the elements (concept nodes) in the graph.
-//cy.fit();
+// cy.fit();
 
 // cy.boxSelectionEnabled(true); // enable box selection (highlight & select multiple elements for moving via mouse click and drag).
 cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning, i.e., dragging the entire graph.
@@ -752,12 +755,6 @@ cy.elements().qtip({
             }
         },
             
-/*        {
-         content: 'Reset',
-         select: function() {
-             cy.reset(); // reset the graph's zooming & panning properties.
-            }
-        },*/
         {
          content: 'Show Selections',
          select: function() {
@@ -842,6 +839,37 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
   // Reset: Re-position the network graph.
   function resetGraph() {
    cy.reset(); // reset the graph's zooming & panning properties.
+   cy.fit();
+//   cy.pan({ x: 100, y: 100 });
+//   cy.center();
+  }
+
+  // Reset: Re-position the network graph.
+  function onlyResetGraph() {
+   cy.reset(); // reset the graph's zooming & panning properties.
+  }
+
+  // Reset: Re-position the network graph.
+  function centerGraph() {
+   cy.center();
+  }
+
+  // Reset: Re-position the network graph.
+  function panGraph() {
+   cy.pan({ x: 50, y: 50 });
+  }
+
+  // Reset: Re-position the network graph.
+  function fitGraph() {
+   cy.fit();
+  }
+
+  // Reset: Re-position the network graph.
+  function zoomGraph() {
+   cy.zoom({
+     level: 7.0, // zoom level
+     renderedPosition: { x: 50, y: 50 }
+    });
   }
 
   // Relayout: Set default (CoLa) layout.
@@ -860,7 +888,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     fit: true, boundingBox: undefined, ready: function() {}, stop: function() {}, 
     roots: undefined, padding: 30 /*5*/, randomize: true,  debug: false, nodeRepulsion: 400000, 
     numIter: 100, idealEdgeLength: 10, nodeOverlap: 10, edgeElasticity: 100, nestingFactor: 5, 
-    gravity: 250, initialTemp: 200, coolingFactor: 0.95, minTemp: 1.0 };
+    gravity: 250, initialTemp: 200, coolingFactor: 0.95, minTemp: 1.0, edgeLength: 5 };
    cy.layout(coseNetworkLayout); // run the CoSE layout algorithm.
   }
 
@@ -869,15 +897,17 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    console.log("setArborLayout()>> animate_layout= "+ animate_layout);
    var arborNetworkLayout= {
     name: 'arbor', // Arbor layout using Arbor.js (Ondex Web: Kamada Kawai).
-    animate: animate_layout /*true*/, animationDuration: 500, maxSimulationTime: 5000, fit: true, padding: 30, 
-    boundingBox: undefined, ungrabifyWhileSimulating: false, ready: undefined, stop: undefined,
-    avoidOverlap: true, handleDisconnected: true, 
+    animate: animate_layout /*true*/, animationDuration: 500, maxSimulationTime: 4000, fit: true, 
+    padding: 30, boundingBox: undefined, ungrabifyWhileSimulating: false, ready: undefined, 
+    stop: undefined, avoidOverlap: true, handleDisconnected: true, 
+//    liveUpdate: false, 
     // forces used by arbor (use arbor default on undefined)
-    repulsion: undefined, stiffness: undefined, friction: undefined, gravity: true, fps: undefined, 
-    precision: undefined,
+    stiffness: undefined /*400*/, 
+    repulsion: 10000 /*undefined*/, // to avoid overlap
+    friction: undefined /*100*/, gravity: true, fps: undefined, precision: undefined /*10*/,
     // static numbers or functions that dynamically return what these values should be for each element
     // e.g. nodeMass: function(n){ return n.data('weight') }
-    nodeMass: undefined, edgeLength: undefined,
+    nodeMass: undefined,
     stepSize: 0.1, // smoothing of arbor bounding box
     // function that returns true if the system is stable to indicate that the layout can be stopped
     stableEnergy: function( energy ) {
@@ -885,7 +915,8 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
      return (e.max <= 0.5) || (e.mean <= 0.3);
     },
     // infinite layout options
-    infinite: false
+    infinite: false,
+    idealEdgeLength: 5 /*undefined*/
    };
    cy.layout(arborNetworkLayout); // run the Arbor layout algorithm.
   }
@@ -895,11 +926,13 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
    var springyNetworkLayout= {
     name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
-    animate: animate_layout /*false*/, animationDuration: 500, maxSimulationTime: 1000, ungrabifyWhileSimulating: false, 
-    fit: true, padding: 30, avoidOverlap: true, handleDisconnected: true, 
+    animate: animate_layout /*false*/, animationDuration: 500, maxSimulationTime: 1000, 
+    ungrabifyWhileSimulating: false, fit: true, padding: 30, avoidOverlap: true, handleDisconnected: true, 
     boundingBox: undefined, random: false, infinite: false, ready: undefined, stop: undefined, 
     // springy forces
-    stiffness: 400, repulsion: 400, damping: 0.5
+    stiffness: 400, repulsion: 400 /*1000*/, // to avoid overlap
+    damping: 0.5,
+    edgeLength: 5
    };
    cy.layout(springyNetworkLayout); // run the Springy layout algorithm.
   }
@@ -941,8 +974,10 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    console.log("setBreadthfirstLayout()>> animate_layout= "+ animate_layout);
    var bfNetworkLayout= {
       name: 'breadthfirst', // Breadth first layout (Ondex Web: Hierarchial)
-      fit: true, directed: true, padding: 10, circle: false, boundingBox: undefined, avoidOverlap: true, 
-      handleDisconnected: true, maximalAdjustments: 0, animate: animate_layout /*false*/, animationDuration: 500, 
+      fit: true, directed: true, padding: 30 /*10*/, circle: false, boundingBox: undefined, avoidOverlap: true, 
+      handleDisconnected: true, maximalAdjustments: 0, animate: animate_layout /*false*/, 
+      animationDuration: 500, 
+      spacingFactor: 1.75, // positive spacing factor, larger= more space between nodes.
       roots: undefined, // '#n12', 
       ready: undefined, stop: undefined
    };
@@ -961,6 +996,23 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     position: function( node ){}, // returns { row, col } for element
     ready: undefined, stop: undefined };
    cy.layout(gridNetworkLayout); // run the Grid layout.
+  }
+
+  // Set Concentric layout.
+  function setConcentricLayout() {
+   console.log("setConcentricLayout()>> animate_layout= "+ animate_layout);
+   var concentricNetworkLayout= {
+    name: 'concentric', fit: true, padding: 30, 
+    startAngle: 3/2 * Math.PI, // the position of the 1st node
+    counterclockwise: false, // whether the layout should go anticlockwise (true) or clockwise (false)
+    minNodeSpacing: 10, boundingBox: undefined, avoidOverlap: true, height: undefined, width: undefined, 
+    concentric: function(){ // returns numeric value for each node, placing higher nodes in levels towards the centre
+     return this.degree(); },
+    levelWidth: function(nodes){ // the variation of concentric values in each level
+     return nodes.maxDegree() / 4; },
+    animate: animate_layout /*false*/, animationDuration: 500, ready: undefined, stop: undefined
+   };
+   cy.layout(concentricNetworkLayout); // run the CoSE layout algorithm.
   }
 
   // Search the graph for a concept using BFS: breadthfirst search
