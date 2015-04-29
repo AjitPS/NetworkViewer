@@ -55,10 +55,10 @@ function generateNetworkGraph(jsonFileName) {
     name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     animate: animate_layout, // true, // false, 
     animationDuration: 500, 
-    fit: true, padding: 10 /*30*/ /*2*/, // padding around the simulation
+    fit: true, padding: 2 /*30*/ /*10*/, // padding around the simulation
     boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     refresh: 1, // number of ticks per frame; higher is faster but more jerky
-    maxSimulationTime: 4000, // 8000, // max length in ms to run the layout
+    maxSimulationTime: 8000, // 4000, // max length in ms to run the layout
     ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
     // layout event callbacks
     ready: function() {}, // on layoutready
@@ -67,7 +67,7 @@ function generateNetworkGraph(jsonFileName) {
     randomize: false, // use random node positions at beginning of layout
     avoidOverlap: true,
     handleDisconnected: true, // if true, avoids disconnected components from overlapping
-    nodeSpacing: function( node ){ return 10; /*20;*/ }, // for extra spacing around nodes
+    nodeSpacing: function( node ){ return 20; /*10;*/ }, // for extra spacing around nodes
     flow: undefined, // use DAG/ tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
     alignment: undefined, // relative alignment constraints on nodes, e.g. function( node ){ return { x: 0, y: 1 } }
     // different methods of specifying edge length, each can be a constant numerical value or a function like `function( edge ){ return 2; }`
@@ -141,7 +141,7 @@ $(function() { // on dom ready
           'outline-colour': 'black', // text outline color
           'border-style': 'solid', // node border
           'border-width': '1px',
-          'font-size': '30px',
+          'font-size': '8px', // '30px',
 //          'min-zoomed-font-size': '8px',
           // Set node shape, color & display (visibility) depending on settings in the JSON var.
           'shape': 'data(conceptShape)', // 'triangle'
@@ -157,7 +157,7 @@ $(function() { // on dom ready
       .selector('edge')
         .css({
           'content': 'data(label)', // label for edges (arrows).
-          'font-size': '30px',
+          'font-size': '8px', // '30px',
 //          'min-zoomed-font-size': '8px',
           'curve-style': 'unbundled-bezier', // default. /* options: bezier (curved), unbundled-bezier (curved with manual control points), haystack (straight edges) */
           'control-point-step-size': '1px', // specifies the distance between successive bezier edges.
