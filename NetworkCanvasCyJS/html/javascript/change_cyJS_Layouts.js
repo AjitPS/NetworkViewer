@@ -1,8 +1,10 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+ * @author Ajit Singh
+ * @name Network View layouts
+ * @description code for Network View using CytoscapeJS layouts such as breadthfirst, grid, cose, circle 
+ * and concentric and third party layout algorithms such as CoLa, arbor, springy and dagre (tree).
+ * @returns
+ **/
    var animate_layout= true; // global variable for layout animation setting (default: true).
 
    function setLayoutAnimationSetting() { // Toggle layout animation On/ Off.
