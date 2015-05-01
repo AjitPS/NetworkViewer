@@ -76,7 +76,7 @@
    console.log("setArborLayout()>> animate_layout= "+ animate_layout);
    var arborNetworkLayout= {
     name: 'arbor', // Arbor layout using Arbor.js (Ondex Web: Kamada Kawai).
-    fit: true, animate: animate_layout /*true*/, animationDuration: 12000/*4000*/ /*500*/, 
+    fit: true, animate: animate_layout /*true*/, animationDuration: 15000/*4000*/ /*500*/, 
     maxSimulationTime: 20000/*5000*/ /*1.7976931348623157E+10308 // (infinite, constant simultaion) */, 
     padding: 30/*[ 50, 50, 50, 50 ]*/, boundingBox: undefined, simulationBounds: undefined, 
     ungrabifyWhileSimulating: false, ready: undefined, stop: undefined, 
@@ -86,7 +86,7 @@
     repulsion: 3000/*undefined*/ /*1000*/, // the force repelling nodes from each other (to avoid overlap).
     friction: undefined /*20*/, // the amount of damping in the system
     gravity: true, // attracting nodes to the origin (can be true for 'center' and false for 'none').
-    fps: undefined, // frames per seccond
+    fps: undefined, // frames per second
     precision: 100/*undefined*/, // accuracy vs. speed in force calculations (0: fast but jittery, 1: smooth but CPU-intensive)
 //    springTension: 512, 
     // static numbers or functions that dynamically return what these values should be for each element
