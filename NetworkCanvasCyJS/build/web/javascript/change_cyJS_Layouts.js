@@ -22,11 +22,11 @@
    var defaultNetworkLayout= {
     name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     animate: animate_layout, // true, // false, 
-    animationDuration: 500, 
+    animationDuration: 2000, 
     fit: true, padding: 2 /*30*/ /*10*/, // padding around the simulation
     boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     refresh: 1, // number of ticks per frame; higher is faster but more jerky
-    maxSimulationTime: 8000, // 4000, // max length in ms to run the layout
+    maxSimulationTime: 10000, // 8000, // max length in ms to run the layout
     ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
     // layout event callbacks
     ready: function() {}, // on layoutready
@@ -146,9 +146,9 @@
       /*directed: true, roots: undefined, */
       padding: 30, avoidOverlap: true, boundingBox: undefined, /*handleDisconnected: true,*/
       animate: animate_layout /*false*/, fit: true, counterclockwise: false,
-      radius: 2, /*function() { return 2; }, */ /*undefined*/
-      rStepSize: 10,
-      startAngle: 3/2 * Math.PI
+      radius: 3 /*function() { return 2; }*/ /*undefined*/,
+      rStepSize: 2//,
+//      startAngle: 3/2 * Math.PI
    };
    cy.layout(circleNetworkLayout); // run the Circle layout.
   }
