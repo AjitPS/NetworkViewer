@@ -76,18 +76,18 @@
    console.log("setArborLayout()>> animate_layout= "+ animate_layout);
    var arborNetworkLayout= {
     name: 'arbor', // Arbor layout using Arbor.js (Ondex Web: Kamada Kawai).
-    fit: true, animate: animate_layout /*true*/, animationDuration: 500, 
-    maxSimulationTime: 4000 /* 1.7976931348623157E+10308 // (infinite, constant simultaion) */, 
+    fit: true, animate: animate_layout /*true*/, animationDuration: 15000/*4000*/ /*500*/, 
+    maxSimulationTime: 20000 /*4000*/ /*1.7976931348623157E+10308 // (infinite, constant simultaion) */, 
     padding: [ 50, 50, 50, 50 ] /*30*/, boundingBox: undefined, simulationBounds: undefined, 
     ungrabifyWhileSimulating: false, ready: undefined, stop: undefined, 
-    avoidOverlap: true, handleDisconnected: true, liveUpdate: true/*false*/, 
+    avoidOverlap: true, handleDisconnected: true, liveUpdate: true /*false*/, 
     // forces used by arbor (use arbor default on undefined)
     stiffness: undefined /*400*/, 
     repulsion: /*10000*/undefined, // to avoid overlap
     friction: undefined /*100*/, gravity: true, fps: undefined, precision: undefined /*10*/,
     // static numbers or functions that dynamically return what these values should be for each element
     // e.g. nodeMass: function(n){ return n.data('weight') }
-    nodeMass: undefined/*10*/, edgeLength: undefined,
+    nodeMass: 15, edgeLength: undefined,
     stepSize: 1/*0.1*/, // size of timestep in simulation
     // function that returns true if the system is stable to indicate that the layout can be stopped
     stableEnergy: /*function() { return false; } */function( energy ) {
