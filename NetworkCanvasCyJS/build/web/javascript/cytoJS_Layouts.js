@@ -22,11 +22,11 @@
    var defaultNetworkLayout= {
     name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     animate: animate_layout, // true, // false, 
-    animationDuration: 4000, //2000, 
+    animationDuration: 2000, //4000, 
     fit: true, padding: 2 /*30*/ /*10*/, // padding around the simulation
     boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     refresh: 1, // number of ticks per frame; higher is faster but more jerky
-    maxSimulationTime: 15000, // 10000, // 8000, // max length in ms to run the layout
+    maxSimulationTime: 8000, // 15000, // 10000, // max length in ms to run the layout
     ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
     // layout event callbacks
     ready: function() {}, // on layoutready
@@ -35,12 +35,12 @@
     randomize: false, // use random node positions at beginning of layout
     avoidOverlap: true,
     handleDisconnected: true, // if true, avoids disconnected components from overlapping
-    nodeSpacing: function( node ){ return 75; /*20;*/ /*10;*/ }, // for extra spacing around nodes
+    nodeSpacing: function( node ){ return 75; /*20*/ /*10*/ }, // for extra spacing around nodes
     flow: undefined, // use DAG/ tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
     alignment: undefined, // relative alignment constraints on nodes, e.g. function( node ){ return { x: 0, y: 1 } }
     // different methods of specifying edge length, each can be a constant numerical value or a function like `function( edge ){ return 2; }`
     edgeLength: 13 /*130*/ /*10*/, // sets edge length directly in simulation
-    gravity: 5, shake: 30,
+    gravity: 15/*5*/, shake: 30,
     /*linkDistance: 2, */
     edgeSymDiffLength: 13 /*undefined*/, // symmetric diff edge length in simulation
     edgeJaccardLength: 13 /*undefined*/, // jaccard edge length in simulation
