@@ -35,7 +35,7 @@
     randomize: false, // use random node positions at beginning of layout
     avoidOverlap: true,
     handleDisconnected: true, // if true, avoids disconnected components from overlapping
-    nodeSpacing: function( node ){ return 75; /*20*/ /*10*/ }, // for extra spacing around nodes
+    nodeSpacing: 75, //function( node ){ return 75; /*20*/ /*10*/ }, // for extra spacing around nodes
     flow: undefined, // use DAG/ tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
     alignment: undefined, // relative alignment constraints on nodes, e.g. function( node ){ return { x: 0, y: 1 } }
     // different methods of specifying edge length, each can be a constant numerical value or a function like `function( edge ){ return 2; }`
@@ -47,7 +47,7 @@
     // iterations of the cola algorithm; uses default values on undefined
     unconstrIter: 10, //undefined, // unconstrained initial layout iterations
     userConstIter: 3, //undefined, // initial layout iterations with user-specified constraints
-    allConstIter: 3, //undefined, // initial layout iterations with all constraints including non-overlap
+    allConstIter: undefined, //3 // initial layout iterations with all constraints including non-overlap
     // infinite layout options
     infinite: false // overrides all other options for a forces-all-the-time mode
    };
@@ -66,9 +66,9 @@
     name: 'cose', // CytoscapeJS Cose layout
     animate: animate_layout /*true*/, animationDuration: 500, avoidOverlap: true, handleDisconnected: true, 
     fit: true, boundingBox: undefined, ready: function() {}, stop: function() {}, 
-    roots: undefined, padding: 30 /*5*/, /*randomize: true, debug: false, nodeRepulsion: 400000, 
-    numIter: 100, idealEdgeLength: 10, nodeOverlap: 10, edgeElasticity: 100, nestingFactor: 5, 
-    gravity: 250, initialTemp: 200, coolingFactor: 0.95, minTemp: 1.0,*/ edgeLength: 10 };
+    roots: undefined, padding: 30 /*5*/, edgeLength: 13, idealEdgeLength: 13, randomize: false/*true*/, 
+    debug: false, nodeRepulsion: 400000, numIter: 10 /*100*/, edgeElasticity: 100, nestingFactor: 5, 
+    /*nodeOverlap: 10,*/ gravity: 15 /*250*/, initialTemp: 200, coolingFactor: 0.95, minTemp: 1.0 };
    cy.layout(coseNetworkLayout); // run the CoSE layout algorithm.
   }
 
