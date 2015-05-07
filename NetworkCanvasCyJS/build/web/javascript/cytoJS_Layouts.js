@@ -22,35 +22,34 @@
    var defaultNetworkLayout= {
     name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     fit: true, animate: animate_layout, // true, // false, 
-    animationDuration: 4000, 
+//    animationDuration: 5000, // 4000
     padding: 10 /*2*/ /*30*/, // padding around the simulation
     boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     refresh: 1, // number of ticks per frame; higher is faster but more jerky
-    maxSimulationTime: 8000, // 15000, // 10000, // max length in ms to run the layout
+    maxSimulationTime: 8000, // 4000 // 10000, // 15000, // max length in ms to run the layout
     ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
     // layout event callbacks
     ready: function() {}, // on layoutready
     stop: function() {}, // on layoutstop
     // positioning options
     randomize: false, // use random node positions at beginning of layout
-    avoidOverlap: true,
+    avoidOverlap: true, // avoidOverlaps: true,
     handleDisconnected: true, // if true, avoids disconnected components from overlapping
-//    nodeSpacing: 75, //function( node ){ return 75; /*20*/ /*10*/ }, // for extra spacing around nodes
+    nodeSpacing: function( node ){ return 20; /*75*/ /*10*/ }, // for extra spacing around nodes
     flow: undefined, // use DAG/ tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
     alignment: undefined, // relative alignment constraints on nodes, e.g. function( node ){ return { x: 0, y: 1 } }
     // different methods of specifying edge length, each can be a constant numerical value or a function like `function( edge ){ return 2; }`
-    edgeLength: 13 /*130*/ /*10*/, // sets edge length directly in simulation
-    gravity: 15/*5*/, shake: 30,
-    /*linkDistance: 2, */
-    edgeSymDiffLength: 13 /*undefined*/, // symmetric diff edge length in simulation
-    edgeJaccardLength: 13 /*undefined*/, // jaccard edge length in simulation
+    edgeLength: undefined /*13*/ /*130*/ /*10*/, // sets edge length directly in simulation
+//    gravity: 15/*5*/, shake: 30,
+    edgeSymDiffLength: undefined /*13*/, // symmetric diff edge length in simulation
+    edgeJaccardLength: undefined /*13*/, // jaccard edge length in simulation
     // iterations of the cola algorithm; uses default values on undefined
-    unconstrIter: 10, //undefined, // unconstrained initial layout iterations
-    userConstIter: 3, //undefined, // initial layout iterations with user-specified constraints
+    unconstrIter: undefined, //10 // unconstrained initial layout iterations
+    userConstIter: undefined, //3 // initial layout iterations with user-specified constraints
     allConstIter: undefined, //3 // initial layout iterations with all constraints including non-overlap
-    maxIter: 10,
-    horizontalSpacing: 75,
-    verticalSPacing: 75,
+//    maxIter: 10,
+/*    horizontalNodeSpacing: 75,
+    verticalNodeSpacing: 75,*/
     // infinite layout options
     infinite: false // overrides all other options for a forces-all-the-time mode
    };

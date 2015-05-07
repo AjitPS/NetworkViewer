@@ -42,7 +42,7 @@ function initializeNetworkView() {
 $(function() { // on dom ready
   var networkJSON= graphJSON; // using the dynamically included graphJSON object directly.
   var metadataJSON= allGraphData; // using the dynamically included metadata JSON object directly.
-
+/*
   console.log("networkJSON: "+ networkJSON +"\n \n metadataJSON: "+ metadataJSON +"\n");
 
   // Display 'networkJSON' elements.nodes data in console.
@@ -84,7 +84,7 @@ $(function() { // on dom ready
               url_mappings.html_acc[k].weblink +", "+ url_mappings.html_acc[k].cc_restriction);
      }
   console.log("\n \n");
-
+*/
    // Define the stylesheet to be used for nodes & edges in the cytoscape.js container.
    var networkStylesheet= cytoscape.stylesheet()
       .selector('node')
@@ -196,7 +196,6 @@ $('#cy').cytoscape({
   desktopTapThreshold: 4,
 
   ready: function() {
-//   console.log('ready');
    window.cy= this;
   }
 });
