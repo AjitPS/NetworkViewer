@@ -66,15 +66,15 @@
    console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
    var coseNetworkLayout= {
     name: 'cose', // CytoscapeJS Cose layout
-    animate: animate_layout /*true*/, /*animationDuration: 500,*/ avoidOverlap: true, 
-    handleDisconnected: true, maxSimulationTime: 8000/*20000*/,
-    fit: true, boundingBox: undefined, ready: function() {} /*undefined*/, stop: function() {} /*undefined*/, 
-    roots: undefined, padding: 30, randomize: false/*true*/, 
-    edgeLength: undefined/*13*/, /*idealEdgeLength: 13, */
-    nodeSpacing: function( node ){ return 20; /*75*/ /*10*/ }, // for extra spacing around nodes
-    debug: false, nodeRepulsion: 400000, numIter: 10 /*100*/, edgeElasticity: 100, nestingFactor: 5, 
-    /*nodeOverlap: 10,*/ gravity: 15 /*250*/, shake: 30, coolingFactor: 0.95, initialTemp: 200, 
-    minTemp: 1.0
+    animate: animate_layout /*true*/, /*animationDuration: 500,*/ avoidOverlap: true,
+    refresh: 0.1, edgeElasticity : 20, fit: true, gravity : 15 /*100*/ /*250*/, /*shake: 30,*/
+//    handleDisconnected: true, maxSimulationTime: 8000/*20000*/,
+//    boundingBox: undefined, ready: function() {} /*undefined*/, stop: function() {} /*undefined*/, 
+    roots: undefined, padding: 30//, 
+//    randomize: false/*true*/, edgeLength: undefined/*13*/, /*idealEdgeLength: 13, */
+//    nodeSpacing: function( node ){ return 20; /*75*/ /*10*/ }, // for extra spacing around nodes
+//    debug: false, nodeRepulsion: 400000, numIter: 10 /*100*/, edgeElasticity: 20/*100*/, nestingFactor: 5, 
+//    /*nodeOverlap: 10,*/ coolingFactor: 0.95, initialTemp: 200, minTemp: 1.0
    };
    cy.layout(coseNetworkLayout); // run the CoSE layout algorithm.
   }
@@ -85,7 +85,7 @@
    var arborNetworkLayout= {
     name: 'arbor', // Arbor layout using Arbor.js (Ondex Web: Kamada Kawai).
     fit: true, animate: animate_layout /*true*/, //animationDuration: 4000/*15000*/ /*500*/, 
-    maxSimulationTime: 5000/*8000*/ /*20000*/ /*1.7976931348623157E+10308 // (infinite, constant simultaion) */, 
+//    maxSimulationTime: 5000/*8000*/ /*20000*/ /*1.7976931348623157E+10308 // (infinite, constant simultaion) */, 
     padding: 30/*[ 50, 50, 50, 50 ]*/, boundingBox: undefined, /*simulationBounds: undefined, */
     ungrabifyWhileSimulating: false, ready: undefined/*function() {}*/, stop: undefined/*function() {}*/, 
 //    avoidOverlap: true, handleDisconnected: true, liveUpdate: true /*false*/, randomize: false,
