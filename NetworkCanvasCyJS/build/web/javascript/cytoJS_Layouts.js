@@ -33,7 +33,7 @@
     stop: function() {}, // on layoutstop
     // positioning options
     randomize: false, // use random node positions at beginning of layout
-    avoidOverlap: true, // avoidOverlaps: true,
+    avoidOverlaps: true, // avoidOverlap: true,
     handleDisconnected: true, // if true, avoids disconnected components from overlapping
     nodeSpacing: function( node ){ return 20; /*75*/ /*10*/ }, // for extra spacing around nodes
     flow: undefined, // use DAG/ tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
@@ -66,11 +66,16 @@
    console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
    var coseNetworkLayout= {
     name: 'cose', // CytoscapeJS Cose layout
-    animate: animate_layout /*true*/, animationDuration: 500, avoidOverlap: true, handleDisconnected: true, 
-    fit: true, boundingBox: undefined, ready: function() {}, stop: function() {}, 
-    roots: undefined, padding: 30 /*5*/, edgeLength: 13, idealEdgeLength: 13, randomize: false/*true*/, 
+    animate: animate_layout /*true*/, /*animationDuration: 500,*/ avoidOverlap: true, 
+    handleDisconnected: true, maxSimulationTime: 8000/*20000*/,
+    fit: true, boundingBox: undefined, ready: function() {} /*undefined*/, stop: function() {} /*undefined*/, 
+    roots: undefined, padding: 30, randomize: false/*true*/, 
+    edgeLength: undefined/*13*/, /*idealEdgeLength: 13, */
+    nodeSpacing: function( node ){ return 20; /*75*/ /*10*/ }, // for extra spacing around nodes
     debug: false, nodeRepulsion: 400000, numIter: 10 /*100*/, edgeElasticity: 100, nestingFactor: 5, 
-    /*nodeOverlap: 10,*/ gravity: 15 /*250*/, initialTemp: 200, coolingFactor: 0.95, minTemp: 1.0 };
+    /*nodeOverlap: 10,*/ gravity: 15 /*250*/, shake: 30, coolingFactor: 0.95, initialTemp: 200, 
+    minTemp: 1.0
+   };
    cy.layout(coseNetworkLayout); // run the CoSE layout algorithm.
   }
 
@@ -79,24 +84,26 @@
    console.log("setArborLayout()>> animate_layout= "+ animate_layout);
    var arborNetworkLayout= {
     name: 'arbor', // Arbor layout using Arbor.js (Ondex Web: Kamada Kawai).
-    fit: true, animate: animate_layout /*true*/, animationDuration: 15000/*4000*/ /*500*/, 
-    maxSimulationTime: 20000/*5000*/ /*1.7976931348623157E+10308 // (infinite, constant simultaion) */, 
-    padding: 30/*[ 50, 50, 50, 50 ]*/, boundingBox: undefined, simulationBounds: undefined, 
-    ungrabifyWhileSimulating: false, ready: undefined, stop: undefined, 
-    avoidOverlap: true, handleDisconnected: true, liveUpdate: true /*false*/, 
+    fit: true, animate: animate_layout /*true*/, //animationDuration: 4000/*15000*/ /*500*/, 
+    maxSimulationTime: 5000/*8000*/ /*20000*/ /*1.7976931348623157E+10308 // (infinite, constant simultaion) */, 
+    padding: 30/*[ 50, 50, 50, 50 ]*/, boundingBox: undefined, /*simulationBounds: undefined, */
+    ungrabifyWhileSimulating: false, ready: undefined/*function() {}*/, stop: undefined/*function() {}*/, 
+//    avoidOverlap: true, handleDisconnected: true, liveUpdate: true /*false*/, randomize: false,
     // forces used by arbor (use arbor default on undefined)
     stiffness: undefined/*600*/, // the rigidity of the edges 
-    repulsion: 3000/*undefined*/ /*1000*/, // the force repelling nodes from each other (to avoid overlap).
+    repulsion: undefined/*400000*/ /*3000*/ /*1000*/, // the force repelling nodes from each other (to avoid overlap).
     friction: undefined /*20*/, // the amount of damping in the system
     gravity: true, // attracting nodes to the origin (can be true for 'center' and false for 'none').
+//    shake: 30,
     fps: undefined, // frames per second
-    precision: 100/*undefined*/, // accuracy vs. speed in force calculations (0: fast but jittery, 1: smooth but CPU-intensive)
+    precision: undefined /*1*/ /*100*/, // accuracy vs. speed in force calculations (0: fast but jittery, 1: smooth but CPU-intensive)
 //    springTension: 512, 
     // static numbers or functions that dynamically return what these values should be for each element
     // e.g. nodeMass: function(n){ return n.data('weight') }
-    nodeMass: undefined/*15*/, edgeLength: undefined /*10*/,
-    stepSize: 1/*0.1*/, // size of timestep in simulation
+    nodeSpacing: function( node ){ return 20; /*75*/ /*10*/ }, // for extra spacing around nodes
+    stepSize: 0.1/*1*/, // size of timestep in simulation
 //    dt: undefined, // the timestep to use for stepping the simulation
+//    nodeMass: undefined/*15*/, edgeLength: undefined/*10*/,
     // function that returns true if the system is stable to indicate that the layout can be stopped
     stableEnergy: /*function() { return false; } */function( energy ) {
      var e = energy;
@@ -113,13 +120,17 @@
    console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
    var springyNetworkLayout= {
     name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
-    animate: animate_layout /*false*/, animationDuration: 500, maxSimulationTime: 1000, 
-    ungrabifyWhileSimulating: false, fit: true, padding: 30, avoidOverlap: true, handleDisconnected: true, 
-    boundingBox: undefined, random: false, infinite: false, ready: undefined, stop: undefined, 
+    animate: animate_layout /*false*/, /*animationDuration: 4000, */ maxSimulationTime: 4000, 
+    ungrabifyWhileSimulating: false, fit: true, padding: 30, 
+    boundingBox: undefined, random: false, infinite: false, 
+    ready: undefined /*function() {} */, stop: undefined /*function() {} */, 
+ /*   avoidOverlap: true, handleDisconnected: true, refresh: 1, */
+//    nodeSpacing: function( node ){ return 20; /*75*/ }, // for extra spacing around nodes
+//    edgeLength: undefined/*10*/, flow: undefined, alignment: undefined, 
     // springy forces
-    stiffness: 400, repulsion: 400 /*1000*/, // to avoid overlap
-    damping: 0.5,
-    edgeLength: 10
+    stiffness: 400, repulsion: 400/*400000*/ /*1000*/ /*3000*/, // to avoid overlap
+    damping: 0.5//,
+//    gravity: 15/*5*/, /*shake: 30,*/ randomize: false
    };
    cy.layout(springyNetworkLayout); // run the Springy layout algorithm.
   }
@@ -167,7 +178,7 @@
       name: 'breadthfirst', // Breadth first layout (Ondex Web: Hierarchial)
       fit: true, directed: true, padding: 30 /*10*/, circle: false, boundingBox: undefined, avoidOverlap: true, 
       handleDisconnected: true, maximalAdjustments: 0, animate: animate_layout /*false*/, 
-      animationDuration: 500, 
+      animationDuration: 1000 /*500*/, 
       spacingFactor: 1.75, // positive spacing factor, larger= more space between nodes.
       roots: undefined, // '#n12', 
       ready: undefined, stop: undefined,
@@ -182,12 +193,12 @@
    var gridNetworkLayout= {
     name: 'grid', // CytoscapeJS Grid layout
     fit: true, padding: 30, boundingBox: undefined, avoidOverlap: true, handleDisconnected: true, 
-    animate: animate_layout /*false*/, animationDuration: 500,
+    animate: animate_layout /*false*/, animationDuration: 1000 /*500*/,
     rows: undefined, // force num of rows in the grid
     columns: undefined, // force num of cols in the grid
     position: function( node ){}, // returns { row, col } for element
-    ready: undefined, stop: undefined,
-    edgeLength: 10
+    ready: undefined, stop: undefined/*,
+    edgeLength: 10*/
    };
    cy.layout(gridNetworkLayout); // run the Grid layout.
   }
