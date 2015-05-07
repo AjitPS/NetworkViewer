@@ -21,9 +21,9 @@
     * Ondex Web). */
    var defaultNetworkLayout= {
     name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
-    animate: animate_layout, // true, // false, 
-    animationDuration: 2000, //4000, 
-    fit: true, padding: 2 /*30*/ /*10*/, // padding around the simulation
+    fit: true, animate: animate_layout, // true, // false, 
+    animationDuration: 4000, 
+    padding: 10 /*2*/ /*30*/, // padding around the simulation
     boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     refresh: 1, // number of ticks per frame; higher is faster but more jerky
     maxSimulationTime: 8000, // 15000, // 10000, // max length in ms to run the layout
@@ -35,7 +35,7 @@
     randomize: false, // use random node positions at beginning of layout
     avoidOverlap: true,
     handleDisconnected: true, // if true, avoids disconnected components from overlapping
-    nodeSpacing: 75, //function( node ){ return 75; /*20*/ /*10*/ }, // for extra spacing around nodes
+//    nodeSpacing: 75, //function( node ){ return 75; /*20*/ /*10*/ }, // for extra spacing around nodes
     flow: undefined, // use DAG/ tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
     alignment: undefined, // relative alignment constraints on nodes, e.g. function( node ){ return { x: 0, y: 1 } }
     // different methods of specifying edge length, each can be a constant numerical value or a function like `function( edge ){ return 2; }`
@@ -48,6 +48,9 @@
     unconstrIter: 10, //undefined, // unconstrained initial layout iterations
     userConstIter: 3, //undefined, // initial layout iterations with user-specified constraints
     allConstIter: undefined, //3 // initial layout iterations with all constraints including non-overlap
+    maxIter: 10,
+    horizontalSpacing: 75,
+    verticalSPacing: 75,
     // infinite layout options
     infinite: false // overrides all other options for a forces-all-the-time mode
    };
