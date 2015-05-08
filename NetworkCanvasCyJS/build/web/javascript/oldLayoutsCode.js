@@ -9,7 +9,7 @@
    var defaultNetworkLayout= {
     name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     animate: true, fit: true, padding: 10, // padding around the simulation
-    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+    boundingBox: undefined, // constraint layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     refresh: 1, // number of ticks per frame; higher is faster but more jerky
     maxSimulationTime: 4000, // max length in ms to run the layout
     ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
@@ -76,7 +76,7 @@
     minLen: function( edge ){ return 1; }, // number of ranks to keep between the source and target of the edge
     // general layout options
     fit: true, padding: 30, animate: false, animationDuration: 500, // duration of animation in ms if enabled
-    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+    boundingBox: undefined, // constraint layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     ready: function(){}, stop: function(){} */
 
  /*     name: 'cose', // CytoscapeJS Cose layout

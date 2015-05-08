@@ -19,12 +19,12 @@
 
   /** Define the default layout for the network, using CoLa layout from Cola.js (similar to the "Gem" layout in 
     * Ondex Web). */
-   var defaultNetworkLayout= {
+   var defaultNetworkLayout_old= {
     name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     fit: true, animate: animate_layout, // true, // false, 
 //    animationDuration: 5000, // 4000
     padding: 10 /*2*/ /*30*/, // padding around the simulation
-    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+    boundingBox: undefined, // constraint layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     refresh: 1, // number of ticks per frame; higher is faster but more jerky
     maxSimulationTime: 8000, // 4000 // 10000, // 15000, // max length in ms to run the layout
     ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
@@ -52,6 +52,28 @@
     verticalNodeSpacing: 75,*/
     // infinite layout options
     infinite: false // overrides all other options for a forces-all-the-time mode
+   };
+
+   var defaultNetworkLayout= {
+    name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
+    fit: true, animate: animate_layout, padding: 30, boundingBox: undefined, 
+//    animationDuration: 4000,
+    refresh: 1, randomize: false, handleDisconnected: true,
+//    maxSimulationTime: 8000, // max length in ms to run the layout
+    ungrabifyWhileSimulating: false, ready: function() {}, stop: function() {},
+    avoidOverlaps: true, // avoidOverlap: true,
+//    nodeSpacing: function( node ){ return 20; /*75*/ },
+//    flow: undefined,
+//    alignment: undefined,
+//    edgeLength: undefined /*13*/,
+//    edgeSymDiffLength: undefined /*13*/, // symmetric diff edge length in simulation
+//    edgeJaccardLength: undefined /*13*/, // jaccard edge length in simulation
+//    gravity: 15, shake: 30,
+//    unconstrIter: undefined, //10
+//    userConstIter: undefined, //3
+//    allConstIter: undefined, //3
+//    maxIter: 10, horizontalNodeSpacing: 75, verticalNodeSpacing: 75,
+    infinite: false
    };
 
   // Relayout: Set default (CoLa) layout.
@@ -149,7 +171,7 @@
     // general layout options
     fit: true, padding: 30, animate: animate_layout /*false*/, animationDuration: 500, // duration of animation in ms if enabled
     avoidOverlap: true, handleDisconnected: true, 
-    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+    boundingBox: undefined, // constraint layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     ready: function(){}, stop: function(){},
     edgeLength: 10
    };
