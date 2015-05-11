@@ -98,9 +98,10 @@
 //    boundingBox: undefined, ready: function() {} /*undefined*/, stop: function() {} /*undefined*/, 
     roots: undefined, padding: 30, 
     randomize: false/*true*/, //edgeLength: undefined/*13*/, /*idealEdgeLength: 13, */
-    nodeSpacing: 20/*function( node ){ return 20; },*/ // for extra spacing around nodes
+    nodeSpacing: 20,/*function( node ){ return 20; },*/ // for extra spacing around nodes
 //    debug: false, nestingFactor: 5, 
 //    /*nodeOverlap: 10,*/ coolingFactor: 0.95, initialTemp: 200, minTemp: 1.0
+    coolingFactor: 0.95 // to enable clustering.
    };
    cy.layout(coseNetworkLayout); // run the CoSE layout algorithm.
   }
@@ -118,7 +119,7 @@
     // forces used by arbor (use arbor default on undefined)
     stiffness: undefined/*600*/, // the rigidity of the edges 
     repulsion: undefined/*400000*/ /*3000*/ /*1000*/, // the force repelling nodes from each other (to avoid overlap).
-    friction: undefined /*20*/, // the amount of damping in the system
+    friction: 0.3 /*1.0*/ /*20*/, // the amount of damping (should allow for clustering) in the system
     gravity: true, // attracting nodes to the origin (can be true for 'center' and false for 'none').
 //    shake: 30,
     fps: undefined/*30*/, // frames per second

@@ -25,6 +25,9 @@ function generateNetworkGraph(jsonFileName) {
      console.log(json_File +" file included...");
      // Initialize the cytoscapeJS container for Network View.
      initializeNetworkView();
+     
+     // Re-set the default (WebCola) layout.
+     setDefaultLayout();
    });
 
   }
