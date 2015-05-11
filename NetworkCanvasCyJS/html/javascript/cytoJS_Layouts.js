@@ -57,7 +57,7 @@
    setColaLayout();
   }
 
-  // Set default (WebCola) layout.
+  // Set WebCola layout (default).
   function setColaLayout() {
    // Get the cytoscape instance as a Javascript object from JQuery.
    var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
@@ -123,7 +123,7 @@
     // forces used by arbor (use arbor default on undefined)
     stiffness: undefined/*600*/, // the rigidity of the edges 
     repulsion: undefined/*400000*/ /*3000*/ /*1000*/, // the force repelling nodes from each other (to avoid overlap).
-    friction: 0.3 /*1.0*/ /*20*/, // the amount of damping (should allow for clustering) in the system
+    friction: 0.3 /*1.0*/ /*20*/, // the amount of damping (should allow for clustering) in the system.
     gravity: true, // attracting nodes to the origin (can be true for 'center' and false for 'none').
 //    shake: 30,
     fps: undefined/*30*/, // frames per second
@@ -163,7 +163,7 @@
     gravity: 15, //shake: 30,
     // springy forces
     stiffness: undefined/*400*/, repulsion: 400000/*400*/, // to avoid overlap
-    damping: 0.3 /*0.5*/ // to enable clustering.
+    damping: 0.3 /*0.5*/ // should allow for clustering.
    };
    cy.layout(springyNetworkLayout); // run the Springy layout algorithm.
   }
