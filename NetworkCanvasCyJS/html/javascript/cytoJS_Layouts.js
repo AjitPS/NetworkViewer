@@ -2,7 +2,7 @@
  * @author Ajit Singh
  * @name Network View layouts
  * @description code for Network View using CytoscapeJS layouts such as breadthfirst, grid, cose, circle 
- * and concentric and third party layout algorithms such as CoLa, arbor, springy and dagre (tree).
+ * and concentric and third party layout algorithms such as WebCola, arbor, springy and dagre (tree).
  * @returns
  **/
    var animate_layout= true; // global variable for layout animation setting (default: true).
@@ -17,10 +17,10 @@
     console.log("setLayoutAnimationSetting()>> checkbox checked: "+ document.getElementById("animateLayout").checked +" --> animate_layout= "+ animate_layout);
    }
 
-  /** Define the default layout for the network, using CoLa layout from Cola.js (similar to the "Gem" layout in 
+  /** Define the default layout for the network, using WebCola layout from Cola.js (similar to the "Gem" layout in 
     * Ondex Web). */
    var defaultNetworkLayout_old= {
-    name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
+    name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     fit: true, animate: animate_layout, // true, // false, 
 //    animationDuration: 5000, // 4000
     padding: 10 /*2*/ /*30*/, // padding around the simulation
@@ -55,7 +55,7 @@
    };
 
    var defaultNetworkLayout= {
-    name: 'cola', // CoLa layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
+    name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     fit: true, animate: animate_layout, padding: 30, boundingBox: undefined, 
 //    animationDuration: 4000,
     randomize: false, handleDisconnected: true, refresh: 0.5/*0.1*/ /*1*/, 
@@ -78,10 +78,10 @@
     infinite: false
    };
 
-  // Relayout: Set default (CoLa) layout.
+  // Relayout: Set default (WebCola) layout.
   function setDefaultLayout() {
    console.log("setDefaultLayout()>> animate_layout= "+ animate_layout);
-   cy.layout(defaultNetworkLayout); // run the default (CoLa) layout algorithm.
+   cy.layout(defaultNetworkLayout); // run the default (WebCola) layout algorithm.
   }
 
   // Set Cose layout.

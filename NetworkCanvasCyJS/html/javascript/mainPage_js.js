@@ -7,7 +7,7 @@ var cyjs_networkView= false;
 
 function generateCyJSNetwork(jsonFileName) {
     var jsonFile= jsonFileName; // the JSON file received from index.html.
-    console.log("generateCyJSNetwork>> jsonFile from index.html: "+ jsonFile);
+//    console.log("generateCyJSNetwork>> jsonFile from index.html: "+ jsonFile);
 
   //  try {
          if(cyjs_networkView && !cyjs_networkView.closed) {

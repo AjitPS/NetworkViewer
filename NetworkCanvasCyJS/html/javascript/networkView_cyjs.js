@@ -2,7 +2,7 @@
  * @author Ajit Singh
  * @name Network View example
  * @description example code for Network View using Javascript, jQuery, CytoscapeJS, JQuery UI, cxtmenu, 
- * QTip, multi-select (using Shift + click), JSON, CoLa.js & other layout algorithms.
+ * QTip, multi-select (using Shift + click), JSON, WebCola.js & other layout algorithms.
  * @returns
  **/
 window.onload= function () {
@@ -147,7 +147,7 @@ $(function() { // on dom ready
   ready: function() { console.log('ready'); window.cy= this; }
 });*/
 
-// Initialise a cystoscape container instance on the HTML DOM using JQuery.
+// Initialise a cytoscape container instance on the HTML DOM using JQuery.
 $('#cy').cytoscape({
   container: document.getElementById('cy'),
 
