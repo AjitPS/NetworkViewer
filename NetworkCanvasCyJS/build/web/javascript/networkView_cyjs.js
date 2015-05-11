@@ -164,7 +164,8 @@ $('#cy').cytoscape({
   elements: networkJSON,
   
   // Layout of the Network.
-  layout: defaultNetworkLayout,
+//  layout: defaultNetworkLayout,
+//  layout: { name: 'cola', animate: true /* , ... */ }, 
 
   // these options hide parts of the graph during interaction.
 //  hideEdgesOnViewport: true,
@@ -204,7 +205,7 @@ $('#cy').cytoscape({
   }
 });
 
-// Get the cystoscape instance as a Javascript object from JQuery.
+// Get the cytoscape instance as a Javascript object from JQuery.
 var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
 
 // Pan & zooms the graph to fit all the elements (concept nodes) in the graph.

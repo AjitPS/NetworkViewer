@@ -16,49 +16,23 @@
     }
     console.log("setLayoutAnimationSetting()>> checkbox checked: "+ document.getElementById("animateLayout").checked +" --> animate_layout= "+ animate_layout);
    }
+/*
+   // Circle layout settings, used while initializating the network graph.
+   var circleLayout= {
+      name: 'circle', // Circle layout (Ondex Web: Circular)
+      padding: 30, avoidOverlap: true, boundingBox: undefined, handleDisconnected: true,
+      animate: animate_layout, fit: true, counterclockwise: false,
+      radius: 3, rStepSize: 2
+   };
+*/
 
   /** Define the default layout for the network, using WebCola layout from Cola.js (similar to the "Gem" layout in 
     * Ondex Web). */
-   var defaultNetworkLayout_old= {
-    name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
-    fit: true, animate: animate_layout, // true, // false, 
-//    animationDuration: 5000, // 4000
-    padding: 10 /*2*/ /*30*/, // padding around the simulation
-    boundingBox: undefined, // constraint layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-    refresh: 1, // number of ticks per frame; higher is faster but more jerky
-    maxSimulationTime: 8000, // 4000 // 10000, // 15000, // max length in ms to run the layout
-    ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
-    // layout event callbacks
-    ready: function() {}, // on layoutready
-    stop: function() {}, // on layoutstop
-    // positioning options
-    randomize: false, // use random node positions at beginning of layout
-    avoidOverlaps: true, // avoidOverlap: true,
-    handleDisconnected: true, // if true, avoids disconnected components from overlapping
-    nodeSpacing: function( node ){ return 20; /*75*/ /*10*/ }, // for extra spacing around nodes
-    flow: undefined, // use DAG/ tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
-    alignment: undefined, // relative alignment constraints on nodes, e.g. function( node ){ return { x: 0, y: 1 } }
-    // different methods of specifying edge length, each can be a constant numerical value or a function like `function( edge ){ return 2; }`
-    edgeLength: undefined /*13*/ /*130*/ /*10*/, // sets edge length directly in simulation
-//    gravity: 15/*5*/, shake: 30,
-    edgeSymDiffLength: undefined /*13*/, // symmetric diff edge length in simulation
-    edgeJaccardLength: undefined /*13*/, // jaccard edge length in simulation
-    // iterations of the cola algorithm; uses default values on undefined
-    unconstrIter: undefined, //10 // unconstrained initial layout iterations
-    userConstIter: undefined, //3 // initial layout iterations with user-specified constraints
-    allConstIter: undefined, //3 // initial layout iterations with all constraints including non-overlap
-//    maxIter: 10,
-/*    horizontalNodeSpacing: 75,
-    verticalNodeSpacing: 75,*/
-    // infinite layout options
-    infinite: false // overrides all other options for a forces-all-the-time mode
-   };
-
    var defaultNetworkLayout= {
     name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     fit: true, animate: animate_layout, padding: 30, boundingBox: undefined, 
 //    animationDuration: 4000,
-    randomize: false, handleDisconnected: true, refresh: 0.5/*0.1*/ /*1*/, 
+    randomize: false, handleDisconnected: true, refresh: 0.5 /*0.1*/, 
 //    maxSimulationTime: 8000, // max length in ms to run the layout
     ungrabifyWhileSimulating: false, ready: function() {}, stop: function() {},
     avoidOverlap: true, // avoidOverlaps: true,
@@ -66,7 +40,7 @@
     nodeSpacing: 20 /*75*/,
 //    flow: undefined,
 //    alignment: undefined,
-//    edgeLength: undefined /*13*/,
+//    edgeLength: undefined /*13*/, // linkDistance: undefined, /*13*/
 //    edgeSymDiffLength: undefined /*13*/, // symmetric diff edge length in simulation
 //    edgeJaccardLength: undefined /*13*/, // jaccard edge length in simulation
     gravity: 15, shake: 30,
@@ -78,9 +52,39 @@
     infinite: false
    };
 
-  // Relayout: Set default (WebCola) layout.
+  // Relayout: Set default (WebCola) layout for the network graph.
   function setDefaultLayout() {
-   console.log("setDefaultLayout()>> animate_layout= "+ animate_layout);
+   setColaLayout();
+  }
+
+  // Set default (WebCola) layout.
+  function setColaLayout() {
+   // Get the cytoscape instance as a Javascript object from JQuery.
+   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+
+   console.log("setColaLayout()>> animate_layout= "+ animate_layout);
+   var defaultNetworkLayout= {
+    name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
+    fit: true, animate: animate_layout, padding: 30, boundingBox: undefined, 
+//    animationDuration: 4000,
+    randomize: false, handleDisconnected: true, refresh: 0.5/*0.1*/ /*1*/, 
+//    maxSimulationTime: 8000, // max length in ms to run the layout
+    ungrabifyWhileSimulating: false, ready: function() {}, stop: function() {},
+    avoidOverlap: true, // avoidOverlaps: true,
+//    edgeElasticity : 20, roots: undefined,
+    nodeSpacing: 20 /*75*/,
+//    flow: undefined, alignment: undefined,
+//    edgeLength: undefined /*13*/,
+//    edgeSymDiffLength: undefined /*13*/, // symmetric diff edge length in simulation
+//    edgeJaccardLength: undefined /*13*/, // jaccard edge length in simulation
+    gravity: 15, shake: 30,
+    nodeRepulsion: 400000, numIter: 10 /*100*/, 
+//    unconstrIter: undefined, //10
+//    userConstIter: undefined, //3
+//    allConstIter: undefined, //3
+//    maxIter: 10, horizontalNodeSpacing: 75, verticalNodeSpacing: 75,
+    infinite: false
+   };
    cy.layout(defaultNetworkLayout); // run the default (WebCola) layout algorithm.
   }
 
@@ -128,7 +132,7 @@
 //    springTension: 512, 
     // static numbers or functions that dynamically return what these values should be for each element
     // e.g. nodeMass: function(n){ return n.data('weight') }
-//    nodeSpacing: 20, // for extra spacing around nodes
+    nodeSpacing: 20, // for extra spacing around nodes
     stepSize: 0.1/*1*/, // size of timestep in simulation
 //    dt: undefined, // the timestep to use for stepping the simulation
     // function that returns true if the system is stable to indicate that the layout can be stopped
@@ -143,23 +147,37 @@
   }
 
   // Set Springy layout.
-  function setSpringyLayout() {
+  function setSpringyLayout_old() {
    console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
    var springyNetworkLayout= {
     name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
     animate: animate_layout, 
+    padding: 30, avoidOverlap: true, boundingBox: undefined, handleDisconnected: true, fit: true,
 //    animationDuration: 4000,
     maxSimulationTime: 4000/*8000*/, 
-    ungrabifyWhileSimulating: false, fit: true, padding: 30, 
-    boundingBox: undefined, random: false, infinite: false,
-    ready: undefined /*function() {} */, stop: undefined /*function() {} */, 
-    avoidOverlap: true, handleDisconnected: true, refresh: 0.1/*1*/,
-//    nodeSpacing: 20, // for extra spacing around nodes
+    ungrabifyWhileSimulating: false, random: false, infinite: false,
+//    ready: undefined /*function() {} */, stop: undefined /*function() {} */, 
+    refresh: 0.1/*1*/ /*0.5*/,
+    nodeSpacing: 20, // for extra spacing around nodes
 //    edgeLength: undefined/*10*/, flow: undefined, alignment: undefined, 
-//    gravity: 15, shake: 30,
+    gravity: 15, //shake: 30,
     // springy forces
-    stiffness: 400, repulsion: 400/*400000*/, // to avoid overlap
-    damping: 0.5
+    stiffness: undefined/*400*/, repulsion: 400000/*400*/, // to avoid overlap
+    damping: 0.3 /*0.5*/ // to enable clustering.
+   };
+   cy.layout(springyNetworkLayout); // run the Springy layout algorithm.
+  }
+
+  // Set Springy layout.
+  function setSpringyLayout() {
+   console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
+   var springyNetworkLayout= {
+    name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
+    animate: animate_layout, maxSimulationTime: 4000, ungrabifyWhileSimulating: false, 
+    fit: true, padding: 30, boundingBox: undefined, random: false, infinite: false, 
+    ready: undefined, stop: undefined, 
+    // springy forces
+    stiffness: 400, repulsion: 400, damping: 0.5 
    };
    cy.layout(springyNetworkLayout); // run the Springy layout algorithm.
   }
@@ -189,6 +207,9 @@
 
   // Set Circle layout.
   function setCircleLayout() {
+   // Get the cytoscape instance as a Javascript object from JQuery.
+   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+
    console.log("setCircleLayout()>> animate_layout= "+ animate_layout);
    var circleNetworkLayout= {
       name: 'circle', // Circle layout (Ondex Web: Circular)
