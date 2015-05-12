@@ -152,22 +152,23 @@
    var springyNetworkLayout= {
     name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
     animate: animate_layout, 
-    padding: 30, avoidOverlap: true, boundingBox: undefined, handleDisconnected: true, fit: true,
-//    animationDuration: 4000,
     maxSimulationTime: 4000/*8000*/, 
-    ungrabifyWhileSimulating: false, random: false, infinite: false,
-//    ready: undefined /*function() {} */, stop: undefined /*function() {} */, 
-    refresh: 0.1/*1*/ /*0.5*/,
-    nodeSpacing: 20, // for extra spacing around nodes
+    ungrabifyWhileSimulating: false, fit: true, padding: 30, boundingBox: undefined, 
+    random: false, infinite: false,
+    ready: undefined/*function() {} */, stop: undefined/*function() {} */, 
+    avoidOverlap: true, handleDisconnected: true,
+//    animationDuration: 4000,
+//    refresh: 0.1/*1*/ /*0.5*/,
+//    nodeSpacing: 20, // for extra spacing around nodes
 //    edgeLength: undefined/*10*/, flow: undefined, alignment: undefined, 
-    gravity: 15, //shake: 30,
+//    gravity: 15, //shake: 30,
     // springy forces
-    stiffness: undefined/*400*/, repulsion: 400000/*400*/, // to avoid overlap
-    damping: 0.3 /*0.5*/ // should allow for clustering.
+    stiffness: undefined/*400*/, repulsion: 400/*400000*/, // to avoid overlap
+    damping: 0.5 /*0.3*/ // should allow for clustering.
    };
    cy.layout(springyNetworkLayout); // run the Springy layout algorithm.
   }
-
+  
   // Set Springy layout.
   function setSpringyLayout() {
    console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
