@@ -55,7 +55,9 @@
   // Relayout: Set default (WebCola) layout for the network graph.
   function setDefaultLayout() {
    console.log("cytoscapeJS container (cy) initialized... now set Default Layout");
-   setColaLayout();
+//   setCircleLayout();
+//   setColaLayout();
+   setTimeout(setColaLayout, 200);
   }
 
   // Set WebCola layout (default).
@@ -75,21 +77,24 @@
     nodeSpacing: 20/*function( node ){ return 20; }*/,
     // infinite layout options
     infinite: false,
-    flow: undefined, alignment: undefined,
-    edgeLength: 20/*undefined*/ /*13*/,
-    edgeSymDiffLength: 20/*undefined*/ /*13*/, // symmetric diff edge length in simulation
-    edgeJaccardLength: 20/*undefined*/ /*13*/, // jaccard edge length in simulation
+//    flow: undefined, alignment: undefined,
+//    edgeLength: 20/*undefined*/ /*13*/,
+//    edgeSymDiffLength: 20/*undefined*/ /*13*/, // symmetric diff edge length in simulation
+//    edgeJaccardLength: 20/*undefined*/ /*13*/, // jaccard edge length in simulation
     gravity: 15, shake: 10/*30*/,
 //    nodeRepulsion: 400000/*400*/, //numIter: 10 /*100*/, 
-    edgeElasticity: 20, // roots: undefined,
-    coolingFactor: 0.95 // to enable clustering.
     // iterations of cola algorithm; uses default values on undefined
 //    unconstrIter: undefined, //10
 //    userConstIter: undefined, //3
 //    allConstIter: undefined, //3
+//    edgeElasticity: 20, // roots: undefined,
+//    coolingFactor: 0.95 // to enable clustering.
 //    maxIter: 10, horizontalNodeSpacing: 75, verticalNodeSpacing: 75,
    };
    cy.layout(defaultNetworkLayout); // run the default (WebCola) layout algorithm.
+
+   cy.reset(); // reset the graph's zooming & panning properties.
+   cy.fit();
   }
 
   // Set Cose layout.
