@@ -93,7 +93,7 @@
   }
 
   // Set Cose layout.
-  /* Slow and performance-hampering */
+  /* Slow and performance-hampering for larger networks */
   function setCoseLayout() {
    console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
    var coseNetworkLayout= {
@@ -151,6 +151,7 @@
   }
 
   // Set Springy layout.
+  /* Not suitable for larger networks */
   function setSpringyLayout_old() {
    console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
    var springyNetworkLayout= {
@@ -170,8 +171,9 @@
    };
    cy.layout(springyNetworkLayout); // run the Springy layout algorithm.
   }
-  
+
   // Set Springy layout.
+  /* Not suitable for larger networks */
   function setSpringyLayout() {
    console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
    var springyNetworkLayout= {
