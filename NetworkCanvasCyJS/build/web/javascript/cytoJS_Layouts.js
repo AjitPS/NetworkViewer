@@ -54,6 +54,7 @@
 
   // Relayout: Set default (WebCola) layout for the network graph.
   function setDefaultLayout() {
+   console.log("cytoscapeJS container (cy) initialized... now set Default Layout");
    setColaLayout();
   }
 
@@ -67,22 +68,25 @@
     name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     fit: true, animate: animate_layout, padding: 30, boundingBox: undefined, 
 //    animationDuration: 4000,
-    randomize: false, handleDisconnected: true, refresh: 0.5/*0.1*/ /*1*/, 
-//    maxSimulationTime: 8000, // max length in ms to run the layout
+    maxSimulationTime: 4000/*8000*/, // max length in ms to run the layout
     ungrabifyWhileSimulating: false, ready: function() {}, stop: function() {},
+    randomize: false, handleDisconnected: true, refresh: 1/*0.1*/ /*0.5*/, 
     avoidOverlap: true, // avoidOverlaps: true,
 //    edgeElasticity : 20, roots: undefined,
-    nodeSpacing: 20 /*75*/,
-//    flow: undefined, alignment: undefined,
-//    edgeLength: undefined /*13*/,
-//    edgeSymDiffLength: undefined /*13*/, // symmetric diff edge length in simulation
-//    edgeJaccardLength: undefined /*13*/, // jaccard edge length in simulation
-    gravity: 15, shake: 30,
-    nodeRepulsion: 400000, numIter: 10 /*100*/, 
-//    unconstrIter: undefined, //10
-//    userConstIter: undefined, //3
-//    allConstIter: undefined, //3
+    nodeSpacing: function( node ){ return 20; /*75*/},
+    flow: undefined, alignment: undefined,
+    edgeLength: undefined /*13*/,
+    edgeSymDiffLength: undefined /*13*/, // symmetric diff edge length in simulation
+    edgeJaccardLength: undefined /*13*/, // jaccard edge length in simulation
+//    gravity: 15, //shake: 30,
+//    nodeRepulsion: 400000, //numIter: 10 /*100*/, 
+    // iterations of cola algorithm; uses default values on undefined
+    unconstrIter: undefined, //10
+    userConstIter: undefined, //3
+    allConstIter: undefined, //3
 //    maxIter: 10, horizontalNodeSpacing: 75, verticalNodeSpacing: 75,
+//    roots: undefined,
+    // infinite layout options
     infinite: false
    };
    cy.layout(defaultNetworkLayout); // run the default (WebCola) layout algorithm.
@@ -151,15 +155,13 @@
    console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
    var springyNetworkLayout= {
     name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
-    animate: animate_layout, 
+    animate: animate_layout, fit: true, padding: 30, boundingBox: undefined, 
+//    animationDuration: 4000, refresh: 0.1/*1*/ /*0.5*/,
     maxSimulationTime: 4000/*8000*/, 
-    ungrabifyWhileSimulating: false, fit: true, padding: 30, boundingBox: undefined, 
-    random: false, infinite: false,
     ready: undefined/*function() {} */, stop: undefined/*function() {} */, 
     avoidOverlap: true, handleDisconnected: true,
-//    animationDuration: 4000,
-//    refresh: 0.1/*1*/ /*0.5*/,
 //    nodeSpacing: 20, // for extra spacing around nodes
+    ungrabifyWhileSimulating: false, random: false, infinite: false,
 //    edgeLength: undefined/*10*/, flow: undefined, alignment: undefined, 
 //    gravity: 15, //shake: 30,
     // springy forces
@@ -174,13 +176,33 @@
    console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
    var springyNetworkLayout= {
     name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
-    animate: animate_layout, maxSimulationTime: 4000, ungrabifyWhileSimulating: false, 
-    fit: true, padding: 30, boundingBox: undefined, random: false, infinite: false, 
+    animate: animate_layout, fit: true, padding: 30, maxSimulationTime: 4000, 
+    ungrabifyWhileSimulating: false, 
+    boundingBox: undefined, random: false, infinite: false, 
     ready: undefined, stop: undefined, 
     // springy forces
     stiffness: 400, repulsion: 400, damping: 0.5 
    };
    cy.layout(springyNetworkLayout); // run the Springy layout algorithm.
+  }
+
+  // Set Spread layout, using foograph.js & rhill-voronoi-core.js.
+  function setSpreadLayout() {
+   console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
+   var spreadNetworkLayout= {
+    name: 'spread', // Spread layout, uses foograph.js & rhill-voronoi-core.js.
+    animate: animate_layout, ready: undefined, stop: undefined,
+    fit: true, padding: 30, 
+    minDist: 20, // Minimum distance between nodes
+    expandingFactor: -1.0, // If the network does not satisfy the minDist criteria then it expands 
+    // the network by this amount.
+    // If it is set to -1.0 the amount of expansion is automatically calculated based on the minDist,
+    // the aspect ratio & the number of nodes.
+    maxFruchtermanReingoldIterations: 50, // Maximum number of initial force-directed iterations
+    maxExpandIterations: 4, // Maximum number of expanding iterations
+    boundingBox: undefined
+   };
+   cy.layout(spreadNetworkLayout); // run the Springy layout algorithm.
   }
 
   // Set Dagre layout.
