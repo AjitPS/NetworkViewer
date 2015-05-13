@@ -55,7 +55,6 @@
   // Relayout: Set default (WebCola) layout for the network graph.
   function setDefaultLayout() {
    console.log("cytoscapeJS container (cy) initialized... now set Default Layout");
-//   setCircleLayout();
 //   setColaLayout();
    setTimeout(setColaLayout, 200);
   }
