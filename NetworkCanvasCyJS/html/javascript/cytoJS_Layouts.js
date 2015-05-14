@@ -17,32 +17,6 @@
     console.log("setLayoutAnimationSetting()>> checkbox checked: "+ document.getElementById("animateLayout").checked +" --> animate_layout= "+ animate_layout);
    }
 
-  /** Define the default layout for the network, using WebCola layout from Cola.js (similar to the "Gem" layout in 
-    * Ondex Web). */
-   var defaultNetworkLayout= {
-    name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
-    fit: true, animate: animate_layout, padding: 30, boundingBox: undefined, 
-//    animationDuration: 4000,
-    randomize: false, handleDisconnected: true, refresh: 0.5 /*0.1*/, 
-//    maxSimulationTime: 8000, // max length in ms to run the layout
-    ungrabifyWhileSimulating: false, ready: function() {}, stop: function() {},
-    avoidOverlap: true, // avoidOverlaps: true,
-//    edgeElasticity : 20, roots: undefined,
-    nodeSpacing: 20 /*75*/,
-//    flow: undefined,
-//    alignment: undefined,
-//    edgeLength: undefined /*13*/, // linkDistance: undefined, /*13*/
-//    edgeSymDiffLength: undefined /*13*/, // symmetric diff edge length in simulation
-//    edgeJaccardLength: undefined /*13*/, // jaccard edge length in simulation
-    gravity: 15, shake: 30,
-    nodeRepulsion: 400000, numIter: 10 /*100*/, 
-//    unconstrIter: undefined, //10
-//    userConstIter: undefined, //3
-//    allConstIter: undefined, //3
-//    maxIter: 10, horizontalNodeSpacing: 75, verticalNodeSpacing: 75,
-    infinite: false
-   };
-
   // Relayout: Set default (WebCola) layout for the network graph.
   function setDefaultLayout() {
    console.log("cytoscapeJS container (cy) initialized... now set Default Layout");
@@ -50,6 +24,8 @@
    setTimeout(setColaLayout, 200);
   }
 
+  /** Define the default layout for the network, using WebCola layout from Cola.js (similar to the "Gem" layout in 
+    * Ondex Web). */
    var defaultNetworkLayout= {
     name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     refresh: 1/*0.1*/ /*0.5*/, animate: animate_layout, fit: true, padding: 30, boundingBox: undefined, 
