@@ -2,7 +2,7 @@
  * @author Ajit Singh
  * @name Network View layouts
  * @description code for Network View using CytoscapeJS layouts such as breadthfirst, grid, cose, circle 
- * and concentric and third party layout algorithms such as WebCola, arbor, springy and dagre (tree).
+ * & concentric & third party layout algorithms such as WebCola, arbor, springy, spread & dagre (tree).
  * @returns
  **/
    var animate_layout= true; // global variable for layout animation setting (default: true).
