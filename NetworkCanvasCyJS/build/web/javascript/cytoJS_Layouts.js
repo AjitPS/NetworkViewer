@@ -17,12 +17,13 @@
     console.log("setLayoutAnimationSetting()>> checkbox checked: "+ document.getElementById("animateLayout").checked +" --> animate_layout= "+ animate_layout);
    }
 
+/*
   // Relayout: Set default (WebCola) layout for the network graph.
   function setDefaultLayout() {
    console.log("cytoscapeJS container (cy) initialized... now set Default Layout");
 //   setColaLayout();
    setTimeout(setColaLayout, 200);
-  }
+  }*/
 
   /** Define the default layout for the network, using WebCola layout from Cola.js (similar to the "Gem" layout in 
     * Ondex Web). */
@@ -43,7 +44,7 @@
 //    gravity: 15, shake: 10/*30*/,
 //    nodeRepulsion: 400000/*400*/, //numIter: 10 /*100*/, 
     // iterations of cola algorithm; uses default values on undefined
-    unconstrIter: 10, //10
+    unconstrIter: 10,
     userConstIter: undefined, //3
     allConstIter: undefined, //3
 //    edgeElasticity: 20, // roots: undefined,
