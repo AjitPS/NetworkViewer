@@ -16,15 +16,6 @@
     }
     console.log("setLayoutAnimationSetting()>> checkbox checked: "+ document.getElementById("animateLayout").checked +" --> animate_layout= "+ animate_layout);
    }
-/*
-   // Circle layout settings, used while initializating the network graph.
-   var circleLayout= {
-      name: 'circle', // Circle layout (Ondex Web: Circular)
-      padding: 30, avoidOverlap: true, boundingBox: undefined, handleDisconnected: true,
-      animate: animate_layout, fit: true, counterclockwise: false,
-      radius: 3, rStepSize: 2
-   };
-*/
 
   /** Define the default layout for the network, using WebCola layout from Cola.js (similar to the "Gem" layout in 
     * Ondex Web). */
@@ -59,41 +50,43 @@
    setTimeout(setColaLayout, 200);
   }
 
+   var defaultNetworkLayout= {
+    name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
+    refresh: 1/*0.1*/ /*0.5*/, animate: animate_layout, fit: true, padding: 30, boundingBox: undefined, 
+//    animationDuration: 4000,
+    maxSimulationTime: 4000/*8000*/, // max length in ms to run the layout
+    ungrabifyWhileSimulating: false, ready: function() {}, stop: function() {},
+    randomize: false, 
+    avoidOverlap: true, // avoidOverlaps: true,
+    handleDisconnected: true, 
+//    nodeSpacing: function( node ){ return 10/*20*/; },
+    flow: undefined, alignment: undefined,
+//    edgeLength: undefined/*20*/ /*13*/,
+//    edgeSymDiffLength: undefined/*20*/ /*13*/, // symmetric diff edge length in simulation
+//    edgeJaccardLength: undefined/*20*/ /*13*/, // jaccard edge length in simulation
+//    gravity: 15, shake: 10/*30*/,
+//    nodeRepulsion: 400000/*400*/, //numIter: 10 /*100*/, 
+    // iterations of cola algorithm; uses default values on undefined
+    unconstrIter: 10, //10
+    userConstIter: undefined, //3
+    allConstIter: undefined, //3
+//    edgeElasticity: 20, // roots: undefined,
+//    coolingFactor: 0.95 // to enable clustering.
+//    maxIter: 10, horizontalNodeSpacing: 75, verticalNodeSpacing: 75,
+    // infinite layout options
+    infinite: false
+   };
+
   // Set WebCola layout (default).
   function setColaLayout() {
    // Get the cytoscape instance as a Javascript object from JQuery.
    var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
 
    console.log("setColaLayout()>> animate_layout= "+ animate_layout);
-   var defaultNetworkLayout= {
-    name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
-    fit: true, animate: animate_layout, padding: 30, boundingBox: undefined, 
-//    animationDuration: 4000,
-    maxSimulationTime: 4000/*8000*/, // max length in ms to run the layout
-    ungrabifyWhileSimulating: false, ready: function() {}, stop: function() {},
-    randomize: false, handleDisconnected: true, refresh: 1/*0.1*/ /*0.5*/, 
-    avoidOverlap: true, // avoidOverlaps: true,
-    nodeSpacing: 20/*function( node ){ return 20; }*/,
-    // infinite layout options
-    infinite: false,
-//    flow: undefined, alignment: undefined,
-//    edgeLength: 20/*undefined*/ /*13*/,
-//    edgeSymDiffLength: 20/*undefined*/ /*13*/, // symmetric diff edge length in simulation
-//    edgeJaccardLength: 20/*undefined*/ /*13*/, // jaccard edge length in simulation
-    gravity: 15, shake: 10/*30*/,
-//    nodeRepulsion: 400000/*400*/, //numIter: 10 /*100*/, 
-    // iterations of cola algorithm; uses default values on undefined
-//    unconstrIter: undefined, //10
-//    userConstIter: undefined, //3
-//    allConstIter: undefined, //3
-//    edgeElasticity: 20, // roots: undefined,
-//    coolingFactor: 0.95 // to enable clustering.
-//    maxIter: 10, horizontalNodeSpacing: 75, verticalNodeSpacing: 75,
-   };
    cy.layout(defaultNetworkLayout); // run the default (WebCola) layout algorithm.
 
-   cy.reset(); // reset the graph's zooming & panning properties.
-   cy.fit();
+//   cy.reset(); // reset the graph's zooming & panning properties.
+//   cy.fit();
   }
 
   // Set Cose layout.
@@ -140,7 +133,7 @@
 //    springTension: 512, 
     // static numbers or functions that dynamically return what these values should be for each element
     // e.g. nodeMass: function(n){ return n.data('weight') }
-    nodeSpacing: 20, // for extra spacing around nodes
+    nodeSpacing: 10/*20*/, // for extra spacing around nodes
     stepSize: 0.1/*1*/, // size of timestep in simulation
 //    dt: undefined, // the timestep to use for stepping the simulation
     // function that returns true if the system is stable to indicate that the layout can be stopped

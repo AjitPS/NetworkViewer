@@ -164,10 +164,10 @@ $('#cy').cytoscape({
   elements: networkJSON,
   
   // Layout of the Network.
-//  layout: defaultNetworkLayout,
-  layout: { name: 'circle', animate: false, padding: 30, avoidOverlap: true, 
+  layout: defaultNetworkLayout,
+/*  layout: { name: 'circle', animate: false, padding: 30, avoidOverlap: true, 
       boundingBox: undefined, handleDisconnected: true, fit: true, counterclockwise: false,
-      radius: 3, rStepSize: 2 }, 
+      radius: 3, rStepSize: 2 }, */
 
   // these options hide parts of the graph during interaction.
 //  hideEdgesOnViewport: true,
@@ -269,8 +269,8 @@ cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning
   else if(conType === "Phenotype") {
      imgName= 'Phenotype';
     }
-  var eleImage= 'image/new_images/'+ imgName +'.png';
-//  var eleImage= data_url +'image/new_images/'+ imgName +'.png';
+  var eleImage= 'image/'+ imgName +'.png';
+//  var eleImage= data_url +'image/'+ imgName +'.png';
 
   // Add these properties to this element's JSON.
   ele.data('nodeImage', eleImage);
