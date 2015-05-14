@@ -27,7 +27,7 @@ function generateNetworkGraph(jsonFileName) {
      initializeNetworkView();
      
      // Re-set the default (WebCola) layout.
-//     setDefaultLayout();
+     setDefaultLayout();
    });
 
   }
@@ -119,7 +119,7 @@ $(function() { // on dom ready
           'curve-style': 'unbundled-bezier', /* options: bezier (curved) (default), unbundled-bezier (curved with manual control points), haystack (straight edges) */
           'control-point-step-size': '10px', //'1px' // specifies the distance between successive bezier edges.
           'control-point-distance': '20px', /* overrides control-point-step-size to curves single edges as well, in addition to parallele edges */
-          'control-point-weight': '0.7', // '0': curve towards source node, '1': curve towards target node.
+          'control-point-weight': '0.2'/*'0.7'*/, // '0': curve towards source node, '1': curve towards target node.
           // 'width': use mapData() mapper to allow for curved edges for inter-connected nodes.
           'width': 'data(relationSize)', // 'mapData(relationSize, 70, 100, 2, 6)', // '3px',
           'line-color': 'data(relationColor)', // 'gray',
@@ -164,7 +164,7 @@ $('#cy').cytoscape({
   elements: networkJSON,
   
   // Layout of the Network.
-  layout: defaultNetworkLayout,
+//  layout: defaultNetworkLayout,
 /*  layout: { name: 'circle', animate: false, padding: 30, avoidOverlap: true, 
       boundingBox: undefined, handleDisconnected: true, fit: true, counterclockwise: false,
       radius: 3, rStepSize: 2 }, */
@@ -692,6 +692,8 @@ cy.elements().qtip({
          select: function() {
              cy.elements('node').show(); // show all nodes using eles.show().
              cy.elements('edge').show(); // show all edges using eles.show().
+             // Relayout the graph.
+             
             }
         },
 
