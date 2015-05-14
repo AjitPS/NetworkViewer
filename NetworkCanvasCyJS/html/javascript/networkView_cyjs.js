@@ -693,7 +693,7 @@ cy.elements().qtip({
              cy.elements('node').show(); // show all nodes using eles.show().
              cy.elements('edge').show(); // show all edges using eles.show().
              // Relayout the graph.
-             rerunLayoutGraph();
+             rerunLayout();
             }
         },
 
@@ -1091,9 +1091,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
          }
 //    $("#infoDialog").html(itemInfo); // display in the dialog box.
    }
-  
+
   // Re-run the graph's layout.
-  function rerunLayoutGraph() {
+  function rerunLayout() {
    if(document.getElementById("default").checked) {
       setColaLayout();
      }
