@@ -27,7 +27,7 @@ function generateNetworkGraph(jsonFileName) {
      initializeNetworkView();
      
      // Re-set the default (WebCola) layout.
-     setDefaultLayout();
+//     setDefaultLayout();
    });
 
   }
