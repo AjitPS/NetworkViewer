@@ -64,6 +64,7 @@
 
 //   cy.reset(); // reset the graph's zooming & panning properties.
 //   cy.fit();
+   console.log("setColaLayout() done...");
   }
 
   // Set Cose layout.
