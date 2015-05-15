@@ -181,6 +181,7 @@ $('#cy').cytoscape({
   // interpolate on high density displays instead of increasing resolution.
   pixelRatio: 1,
 
+  // interaction options:
   // Zoom settings
   zoomingEnabled: true, // zooming: both by user and programmatically.
 //  userZoomingEnabled: true, // user-enabled zooming.
@@ -194,14 +195,17 @@ $('#cy').cytoscape({
   panningEnabled: true, // panning: both by user and programmatically.
 //  userPanningEnabled: true, // user-enabled panning.
 
-  // a "motion blur" effect that increases perceived performance for little or no cost.
-  motionBlur: true,
-  
   // for Touch-based gestures.
 //  selectionType: (isTouchDevice ? 'additive' : 'single'),
   touchTapThreshold: 8,
   desktopTapThreshold: 4,
+  autolock: false,
+  autoungrabify: false,
+  autounselectify: false,
 
+  // a "motion blur" effect that increases perceived performance for little or no cost.
+  motionBlur: true,
+  
   ready: function() {
    window.cy= this;
   }
@@ -561,10 +565,10 @@ cy.elements().qtip({
                 }
              });
              // Relayout the graph.
-//             rerunLayout();
+             rerunLayout();
             }
         },
-            
+
 /*        {
          content: 'Reset',
          select: function() {
@@ -948,7 +952,6 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Re-run the graph's layout.
   function rerunLayout() {
-   console.log("Re-run layout...");
    if(document.getElementById("default").checked) {
       setColaLayout();
      }
@@ -979,4 +982,5 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    else if(document.getElementById("concentric").checked) {
            setConcentricLayout();
           }
+   console.log("Re-run layout complete...");
   }
