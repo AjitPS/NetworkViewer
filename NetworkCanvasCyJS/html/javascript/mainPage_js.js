@@ -1,5 +1,4 @@
 /*
- * Function
  * Generates the new lightweight Network graph, using cytoscapeJS.
  * @author: Ajit Singh.
  */
