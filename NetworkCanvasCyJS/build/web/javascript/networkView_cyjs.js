@@ -339,6 +339,15 @@ cy.elements().qtip({
     console.log(info);
    });
 
+/*
+  // Modifiying taphold event to handle usage of touch gestures.
+  cy.elements.on('taphold', function(e){
+   this.ungrabify();
+  }).on('free', function(e){
+       this.grabify();
+      });
+*/
+
  /** Popup (context) menu: a circular Context Menu for each Node (concept) & Edge (relation) using the 'cxtmenu' jQuery plugin. */
  var contextMenu= {
     menuRadius: 75, // 100, // the radius of the circular menu in pixels
