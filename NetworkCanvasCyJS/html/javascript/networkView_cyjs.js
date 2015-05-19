@@ -298,11 +298,12 @@ cy.elements().qtip({
       try {
       if(this.isNode()) {
 //         qtipMsg= "ID: "+ this.id() +", Type: "+ this.data('conceptType') +", Value: "+ this.data('value');
-         qtipMsg= "Concept Type: "+ this.data('conceptType') +", Value: "+ this.data('value') +", PID: "+ 
+         qtipMsg= "Concept: "+ this.data('value') +", type: "+ this.data('conceptType') +", PID: "+ 
                   this.data('pid') +"<br>"+"Annotation: "+ this.data('annotation');
         }
       else if(this.isEdge()) {
-              qtipMsg= "ID: "+ this.id() +", Relation Label: "+ this.data('label');
+              qtipMsg= "Relation: "+ this.data('label') +", From: "+ this.data('source') +", To: "+ 
+                      this.data('target');
              }
       }
       catch(err) { qtipMsg= "Selected element is neither a Concept nor a Relation"; }
