@@ -619,7 +619,7 @@ cy.elements().qtip({
     maxSpotlightRadius: 10, // 38, // the maximum radius in pixels of the spotlight
     itemColor: 'white', // the colour of text in the command's content
     itemTextShadowColor: 'black', // the text shadow colour of the command's content
-    itemFontSize: 6, //8,
+//    itemFontSize: 6, //8,
     zIndex: 9999 // the z-index of the ui div
  };
 
