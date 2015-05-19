@@ -205,7 +205,7 @@ $('#cy').cytoscape({
 
   // a "motion blur" effect that increases perceived performance for little or no cost.
   motionBlur: true,
-  
+
   ready: function() {
    window.cy= this;
   }
@@ -325,11 +325,13 @@ cy.elements().qtip({
     var info= "";
     try {
     if(thisElement.isNode()) {
-       info= "Concept selected: "+ thisElement.data('conceptType') +", value: "+ thisElement.data('value') +
-               ", PID: "+ thisElement.data('pid');
+       info= "Concept selected: "+ thisElement.data('value') +", type: "+ thisElement.data('conceptType')
+               +", PID: "+ thisElement.data('pid');
       }
       else if(thisElement.isEdge()) {
-              info= "Relation selected: id: "+ thisElement.id() +", Relation Label: "+ thisElement.data('label');
+//              info= "Relation selected: id: "+ thisElement.id() +", Relation Label: "+ thisElement.data('label');
+              info= "Relation selected: "+ thisElement.data('label') +", From: "+ 
+                      thisElement.data('source') +", To: "+ thisElement.data('target');
              }
       }
       catch(err) { info= "Selected element is neither a Concept nor a Relation"; }
