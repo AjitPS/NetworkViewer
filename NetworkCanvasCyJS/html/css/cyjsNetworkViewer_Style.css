@@ -68,27 +68,29 @@
 	overflow:auto;
 	margin:0 auto;
         border: 1px;
-      }
+       }
 
       div.infoDiv table {
         width:99%;  /*100% of container produces horiz. scroll in Mozilla*/
 	/*border:none;*/
-	border-spacing:0px;
-	background-color:transparent;
-	border:1px solid #C2C2C2;
-	border-collapse:collapse;
+	border-spacing: 0px;
+	background-color: transparent;
+	border: 1px solid #C2C2C2;
+	border-collapse: collapse;
+        /* Table not visible, by default. */
+        display: none;
       }
 
       div.infoDiv th, div.infoDiv td {
-        padding:4px;
-        border:1px solid #C2C2C2;
+        padding: 4px;
+        border: 1px solid #C2C2C2;
       }
 
       table.infoTable thead th {
-	background-color:#C0C0C0;
-	color:black;
-	font-size:10pt;
-	padding:4px;
+	background-color: #C0C0C0;
+	color: black;
+	font-size: 10pt;
+	padding: 4px;
       }
 
       div.infoDiv tbody {
@@ -98,19 +100,26 @@
       }
 
      div.infoDiv table>tbody {
-       overflow:auto;
-       max-height:280px;
-       overflow-x:hidden;
+       overflow: auto;
+       max-height: 280px;
+       overflow-x: hidden;
      }
 
      div.infoDiv table>tbody tr {
-       height:auto;
+       height: auto;
      }
 
      div.infoDiv table>thead tr {
-       position:relative;
-       top: 0px;/*expression(offsetParent.scrollTop); IE5+ only*/
+       position: relative;
+       top: 0px; /*expression(offsetParent.scrollTop); IE5+ only*/
      }
+
+      /* Button to hide Item Info table */
+      #showHideInfo {
+       position: relative;
+       float: right;
+       margin-right: 1%;
+      }
 
       /* Legend */
       #legend_picture {
@@ -151,6 +160,7 @@
       #animationCheckbox {
        float: right
       }
+
    /*   #layouts_container {
           position: relative;
           margin: auto;

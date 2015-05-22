@@ -364,6 +364,8 @@ cy.elements().qtip({
             function() {
              var itemInfo= "";
              try {
+             // Display the Item Info table in its parent div.
+             document.getElementById("itemInfo_Table").style.display= "inline";
              // Display item information in the itemInfo <div> in a <table>.
              var table= document.getElementById("itemInfo_Table").getElementsByTagName('tbody')[0]; // get the Item Info. table.
              // Clear the existing table body contents.
@@ -667,6 +669,19 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 }
 
   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+
+  // Show or Hide the Item Info table.
+  function showOrHideItemInfoTable() {
+   var iiTable= document.getElementById("itemInfo_Table");
+//   console.log("showOrHideItemInfoTable clicked... current Table.display: "+ iiTable.style.display);
+   if(iiTable.style.display === "none" || iiTable.style.display === "") {
+      iiTable.style.display= "inline";
+     }
+   else {
+      iiTable.style.display= "none";
+     }
+//   console.log("current Table.display changed to: "+ iiTable.style.display);
+  }
 
   // Reset: Re-position the network graph.
   function resetGraph() {
