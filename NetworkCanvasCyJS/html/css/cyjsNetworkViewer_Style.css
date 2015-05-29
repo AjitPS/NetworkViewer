@@ -64,7 +64,7 @@
       
       div.infoDiv {
 	width:100%;       /* table width will be 99% of this*/
-	max-height:400px;    /* must be greater than tbody*/
+	max-height: 600px;/*400px;*/    /* must be greater than tbody*/
 	overflow:auto;
 	margin:0 auto;
         border: 1px;
