@@ -364,6 +364,9 @@ cy.elements().qtip({
             function() {
              var itemInfo= "";
              try {
+             // Show Item Info Pane.
+             console.log("Show Item Info Pane...");
+             myLayout.show('east');
              // Display the Item Info table in its parent div.
              document.getElementById("itemInfo_Table").style.display= "inline";
              // Display item information in the itemInfo <div> in a <table>.
@@ -791,6 +794,8 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     console.log("Display Item Info. for id: "+ selectedElement.id());
 /*  $("#infoDialog").dialog(); // initialize a dialog box.
 */
+    // Show Item Info Pane.
+    myLayout.show('east');
     try {
          // Display item information in the itemInfo <div> in a <table>.
          var table= document.getElementById("itemInfo_Table").getElementsByTagName('tbody')[0]; // get the Item Info. table.

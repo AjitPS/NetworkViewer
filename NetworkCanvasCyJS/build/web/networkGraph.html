@@ -80,14 +80,14 @@
             Export graph Image: <input type="button" value="Export Image" onclick="exportAsImage();" title="Export the Network graph as a .png image (generated below)">
         </div>
 <!--        <br/>-->
-	<p class="buttons">Item Information:
 		<!-- these Show/ Hide buttons have events added dynamically in document.ready -->
+<!--	<p class="buttons">Item Information:
 		<button id="showItemInfoPane">Show</button>
 		&nbsp;
 		<button onclick="myLayout.hide('east')">Hide</button>
 		&nbsp; &nbsp;
-		Test: <button onclick="myLayout.show('east')">Show2</button>
-	</p>
+		Test: <button onclick="myLayout.show('east')">Open Item Info Pane</button>
+	</p> -->
 <!--        <br/>-->
     </div>
 
@@ -149,13 +149,14 @@
      <!-- East pane of split pane added using jquery-ui-layout -->
    <div class="ui-layout-east">
 	<!-- this button has its event added dynamically in document.ready -->
-	<p><button id="btnCloseItemInfoPane">Close</button></p>
+<!--	<p><button id="btnCloseItemInfoPane">Close</button></p> -->
         
 	<!-- Item Info -->
         <div id="itemInfo" class="infoDiv">
             <b>Item Information:</b>
-            <input type="button" id="showHideInfo" value="Show/ Hide" onclick="showOrHideItemInfoTable();" title="Click to show or hide the Item Info table">
-            <br/><br/>
+<!--            <input type="button" id="showHideInfo" value="Show/ Hide" onclick="showOrHideItemInfoTable();" title="Click to show or hide the Item Info table">
+            <br/> -->
+            <br/>
             <table id="itemInfo_Table" class="infoTable" cellspacing=1>
                 <thead><th>Item Info:</th><th>Information about selected concept(s) or relation(s)</th></thead>
                 <tbody></tbody>

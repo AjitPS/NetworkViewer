@@ -21,7 +21,7 @@
 
       /* CytoscapeJS "core" container */
       #cy {
-        height: 950px; //600px;
+        height: 900px; //950px; //600px;
         width: 1200px;
         position: relative;
         margin: auto;
@@ -64,7 +64,7 @@
       
       div.infoDiv {
 	width:100%;       /* table width will be 99% of this*/
-	max-height: 600px;/*400px;*/    /* must be greater than tbody*/
+	max-height: 100%; /*95%;*/ /*600px;*/ /*400px;*/    /* must be greater than tbody*/
 	overflow:auto;
 	margin:0 auto;
         border: 1px;

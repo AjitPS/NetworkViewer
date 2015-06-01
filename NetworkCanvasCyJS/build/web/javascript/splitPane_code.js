@@ -14,20 +14,28 @@ $(document).ready(function () {
 		livePaneResizing: true,
 
                 // some resizing/toggling settings
-		north__slidable: false,	// OVERRIDE the pane-default of 'slidable=true'
-		north__togglerLength_closed: '100%', // toggle-button is full-width of resizer-bar
-		north__spacing_closed: 20, // big resizer-bar when open (zero height)
-		south__resizable: false, // OVERRIDE the pane-default of 'resizable=true'
-		south__spacing_open: 0, // no resizer-bar when open (zero height)
-		south__spacing_closed: 20, // big resizer-bar when open (zero height)
+   	        north__initClosed: true,
+//	        north__initHidden: true,
+//		north__slidable: false,	// OVERRIDE the pane-default of 'slidable=true'
+		north__togglerLength_closed: '50%', //'100%', // toggle-button is full-width of resizer-bar
+//		north__spacing_closed: 20, // resizer-bar size when closed (20= big resizer bar) (default: zero height)
+
+//		south__resizable: false, // OVERRIDE the pane-default of 'resizable=true'
+   	        south__initClosed: true,
+//	        south__initHidden: true,
+//		south__spacing_open: 0, // no resizer-bar when open (zero height)
+//		south__spacing_closed: 20, // resizer-bar when closed (20= big resizer bar) (default: zero height)
 
 		// some pane-size settings
+   	        east__initClosed: true,
+//	        east__initHidden: true,
                 east__size: 400,
 		east__minSize: 300,
 		east__maxSize: 0.5, // 50% of layout width
-   	        east__initClosed: true,
-	        east__initHidden: true,
+
                 center__minWidth: 600, //800 // min. width for the center pane.
+//                center__contentSelector: ".cy", // inner div to auto-size so only it scrolls, not the entire pane!
+//                center__contentIgnoreSelector: "span", // 'paneSelector' for content to 'ignore' when measuring room for content
 
 		showDebugMessages: true // log and/or display messages from debugging & testing code
                });
@@ -40,7 +48,7 @@ $(document).ready(function () {
            ;
 
     /*
-     * DISABLE TEXT-SELECTION WHEN DRAGGING (or even _trying_ to drag!)
+     * DISABLE TEXT-SELECTION WHEN DRAGGING (or even trying to drag.)
      * this functionality will be included in RC30.80
      */
     $.layout.disableTextSelection= function(){
