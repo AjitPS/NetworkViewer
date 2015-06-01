@@ -19,6 +19,11 @@
        cellspacing: 1px;
       }*/
 
+      /* The Center pane */
+      .ui-layout-center {
+       overflow-y: scroll;
+      }
+
       /* CytoscapeJS "core" container */
       #cy {
         height: 900px; //950px; //600px;
