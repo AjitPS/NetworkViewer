@@ -62,11 +62,12 @@
                 </tr>
             </table>
         </div><hr>
-        <br/>
-        <div>Annotate relations by attribute: <input type="button" value="Annotate" disabled onclick="annotateByAttribute();" title="Annotate relations by any attribute">
+<!--        <br/>-->
+        <div>
+             Re-run Layout: <input type="button" value="Relayout" onclick="rerunLayout();" title="Re-run the graph Layout">
+<!--             Annotate relations by attribute: <input type="button" value="Annotate" disabled onclick="annotateByAttribute();" title="Annotate relations by any attribute"> -->
              Search for concept: <input type="text" id="txtSearch" placeholder="Search..." /> <input type="button" value="Search" onclick="findConcept(document.getElementById('txtSearch').value);" title="Search by concept name">
              Reset graph: <input type="button" value="Reset" onclick="resetGraph();" title="Reposition (reset and re-fit) the graph">
-             Re-run Layout: <input type="button" value="Relayout" onclick="rerunLayout();" title="Re-run the graph Layout">
 <!--             Fit: <input type="button" value="Fit" onclick="fitGraph();" title="Re-fit the graph">
              Reset Only: <input type="button" value="ResetOnly" onclick="onlyResetGraph();" title="Reset the graph">
              Zoom: <input type="button" value="Zoom" onclick="zoomGraph();" title="Zoom the graph">
@@ -79,23 +80,20 @@
             Export graph JSON: <input type="button" value="Export JSON" onclick="exportAsJson();" title="Export the Network graph as a JSON object and show it in a new Tab">
             Export graph Image: <input type="button" value="Export Image" onclick="exportAsImage();" title="Export the Network graph as a .png image (generated below)">
         </div>
-<!--        <br/>-->
-		<!-- these Show/ Hide buttons have events added dynamically in document.ready -->
+<!--    <br/>-->
+	<!-- these Show/ Hide buttons have events added dynamically in document.ready -->
 <!--	<p class="buttons">Item Information:
 		<button id="showItemInfoPane">Show</button>
 		&nbsp;
-		<button onclick="myLayout.hide('east')">Hide</button>
-		&nbsp; &nbsp;
-		Test: <button onclick="myLayout.show('east')">Open Item Info Pane</button>
-	</p> -->
-<!--        <br/>-->
+		<button onclick="myLayout.hide('east')">Hide</button></p>
+        <br/>-->
     </div>
 
     <!-- Center pane of split pane added using jquery-ui-layout -->
     <div class="ui-layout-center">
         <!-- The core cytoscapeJS container -->
-<!--        <div id="cy" ondragenter="dragCyContainer()"></div> -->
         <div id="cy"></div>
+<!--        <div id="cy" ondragenter="dragCyContainer()"></div> -->
 
         <div id="infoDialog"></div><br/>
 
@@ -137,8 +135,7 @@
                     </tr></table>
             </div>
         </div>
-        <br/>
-<!--        <br/><br/> -->
+<!--        <br/>-->
     </div>
 
      <!-- South pane of split pane added using jquery-ui-layout -->
@@ -148,15 +145,13 @@
 
      <!-- East pane of split pane added using jquery-ui-layout -->
    <div class="ui-layout-east">
-	<!-- this button has its event added dynamically in document.ready -->
-<!--	<p><button id="btnCloseItemInfoPane">Close</button></p> -->
-        
 	<!-- Item Info -->
         <div id="itemInfo" class="infoDiv">
             <b>Item Information:</b>
-<!--            <input type="button" id="showHideInfo" value="Show/ Hide" onclick="showOrHideItemInfoTable();" title="Click to show or hide the Item Info table">
-            <br/> -->
-            <br/>
+<!--            <input type="button" id="showHideInfo" value="Show/ Hide" onclick="showOrHideItemInfoTable();" title="Click to show or hide the Item Info table">-->
+  	    <!-- this button has its event added dynamically in document.ready, using jquery-ui-layout -->
+            <button id="btnCloseItemInfoPane">Close</button>
+            <br/><br/>
             <table id="itemInfo_Table" class="infoTable" cellspacing=1>
                 <thead><th>Item Info:</th><th>Information about selected concept(s) or relation(s)</th></thead>
                 <tbody></tbody>

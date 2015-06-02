@@ -119,12 +119,19 @@
        top: 0px; /*expression(offsetParent.scrollTop); IE5+ only*/
      }
 
-      /* Button to hide Item Info table */
-      #showHideInfo {
+      /* Button to close the Item Info pane */
+      #btnCloseItemInfoPane {
        position: relative;
        float: right;
        margin-right: 1%;
       }
+
+      /* Button to hide Item Info table */
+/*      #showHideInfo {
+       position: relative;
+       float: right;
+       margin-right: 1%;
+      }*/
 
       /* Legend */
       #legend_picture {

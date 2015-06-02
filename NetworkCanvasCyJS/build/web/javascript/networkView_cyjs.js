@@ -365,8 +365,8 @@ cy.elements().qtip({
              var itemInfo= "";
              try {
              // Show Item Info Pane.
-             console.log("Show Item Info Pane...");
-             myLayout.show('east');
+             openItemInfoPane();
+
              // Display the Item Info table in its parent div.
              document.getElementById("itemInfo_Table").style.display= "inline";
              // Display item information in the itemInfo <div> in a <table>.
@@ -674,6 +674,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
 
   // Show or Hide the Item Info table.
+  /** NOT USED ANYMORE. */
   function showOrHideItemInfoTable() {
    var iiTable= document.getElementById("itemInfo_Table");
 //   console.log("showOrHideItemInfoTable clicked... current Table.display: "+ iiTable.style.display);
@@ -794,9 +795,10 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     console.log("Display Item Info. for id: "+ selectedElement.id());
 /*  $("#infoDialog").dialog(); // initialize a dialog box.
 */
-    // Show Item Info Pane.
-    myLayout.show('east');
     try {
+         // Show Item Info Pane.
+         openItemInfoPane();
+
          // Display item information in the itemInfo <div> in a <table>.
          var table= document.getElementById("itemInfo_Table").getElementsByTagName('tbody')[0]; // get the Item Info. table.
          // Clear the existing table body contents.
@@ -1016,3 +1018,8 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
           }
    console.log("Re-run layout complete...");
   }
+
+ function openItemInfoPane() {
+//  myLayout.show('east', true); // to unhide (show) and open the pane.
+  myLayout.open('east'); // open the (already unhidden) Item Info pane.
+ }

@@ -17,14 +17,18 @@ $(document).ready(function () {
    	        north__initClosed: true,
 //	        north__initHidden: true,
 //		north__slidable: false,	// OVERRIDE the pane-default of 'slidable=true'
-		north__togglerLength_closed: '50%', //'100%', // toggle-button is full-width of resizer-bar
+//		north__togglerLength_closed: '50%', //'100%', // toggle-button is full-width of resizer-bar
 //		north__spacing_closed: 20, // resizer-bar size when closed (20= big resizer bar) (default: zero height)
+		north__maxSize: 0.2, // 20% of layout width
 
 //		south__resizable: false, // OVERRIDE the pane-default of 'resizable=true'
    	        south__initClosed: true,
 //	        south__initHidden: true,
 //		south__spacing_open: 0, // no resizer-bar when open (zero height)
 //		south__spacing_closed: 20, // resizer-bar when closed (20= big resizer bar) (default: zero height)
+                south__size: 25,
+		south__minSize: 25,
+		south__maxSize: 0.03, // 3% of layout width
 
 		// some pane-size settings
    	        east__initClosed: true,
@@ -34,18 +38,14 @@ $(document).ready(function () {
 		east__maxSize: 0.5, // 50% of layout width
 
                 center__minWidth: 600, //800 // min. width for the center pane.
-//                center__contentSelector: ".cy", // inner div to auto-size so only it scrolls, not the entire pane!
-//                center__contentIgnoreSelector: "span", // 'paneSelector' for content to 'ignore' when measuring room for content
 
 		showDebugMessages: true // log and/or display messages from debugging & testing code
                });
     
-    myLayout
- 	    // add event to the 'Close' button in the Item Info. pane dynamically.
-            .bindButton('#btnCloseItemInfoPane', 'close', 'east')
-	    // Also, add event to the 'Show' button in the Center pane dynamically.
-	    .bindButton('#showItemInfoPane', 'open', 'east')
-           ;
+    // add event to the 'Close' button in the Item Info. pane dynamically.
+    myLayout.bindButton('#btnCloseItemInfoPane', 'close', 'east');
+    // Also, add event to the 'Show' button in the Center pane dynamically.
+//  myLayout..bindButton('#showItemInfoPane', 'open', 'east');
 
     /*
      * DISABLE TEXT-SELECTION WHEN DRAGGING (or even trying to drag.)
