@@ -1019,7 +1019,10 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    console.log("Re-run layout complete...");
   }
 
+ // Open the Item Info pane when the "Item Info" option is selected for a concept or relation.
  function openItemInfoPane() {
 //  myLayout.show('east', true); // to unhide (show) and open the pane.
-  myLayout.open('east'); // open the (already unhidden) Item Info pane.
+//  myLayout.open('east'); // open the (already unhidden) Item Info pane.
+
+  myLayout.slideOpen('east'); // open the (already unhidden) Item Info pane.
  }

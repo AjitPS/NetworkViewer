@@ -9,7 +9,7 @@ $(document).ready(function () {
     myLayout= $('body').layout({
         //      reference only - these options are NOT required because 'true' is the default
 		closable: true,
-                resizable: true,
+                resizable: true/*false*/,
                 slidable: true, // when closed, pane can 'slide' open over other panes - closes on mouse-out
 		livePaneResizing: true,
 
@@ -20,6 +20,16 @@ $(document).ready(function () {
 //		north__togglerLength_closed: '50%', //'100%', // toggle-button is full-width of resizer-bar
 //		north__spacing_closed: 20, // resizer-bar size when closed (20= big resizer bar) (default: zero height)
 		north__maxSize: 0.2, // 20% of layout width
+                // Allow pane to slide open with a click anywhere on its resizer bar.
+                north__slideTrigger_open: "click", // click, dblclick or mouseenter 
+                // Close the pane only with a click anywhere on its resizer bar.
+                north__slideTrigger_close: "click", // click or mouseleave 
+                /* When a pane opens, have it slide open (overlay) instead of just opening (because 
+                 * just opening a pane resizes the pane adjacent to it. */
+                north__onopen_start: function (pane, $Pane) {
+                 $Pane.data("parentLayout").slideOpen("north"); 
+                 return false; // cancel: open("north")
+                },
 
 //		south__resizable: false, // OVERRIDE the pane-default of 'resizable=true'
    	        south__initClosed: true,
@@ -29,6 +39,12 @@ $(document).ready(function () {
                 south__size: 25,
 		south__minSize: 25,
 		south__maxSize: 0.03, // 3% of layout width
+                south__slideTrigger_open: "click", // click, dblclick or mouseenter 
+                south__slideTrigger_close: "click", // click or mouseleave 
+                south__onopen_start: function (pane, $Pane) {
+                 $Pane.data("parentLayout").slideOpen("south"); 
+                 return false; // cancel: open("south")
+                },
 
 		// some pane-size settings
    	        east__initClosed: true,
@@ -36,16 +52,23 @@ $(document).ready(function () {
                 east__size: 400,
 		east__minSize: 300,
 		east__maxSize: 0.5, // 50% of layout width
+                east__slideTrigger_open: "click", // click, dblclick or mouseenter 
+                east__slideTrigger_close: "click", // click or mouseleave 
+                east__onopen_start: function (pane, $Pane) {
+                 $Pane.data("parentLayout").slideOpen("east"); 
+                 return false; // cancel: open("east")
+                },
 
                 center__minWidth: 600, //800 // min. width for the center pane.
+//		center__resizable: false, // OVERRIDE the pane-default of 'resizable=true'
 
 		showDebugMessages: true // log and/or display messages from debugging & testing code
                });
-    
+
     // add event to the 'Close' button in the Item Info. pane dynamically.
     myLayout.bindButton('#btnCloseItemInfoPane', 'close', 'east');
     // Also, add event to the 'Show' button in the Center pane dynamically.
-//  myLayout..bindButton('#showItemInfoPane', 'open', 'east');
+//  myLayout.bindButton('#showItemInfoPane', 'open', 'east');
 
     /*
      * DISABLE TEXT-SELECTION WHEN DRAGGING (or even trying to drag.)
