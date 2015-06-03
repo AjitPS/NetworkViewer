@@ -22,7 +22,7 @@ $(document).ready(function () {
 		north__maxSize: 0.2, // 20% of layout width
                 // Allow pane to slide open with a click anywhere on its resizer bar.
                 north__slideTrigger_open: "click", // click, dblclick or mouseenter 
-                // Close the pane only with a click anywhere on its resizer bar.
+                // Close the pane only with a click anywhere on its resizer bar and not with a mouseout event.
                 north__slideTrigger_close: "click", // click or mouseleave 
                 /* When a pane opens, have it slide open (overlay) instead of just opening (because 
                  * just opening a pane resizes the pane adjacent to it. */
@@ -39,8 +39,12 @@ $(document).ready(function () {
                 south__size: 25,
 		south__minSize: 25,
 		south__maxSize: 0.03, // 3% of layout width
+                // Allow pane to slide open with a click anywhere on its resizer bar.
                 south__slideTrigger_open: "click", // click, dblclick or mouseenter 
+                // Close the pane only with a click anywhere on its resizer bar and not with a mouseout event.
                 south__slideTrigger_close: "click", // click or mouseleave 
+                /* When a pane opens, have it slide open (overlay) instead of just opening (because 
+                 * just opening a pane resizes the pane adjacent to it. */
                 south__onopen_start: function (pane, $Pane) {
                  $Pane.data("parentLayout").slideOpen("south"); 
                  return false; // cancel: open("south")
@@ -52,8 +56,12 @@ $(document).ready(function () {
                 east__size: 400,
 		east__minSize: 300,
 		east__maxSize: 0.5, // 50% of layout width
+                // Allow pane to slide open with a click anywhere on its resizer bar.
                 east__slideTrigger_open: "click", // click, dblclick or mouseenter 
+                // Close the pane only with a click anywhere on its resizer bar and not with a mouseout event.
                 east__slideTrigger_close: "click", // click or mouseleave 
+                /* When a pane opens, have it slide open (overlay) instead of just opening (because 
+                 * just opening a pane resizes the pane adjacent to it. */
                 east__onopen_start: function (pane, $Pane) {
                  $Pane.data("parentLayout").slideOpen("east"); 
                  return false; // cancel: open("east")
@@ -69,6 +77,15 @@ $(document).ready(function () {
     myLayout.bindButton('#btnCloseItemInfoPane', 'close', 'east');
     // Also, add event to the 'Show' button in the Center pane dynamically.
 //  myLayout.bindButton('#showItemInfoPane', 'open', 'east');
+
+    // Customise the event handling for clicking the Toggler buttons on the North, East & South panes.
+    var northToggler= myLayout.togglers.north;
+    var eastToggler= myLayout.togglers.east;
+    var southToggler= myLayout.togglers.south;
+    // Unbind the panes' Toggler button's default click functionality to prevent adjacent panes from resizing.
+    northToggler.unbind("click");
+    eastToggler.unbind("click");
+    southToggler.unbind("click");
 
     /*
      * DISABLE TEXT-SELECTION WHEN DRAGGING (or even trying to drag.)
