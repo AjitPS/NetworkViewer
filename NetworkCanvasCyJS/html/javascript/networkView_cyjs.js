@@ -21,6 +21,7 @@ function generateNetworkGraph(jsonFileName) {
    console.log("Received json_File: file path: "+ json_File);
 
    // Include this file's contents on the page at runtime using jQuery and a callback function.
+/*   $.getScript(json_File, function() {*/
    jQuery.getScript(json_File, function() {
      console.log(json_File +" file included...");
      // Initialize the cytoscapeJS container for Network View.
@@ -102,7 +103,6 @@ $(function() { // on dom ready
 //          'min-zoomed-font-size': '8px',
           // Set node shape, color & display (visibility) depending on settings in the JSON var.
           'shape': 'data(conceptShape)', // 'triangle'
-          // 'width' & 'height': use mapData() mapper.
           'width': 'data(conceptSize)', // '18px',
           'height': 'data(conceptSize)', // '18px',
           'background-color': 'data(conceptColor)', // 'gray'
@@ -631,6 +631,7 @@ cy.elements().qtip({
 cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
 /* // JQuery Context Menu plugin.
+// $.contextMenu({
  jQuery.contextMenu({
 // $('#cy').contextMenu({
 // cy.elements('node').contextMenu({
