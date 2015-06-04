@@ -137,10 +137,10 @@ $(function() { // on dom ready
           'transition-duration': '0.5s'
         })
       .selector(':selected')
-      .css({ // settings for highlight nodes in case of single click or Shift+click multi-select event.
-        'border-width': '3px',
-        'border-color': '#CCCC33' // '#333'
-      });
+        .css({ // settings for highlighting nodes in case of single click or Shift+click multi-select event.
+          'border-width': '3px',
+          'border-color': '#CCCC33' // '#333'
+        });
 
 // Initialise a cytoscape container instance as a Javascript object.
 /* var cy= cytoscape({
