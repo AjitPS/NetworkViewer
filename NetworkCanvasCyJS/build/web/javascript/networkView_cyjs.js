@@ -376,7 +376,7 @@ cy.elements().qtip({
   cy.on('tapdragover', function (e) {
 //    console.log("tapdragover (touchmove or mouseover event)...");
     var thisElement= e.cyTarget;
-    var nodeID, info="";
+    var nodeID;
     var connectedNodesCount= 0;
     try {
       if(thisElement.isNode()) {
@@ -386,13 +386,12 @@ cy.elements().qtip({
              if(networkJSON.edges[k].data.source === nodeID)
                 connectedNodesCount= connectedNodesCount + 1;
             }
-         info= "Node tapdragover (touchmove/ mouseover) event: No. of connected nodes= "+ connectedNodesCount;
+         console.log("Node tapdragover (touchmove/ mouseover) event: No. of connected nodes= "+ connectedNodesCount);
          // Show small, outward edges signifying the number of connected nodes.
          
         }
       }
-      catch(err) { info= err.stack; }
-   console.log(info);
+      catch(err) { console.log("tapdragover Error: "+ err.stack); }
   });
 
  /** Popup (context) menu: a circular Context Menu for each Node (concept) & Edge (relation) using the 'cxtmenu' jQuery plugin. */
