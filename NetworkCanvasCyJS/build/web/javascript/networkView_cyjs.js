@@ -97,8 +97,31 @@ $(function() { // on dom ready
                     // function() { return "<html>"+ this.data('value') +"</html>"; },
      //     'text-valign': 'center', // to have 'content' displayed in the middle of the node.
           'outline-colour': 'black', // text outline color
-          'border-style': 'solid', // node border
-          'border-width': '1px',
+          'border-style': //'solid', // node border, can be 'solid', 'dotted', 'dashed' or 'double'.
+                          function(ele) {
+                              var node_borderStyle= 'solid';
+                              try { // Check if the node was flagged or not
+                              if(ele.data('flagged') === "true") {
+                                 node_borderStyle= 'double'; // can be 'solid', 'dotted', 'dashed' or 'double'.
+//                                 console.log("node Flagged= "+ ele.data('flagged') +" , node_borderStyle: "+ node_borderStyle);
+                                }
+                              }
+                              catch(err) { console.log(err.stack); }
+                              return node_borderStyle;
+                          },
+          'border-width': //'1px',
+                          function(ele) {
+                              var node_borderWidth= '1px';
+                              try { // Check if the node was flagged or not
+                              if(ele.data('flagged') === "true") {
+                                 node_borderWidth= '3px';
+//                                 console.log("node Flagged= "+ ele.data('flagged') +" , node_borderWidth: "+ node_borderWidth);
+                                }
+                              }
+                              catch(err) { console.log(err.stack); }
+                              return node_borderWidth;
+                          },
+//          'border-color': 'black',
           'font-size': '8px', // '30px',
 //          'min-zoomed-font-size': '8px',
           // Set node shape, color & display (visibility) depending on settings in the JSON var.
@@ -138,7 +161,7 @@ $(function() { // on dom ready
         })
       .selector(':selected')
         .css({ // settings for highlighting nodes in case of single click or Shift+click multi-select event.
-          'border-width': '3px',
+          'border-width': '4px',
           'border-color': '#CCCC33' // '#333'
         });
 
@@ -299,7 +322,8 @@ cy.elements().qtip({
       if(this.isNode()) {
 //         qtipMsg= "ID: "+ this.id() +", Type: "+ this.data('conceptType') +", Value: "+ this.data('value');
          qtipMsg= "Concept: "+ this.data('value') +", type: "+ this.data('conceptType') +", PID: "+ 
-                  this.data('pid') +"<br>"+"Annotation: "+ this.data('annotation');
+                  this.data('pid') +" , flagged: "+ this.data('flagged') +"<br>"+"Annotation: "+ 
+                  this.data('annotation');
         }
       else if(this.isEdge()) {
               qtipMsg= "Relation: "+ this.data('label') +", From: "+ this.data('source') +", To: "+ 
@@ -351,7 +375,7 @@ cy.elements().qtip({
 
   // On a 'touchmove' or 'mouseover' event, show jagged edges signifying the number of nodes connected to this node.
   cy.on('tapdragover', function (e) {
-    console.log("tapdragover (touchmove or mouseover event)...");
+//    console.log("tapdragover (touchmove or mouseover event)...");
     var thisElement= e.cyTarget;
     var nodeID, info="";
     var connectedNodesCount= 0;
@@ -363,12 +387,12 @@ cy.elements().qtip({
              if(networkJSON.edges[k].data.source === nodeID)
                 connectedNodesCount= connectedNodesCount + 1;
             }
-         info= "No. of connected nodes= "+ connectedNodesCount;
+         info= "Node tapdragover (touchmove/ mouseover) event: No. of connected nodes= "+ connectedNodesCount;
          // Show small, outward edges signifying the number of connected nodes.
          
         }
       }
-      catch(err) { info= "Selected element is not a Concept."; }
+      catch(err) { info= err.stack; }
    console.log(info);
   });
 
