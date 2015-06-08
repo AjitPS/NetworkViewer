@@ -348,6 +348,29 @@ cy.elements().qtip({
       });
 */
 
+
+  // On a 'touchmove' or 'mouseover' event, show jagged edges signifying the number of nodes connected to this node.
+  cy.elements.on('tapdragover', function (e) {
+    console.log("tapdragover (touchmove or mouseover event)...");
+    var nodeID, thisElement= e.cyTarget;
+    var connectedNodesCount= 0;
+    try {
+      if(thisElement.isNode()) {
+         nodeID= thisElement.id();
+         // Get the number of nodes connected to this node from the graph's JSON data.
+         for(var k=0; k < networkJSON.edges.length; k++) {
+             if(networkJSON.edges[k].data.source === nodeID)
+                connectedNodesCount= connectedNodesCount + 1;
+            }
+         info= "No. of connected nodes= "+ connectedNodesCount;
+         // Show small, outward edges signifying the number of connected nodes.
+         
+        }
+      }
+      catch(err) { info= "Selected element is not a Concept."; }
+   console.log(info);
+  });
+
  /** Popup (context) menu: a circular Context Menu for each Node (concept) & Edge (relation) using the 'cxtmenu' jQuery plugin. */
  var contextMenu= {
     menuRadius: 75, // 100, // the radius of the circular menu in pixels
