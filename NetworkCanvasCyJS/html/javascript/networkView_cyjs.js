@@ -372,7 +372,6 @@ cy.elements().qtip({
       });
 */
 
-
   // On a 'touchmove' or 'mouseover' event, show jagged edges signifying the number of nodes connected to this node.
   cy.on('tapdragover', function (e) {
 //    console.log("tapdragover (touchmove or mouseover event)...");
