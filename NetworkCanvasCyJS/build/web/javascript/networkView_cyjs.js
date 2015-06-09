@@ -29,7 +29,7 @@ function generateNetworkGraph(jsonFileName) {
 
      // Highlight nodes with hidden, connected nodes using Shadowing.
      shadowNodesWithHiddenNeighborhood();
-     
+
      // Re-set the default (WebCola) layout.
      setDefaultLayout();
    });
@@ -1131,7 +1131,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
   myLayout.slideOpen('east'); // open the (already unhidden) Item Info pane.
  }
 
-  // Show jagged edges signifying the number of nodes connected to this node.
+  // Show shadow effect on nodes with connected, hidden elements in their neighborhood.
   function shadowNodesWithHiddenNeighborhood() {
     var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
     cy.nodes().forEach(function( ele ) {
@@ -1151,7 +1151,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 //         console.log("No. of connected, hidden nodes= "+ connected_hiddenNodesCount);
 
          if(connected_hiddenNodesCount > 0) {
-            console.log("Highlight node ID (has connected, hidden nodes)= "+ thisElement.data('value'));
+//            console.log("Highlight node ID (has connected, hidden nodes)= "+ thisElement.data('value'));
             // Show shadow around nodes that have hidden, connected nodes.
             thisElement.addClass('nodeShadowAndOverlay');
            // Show small, outward edges signifying the number of connected nodes.

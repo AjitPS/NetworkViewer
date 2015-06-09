@@ -29,7 +29,7 @@ function generateNetworkGraph(jsonFileName) {
 
      // Highlight nodes with hidden, connected nodes using Shadowing.
      shadowNodesWithHiddenNeighborhood();
-     
+
      // Re-set the default (WebCola) layout.
      setDefaultLayout();
    });
