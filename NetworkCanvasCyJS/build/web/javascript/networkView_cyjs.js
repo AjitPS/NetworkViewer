@@ -168,13 +168,18 @@ $(function() { // on dom ready
           'border-width': '4px',
           'border-color': '#CCCC33' // '#333'
         })
-      .selector('.nodeShadow')
-        .css({ // settings for using shadow on nodes when they have hidden, connected nodes.
-              'shadow-blur': '40',/*'20'*/ // disable for larger network graphs, use x & y offset(s) instead.
-              'shadow-color': 'data(conceptColor)', // 'black'
+      .selector('.nodeShadowAndOverlay')
+        .css({ // settings for using shadow effect on nodes when they have hidden, connected nodes.
+              'shadow-blur': '25', // disable for larger network graphs, use x & y offset(s) instead.
+              'shadow-color': 'black', // 'data(conceptColor)',
 //            'shadow-offset-x': '5',
 //            'shadow-offset-y': '2',
-              'shadow-opacity': '0.99'
+              'shadow-opacity': '0.9',
+
+              // settings for overlay effect.
+/*              'overlay-color': 'data(conceptColor)',
+              'overlay-padding': '1.5px',
+              'overlay-opacity': '0.5' */
         });
 
 // Initialise a cytoscape container instance as a Javascript object.
@@ -422,9 +427,7 @@ cy.elements().qtip({
          if(connected_hiddenNodesCount > 0) {
 //            console.log("shadowColor= "+ shadowColor);
             // Show shadow around nodes that have hidden, connected nodes.
-            thisElement.addClass('nodeShadow');
-           // Show small, outward edges signifying the number of connected nodes.
-           
+            thisElement.addClass('nodeShadowAndOverlay');
           }
         }
       }
@@ -436,9 +439,9 @@ cy.elements().qtip({
 //    console.log("tapdragout (touchmove or mouseout event)...");
     var thisElement= e.cyTarget;
     try {
-      if(thisElement.hasClass('nodeShadow')) {
+      if(thisElement.hasClass('nodeShadowAndOverlay')) {
          // Remove any shadow created around the node.
-         thisElement.removeClass('nodeShadow');
+         thisElement.removeClass('nodeShadowAndOverlay');
         }
      }
     catch(err) { console.log("tapdragout event: Error: "+ err.stack); }
@@ -866,7 +869,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
   function showNeighbourhood() {
    console.log("Show neighborhood: Display concepts in the neighbourhood of the selected concept (node)...");
    cy.nodes(':selected').neighborhood().nodes().show();
-//   cy.nodes(':selected').neighborhood().edges().show();
+   cy.nodes(':selected').neighborhood().edges().show();
   }
   
   // Show/ Hide labels for concepts and relations.
@@ -1148,10 +1151,25 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 //         console.log("No. of connected, hidden nodes= "+ connected_hiddenNodesCount);
 
          if(connected_hiddenNodesCount > 0) {
+            console.log("Highlight node ID (has connected, hidden nodes)= "+ thisElement.data('value'));
             // Show shadow around nodes that have hidden, connected nodes.
-            thisElement.addClass('nodeShadow');
+            thisElement.addClass('nodeShadowAndOverlay');
            // Show small, outward edges signifying the number of connected nodes.
-           
+/*           // D3.js code
+           var w = thisElement.data('conceptSize') - 6,
+                h = thisElement.data('conceptSize') - 6,
+                x = w / 2 + 25 * Math.cos(r * connected_hiddenNodesCount),
+                y = h / 2 + 30 * Math.sin(r * connected_hiddenNodesCount),
+                rect = new cola.vpsc.Rectangle(0, w, 0, h),
+                vi = rect.rayIntersection(x, y);
+            var dview = d3.select("#"+v.name()+"_spikes");
+            dview.append("rect")
+                .attr("class", "spike")
+                .attr("rx", 1).attr("ry", 1)
+                .attr("x", 0).attr("y", 0)
+                .attr("width", 10).attr("height", 2)
+                .attr("transform", "translate("+vi.x+","+vi.y+") rotate("+(360*i/hiddenEdges)+")")
+                .on("click", function () { click(v) });*/
           }
       }
     catch(err) { 
@@ -1166,9 +1184,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     cy.nodes().forEach(function( ele ) {
     var thisElement= ele;
     try {
-      if(thisElement.hasClass('nodeShadow')) {
+      if(thisElement.hasClass('nodeShadowAndOverlay')) {
          // Remove any shadow created around the node.
-         thisElement.removeClass('nodeShadow');
+         thisElement.removeClass('nodeShadowAndOverlay');
         }
      }
     catch(err) {
