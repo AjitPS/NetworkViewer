@@ -170,11 +170,11 @@ $(function() { // on dom ready
         })
       .selector('.nodeShadow')
         .css({ // settings for using shadow on nodes when they have hidden, connected nodes.
-              'shadow-blur': '30',/*'20'*/ // disable for larger network graphs, use x & y offset(s) instead.
+              'shadow-blur': '40',/*'20'*/ // disable for larger network graphs, use x & y offset(s) instead.
               'shadow-color': 'data(conceptColor)', // 'black'
 //            'shadow-offset-x': '5',
 //            'shadow-offset-y': '2',
-              'shadow-opacity': '0.9'
+              'shadow-opacity': '0.99'
         });
 
 // Initialise a cytoscape container instance as a Javascript object.
@@ -384,6 +384,7 @@ cy.elements().qtip({
       });
 */
 
+/*
   // On a 'touchmove' or 'mouseover' event, show jagged edges signifying the number of nodes connected to this node.
   cy.on('tapdragover', function (e) {
 //    console.log("tapdragover (touchmove or mouseover event)...");
@@ -430,53 +431,7 @@ cy.elements().qtip({
     catch(err) { console.log("tapdragover event: Error: "+ err.stack); }
   });
 
-  // On a 'touchmove' or 'mouseover' event, show jagged edges signifying the number of nodes connected to this node.
-  function shadowNodesWithHiddenNeighborhood() {
-    console.log("shadowNodesWithHiddenNeighborhood() function...");
-    var thisElement= e.cyTarget;
-    var nodeID, connectedNodesCount= 0;
-//    var shadowColor= "";
-    var neighbor_node, neighbor_nodeID, neighbor_nodeDisplay, connected_hiddenNodesCount= 0;
-    try {
-      if(thisElement.isNode()) {
-         nodeID= thisElement.id();
-//         shadowColor= thisElement.data('conceptColor');
-
-         // Get the number of nodes connected to this node from the graph's JSON data.
-         for(var k=0; k < networkJSON.edges.length; k++) {
-             if(networkJSON.edges[k].data.source === nodeID) {
-                connectedNodesCount= connectedNodesCount + 1;
-               }
-            }
-//         console.log("Node tapdragover (touchmove/ mouseover) event: No. of connected nodes= "+ connectedNodesCount);
-
-         // Retrieve the nodes in this element's neighborhood.
-         var neighborhood_nodes= thisElement.neighborhood().nodes();
-         // Find the hidden nodes connected to this node.
-         for(var j=0; j < neighborhood_nodes.length; j++) {
-             neighbor_node= neighborhood_nodes[j];
-             neighbor_nodeID= neighbor_node.id();
-             neighbor_nodeDisplay= neighbor_node.data('conceptDisplay');
-//             console.log("neighbor_node: "+ neighbor_node +" ; id: "+ neighbor_nodeID +" , display: "+ neighbor_nodeDisplay);
-             if(neighbor_nodeDisplay === "none") { // Find the hidden, connected nodes.
-                connected_hiddenNodesCount= connected_hiddenNodesCount + 1;
-               }
-            }
-         console.log("No. of connected, hidden nodes= "+ connected_hiddenNodesCount);
-
-         if(connected_hiddenNodesCount > 0) {
-//            console.log("shadowColor= "+ shadowColor);
-            // Show shadow around nodes that have hidden, connected nodes.
-            thisElement.addClass('nodeShadow');
-           // Show small, outward edges signifying the number of connected nodes.
-           
-          }
-        }
-      }
-    catch(err) { console.log("tapdragover event: Error: "+ err.stack); }
-  }
-
-  // On a 'touchmove' or 'mouseout' event, hide shadow on nodes, if it exists.
+  // On a 'touchmove' or 'mouseout' event, remove shadow effect from nodes, if it exists.
   cy.on('tapdragout', function (e) {
 //    console.log("tapdragout (touchmove or mouseout event)...");
     var thisElement= e.cyTarget;
@@ -488,19 +443,7 @@ cy.elements().qtip({
      }
     catch(err) { console.log("tapdragout event: Error: "+ err.stack); }
   });
-
-  // On a 'touchmove' or 'mouseout' event, hide shadow on nodes, if it exists.
-  function removeNodeShadow() {
-    console.log("removeNodeShadow() function...");
-    var thisElement= e.cyTarget;
-    try {
-      if(thisElement.hasClass('nodeShadow')) {
-         // Remove any shadow created around the node.
-         thisElement.removeClass('nodeShadow');
-        }
-     }
-    catch(err) { console.log("tapdragout event: Error: "+ err.stack); }
-  }
+*/
 
  /** Popup (context) menu: a circular Context Menu for each Node (concept) & Edge (relation) using the 'cxtmenu' jQuery plugin. */
  var contextMenu= {
@@ -715,6 +658,9 @@ cy.elements().qtip({
              cy.elements('edge').show(); // show all edges using eles.show().
              // Relayout the graph.
              rerunLayout();
+
+             // Remove shadows around nodes, if any.
+             removeNodeShadow();
             }
         },
 
@@ -1181,3 +1127,52 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   myLayout.slideOpen('east'); // open the (already unhidden) Item Info pane.
  }
+
+  // Show jagged edges signifying the number of nodes connected to this node.
+  function shadowNodesWithHiddenNeighborhood() {
+    var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+    cy.nodes().forEach(function( ele ) {
+    var thisElement= ele;
+    var neighbor_nodeDisplay, connected_hiddenNodesCount= 0;
+    try {
+         // Retrieve the nodes in this element's neighborhood.
+         var neighborhood_nodes= thisElement.neighborhood().nodes();
+         // Find the hidden nodes connected to this node.
+         for(var j=0; j < neighborhood_nodes.length; j++) {
+             neighbor_nodeDisplay= neighborhood_nodes[j].data('conceptDisplay');
+//             console.log("neighbor_nodeDisplay: "+ neighbor_nodeDisplay);
+             if(neighbor_nodeDisplay === "none") { // Find the hidden, connected nodes.
+                connected_hiddenNodesCount= connected_hiddenNodesCount + 1;
+               }
+            }
+//         console.log("No. of connected, hidden nodes= "+ connected_hiddenNodesCount);
+
+         if(connected_hiddenNodesCount > 0) {
+            // Show shadow around nodes that have hidden, connected nodes.
+            thisElement.addClass('nodeShadow');
+           // Show small, outward edges signifying the number of connected nodes.
+           
+          }
+      }
+    catch(err) { 
+          console.log("Error occurred while adding Shadow to concepts with connected, hidden elements. \n"+"Error Details: "+ err.stack);
+         }
+   });
+  }
+
+  // Remove shadow effect from nodes, if it exists.
+  function removeNodeShadow() {
+    var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+    cy.nodes().forEach(function( ele ) {
+    var thisElement= ele;
+    try {
+      if(thisElement.hasClass('nodeShadow')) {
+         // Remove any shadow created around the node.
+         thisElement.removeClass('nodeShadow');
+        }
+     }
+    catch(err) {
+          console.log("Error occurred while removing Shadow from concepts with connected, hidden elements. \n"+"Error Details: "+ err.stack);
+         }
+   });
+  }
