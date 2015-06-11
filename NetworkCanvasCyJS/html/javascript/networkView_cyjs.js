@@ -174,7 +174,7 @@ $(function() { // on dom ready
               'shadow-color': 'black', // 'data(conceptColor)',
 //            'shadow-offset-x': '5',
 //            'shadow-offset-y': '2',
-              'shadow-opacity': '0.9',
+              'shadow-opacity': '0.9'
 
               // settings for overlay effect.
 /*              'overlay-color': 'data(conceptColor)',
@@ -1163,9 +1163,24 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 //            console.log("Highlight node ID (has connected, hidden nodes)= "+ thisElement.data('value'));
             // Show shadow around nodes that have hidden, connected nodes.
             thisElement.addClass('nodeShadowAndOverlay');
-           // Show small, outward edges signifying the number of connected nodes.
-/*           // D3.js code
-           var w = thisElement.data('conceptSize') - 6,
+
+/*
+            // Using cytoscapeJS, set a circle layout on the neighborhood & make the neighboring hidden nodes & edges transparent.
+            var neighborhood_circleLayout= { name: 'circle', roots: thisElement, radius: '0.1',
+                rStepSize: '0.1' };
+            thisElement.neighborhood().layout(neighborhood_circleLayout);
+            var hidden_neighbor_nodes= thisElement.neighborhood().nodes()
+                    .filter('node[conceptDisplay = "none"]');
+            var hidden_neighbor_edges= thisElement.neighborhood().edges()
+                    .filter('edge[relationDisplay = "none"]')
+            hidden_neighbor_nodes.style({'opacity': '0', 'display': 'element'});
+            hidden_neighbor_edges.style({'opacity': '0.5', 'display': 'element'});
+*/
+
+            /* Show small, outward edges (rotated rectanges with a gradient) signifying the number 
+             * of connected nodes. */
+/*            // D3.js code
+            var w = thisElement.data('conceptSize') - 6,
                 h = thisElement.data('conceptSize') - 6,
                 x = w / 2 + 25 * Math.cos(r * connected_hiddenNodesCount),
                 y = h / 2 + 30 * Math.sin(r * connected_hiddenNodesCount),
@@ -1195,6 +1210,8 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
          // Remove any shadow created around the node.
          thisElement.removeClass('nodeShadowAndOverlay');
         }
+/*      thisElement.neighborhood().nodes().style({'opacity': '1'});
+      thisElement.neighborhood().edges().style({'opacity': '1'});*/
      }
     catch(err) {
           console.log("Error occurred while removing Shadow from concepts with connected, hidden elements. \n"+"Error Details: "+ err.stack);
