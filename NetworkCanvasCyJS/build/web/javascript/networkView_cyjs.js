@@ -11,7 +11,9 @@ window.onload= function () {
     };
 
 // Generate the network graph using a new JSON dataset (file) when the graph is refreshed by the user.
-/*window.opener.location.reload= function () {
+//window.opener.location.reload= function () {
+/*window.location.reload= function () {
+     console.log("reload>> window.jsonFile= "+ window.jsonFile);
      // Generate the Network Graph after the page load event.
      generateNetworkGraph(window.jsonFile);
     };*/
@@ -125,7 +127,18 @@ $(function() { // on dom ready
                               catch(err) { console.log(err.stack); }
                               return node_borderWidth;
                           },
-//          'border-color': 'black',
+          'border-color': //'black',
+                          function(ele) {
+                              var node_borderColor= 'black';
+                              try { // Check if the node was flagged or not
+                              if(ele.data('flagged') === "true") {
+                                 node_borderColor= 'navy';
+//                                 console.log("node Flagged= "+ ele.data('flagged') +" , node_borderColor: "+ node_borderColor);
+                                }
+                              }
+                              catch(err) { console.log(err.stack); }
+                              return node_borderColor;
+                          },
           'font-size': '8px', // '30px',
 //          'min-zoomed-font-size': '8px',
           // Set node shape, color & display (visibility) depending on settings in the JSON var.
