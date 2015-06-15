@@ -406,8 +406,20 @@ cy.elements().qtip({
   // On a 'touchmove' or 'mouseover' event, show jagged edges signifying the number of nodes connected to this node.
   cy.on('tapdragover', function (e) {
 //    console.log("tapdragover (touchmove or mouseover event)...");
-    var thisElement= e.cyTarget;
-    var nodeID, connectedNodesCount= 0;
+    var thisElement= e.cyTarget;*/
+/*
+    // Using cytoscapeJS, set a circle layout on the neighborhood & make the neighboring hidden nodes & edges transparent.
+    var neighborhood_circleLayout= { name: 'circle', root: thisElement, radius: '0.1',
+            rStepSize: '0.1'};
+    thisElement.neighborhood().layout(neighborhood_circleLayout);
+    var hidden_neighbor_nodes= thisElement.neighborhood().nodes()
+                .filter('node[conceptDisplay = "none"]');
+    var hidden_neighbor_edges= thisElement.neighborhood().edges()
+                .filter('edge[relationDisplay = "none"]')
+    hidden_neighbor_nodes.style({'opacity': '0', 'display': 'element'});
+    hidden_neighbor_edges.style({'opacity': '0.5', 'display': 'element'});
+*/
+/*    var nodeID, connectedNodesCount= 0;
 //    var shadowColor= "";
     var neighbor_node, neighbor_nodeID, neighbor_nodeDisplay, connected_hiddenNodesCount= 0;
     try {
@@ -445,7 +457,7 @@ cy.elements().qtip({
         }
       }
     catch(err) { console.log("tapdragover event: Error: "+ err.stack); }
-  });
+  });*/
 
   // On a 'touchmove' or 'mouseout' event, remove shadow effect from nodes, if it exists.
   cy.on('tapdragout', function (e) {
@@ -459,7 +471,7 @@ cy.elements().qtip({
      }
     catch(err) { console.log("tapdragout event: Error: "+ err.stack); }
   });
-*/
+
 
  /** Popup (context) menu: a circular Context Menu for each Node (concept) & Edge (relation) using the 'cxtmenu' jQuery plugin. */
  var contextMenu= {
