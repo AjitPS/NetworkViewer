@@ -391,6 +391,9 @@ cy.elements().qtip({
       }
       catch(err) { info= "Selected element is neither a Concept nor a Relation"; }
     console.log(info);
+
+     // Also update the Item Info table & display it.
+     showItemInfo(thisElement);
    });
 
 /*
@@ -402,22 +405,22 @@ cy.elements().qtip({
       });
 */
 
-/*
   // On a 'touchmove' or 'mouseover' event, show jagged edges signifying the number of nodes connected to this node.
   cy.on('tapdragover', function (e) {
 //    console.log("tapdragover (touchmove or mouseover event)...");
-    var thisElement= e.cyTarget;*/
 /*
+// HERE
+    var thisElement= e.cyTarget;
+
     // Using cytoscapeJS, set a circle layout on the neighborhood & make the neighboring hidden nodes & edges transparent.
-    var neighborhood_circleLayout= { name: 'circle', root: thisElement, radius: '0.1',
-            rStepSize: '0.1'};
+    var neighborhood_circleLayout= { name: 'circle', radius: 2,
+            boundingBox: undefined, avoidOverlap: true, fit: true, handleDisconnected: true };
     thisElement.neighborhood().layout(neighborhood_circleLayout);
-    var hidden_neighbor_nodes= thisElement.neighborhood().nodes()
-                .filter('node[conceptDisplay = "none"]');
+//    var hidden_neighbor_nodes= thisElement.neighborhood().nodes().filter('node[conceptDisplay = "none"]');
     var hidden_neighbor_edges= thisElement.neighborhood().edges()
-                .filter('edge[relationDisplay = "none"]')
-    hidden_neighbor_nodes.style({'opacity': '0', 'display': 'element'});
-    hidden_neighbor_edges.style({'opacity': '0.5', 'display': 'element'});
+                .filter('edge[relationDisplay = "none"]');
+//    hidden_neighbor_nodes.style({'opacity': '0'});
+    hidden_neighbor_edges.style({'display': 'element', 'curve-style': 'unbundled-bezier' });
 */
 /*    var nodeID, connectedNodesCount= 0;
 //    var shadowColor= "";
@@ -456,13 +459,26 @@ cy.elements().qtip({
           }
         }
       }
-    catch(err) { console.log("tapdragover event: Error: "+ err.stack); }
-  });*/
+    catch(err) { console.log("tapdragover event: Error: "+ err.stack); }*/
+  });
 
   // On a 'touchmove' or 'mouseout' event, remove shadow effect from nodes, if it exists.
   cy.on('tapdragout', function (e) {
 //    console.log("tapdragout (touchmove or mouseout event)...");
     var thisElement= e.cyTarget;
+    // Remove 'circle' layout from the neighborhood.
+/*    var neighborhood_defaultLayout= { name: 'cola', refresh: 1, animate: true, fit: true, padding: 10,
+        boundingBox: undefined, maxSimulationTime: 4000, ungrabifyWhileSimulating: false, 
+        ready: function() {}, stop: function() {}, randomize: false, avoidOverlap: true, 
+        handleDisconnected: true, flow: undefined, alignment: undefined, 
+        unconstrIter: 10, userConstIter: 10, allConstIter: 10, infinite: false };
+    thisElement.neighborhood().layout(neighborhood_defaultLayout);*/
+/*
+// HERE
+    var hidden_neighbor_edges= thisElement.neighborhood().edges()
+                .filter('edge[relationDisplay = "none"]');
+    hidden_neighbor_edges.style({'display': 'none', 'curve-style': 'unbundled-bezier', 
+        'control-point-step-size': '10px', 'control-point-distance': '20px', 'control-point-weight': '50'});*/
     try {
       if(thisElement.hasClass('nodeShadowAndOverlay')) {
          // Remove any shadow created around the node.
@@ -471,7 +487,6 @@ cy.elements().qtip({
      }
     catch(err) { console.log("tapdragout event: Error: "+ err.stack); }
   });
-
 
  /** Popup (context) menu: a circular Context Menu for each Node (concept) & Edge (relation) using the 'cxtmenu' jQuery plugin. */
  var contextMenu= {
@@ -485,197 +500,9 @@ cy.elements().qtip({
     commands: [ // an array of commands to list in the menu
         {
          content: 'Item Info',
-         select: // showItemInfo(this)
-            function() {
-             var itemInfo= "";
-             try {
-             // Show Item Info Pane.
-             openItemInfoPane();
-
-             // Display the Item Info table in its parent div.
-             document.getElementById("itemInfo_Table").style.display= "inline";
-             // Display item information in the itemInfo <div> in a <table>.
-             var table= document.getElementById("itemInfo_Table").getElementsByTagName('tbody')[0]; // get the Item Info. table.
-             // Clear the existing table body contents.
-             table.innerHTML= "";
-             if(this.isNode()) {
-                var row= table.insertRow(0); // create a new, empty row.
-                // Insert new cells in this row.
-                var cell1= row.insertCell(0);
-                var cell2= row.insertCell(1);
-                // Store the necessary data in the cells.
-                cell1.innerHTML= "Concept Type:";
-                cell2.innerHTML= this.data('conceptType'); // concept Type
-                // Concept 'value'.
-                row= table.insertRow(1);
-                cell1= row.insertCell(0);
-                cell2= row.insertCell(1);
-                cell1.innerHTML= "Value:";
-                cell2.innerHTML= this.data('value');
-                // Concept 'PID'.
-                row= table.insertRow(2);
-                cell1= row.insertCell(0);
-                cell2= row.insertCell(1);
-                cell1.innerHTML= "PID:";
-                cell2.innerHTML= this.data('pid');
-                // Concept 'Annotation'.
-                row= table.insertRow(3);
-                cell1= row.insertCell(0);
-                cell2= row.insertCell(1);
-                cell1.innerHTML= "Annotation:";
-                cell2.innerHTML= this.data('annotation');
-                // Get all metadata for this concept from the metadataJSON variable.
-                for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
-                    if(this.id() === metadataJSON.ondexmetadata.concepts[j].id) {
-                       // Concept 'elementOf'.
-                       row= table.insertRow(table.rows.length); // new row.
-                       cell1= row.insertCell(0);
-                       cell2= row.insertCell(1);
-                       cell1.innerHTML= "Source:";
-                       cell2.innerHTML= metadataJSON.ondexmetadata.concepts[j].elementOf;
-
-                       // Get evidence information.
-                       var evidences= "";
-                       row= table.insertRow(table.rows.length); // new row.
-                       cell1= row.insertCell(0);
-                       cell2= row.insertCell(1);
-                       cell1.innerHTML= "Evidence:";
-                       for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].evidences.length; k++) {
-                           if(metadataJSON.ondexmetadata.concepts[j].evidences[k] !== "") {
-                              evidences= evidences + metadataJSON.ondexmetadata.concepts[j].evidences[k] +", ";
-                             }
-                          }
-                       cell2.innerHTML= evidences.substring(0, evidences.length-2);
-
-                       // Get concept attributes.
-                       row= table.insertRow(table.rows.length); // new row.
-                       cell1= row.insertCell(0);
-                       cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
-                       for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
-                           if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
-                               && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "visible")) {
-                               row= table.insertRow(table.rows.length); // new row.
-                               cell1= row.insertCell(0);
-                               cell2= row.insertCell(1);
-                               attrName= metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname;
-                               attrValue= metadataJSON.ondexmetadata.concepts[j].attributes[k].value;
-                               // For Taxonomy ID, display url (created via config>> url_mappings.json).
-                               if((attrName === "TAXID") || (attrName === "TX")) {
-                                  for(var u=0; u < url_mappings.html_acc.length; u++) {
-                                      if((url_mappings.html_acc[u].cv === attrName) || (url_mappings.html_acc[u].cv === "TX")) {
-                                         attrUrl= url_mappings.html_acc[u].weblink + attrValue; // Taxonomy ID url.
-                                         // open attribute url in new blank tab.
-//                                         attrValue= "<a href=\""+ attrUrl +"\" target=\"_blank\">"+ attrValue +"</a>";
-                                         attrValue= "<a href=\""+ attrUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ attrValue +"</a>";
-                                        }
-                                     }
-                                 }
-                               // For Aminoacid sequence (AA).
-                               else if(attrName === "AA") {
-                                       attrName= "Aminoacid sequence (AA)";
-                                       aaSeq= attrValue.match(/.{1,10}/g); // split into string array of 10 characters each.
-                                       counter= 0;
-                                       // Have monospaced font for AA sequence.
-//                                       attrValue= "<font size=\"1\">";
-                                       attrValue= "<span style= \"font-family: 'Courier New', Courier, monospace\">";
-                                       for(var p=0; p < aaSeq.length; p++) {
-                                           attrValue= attrValue + aaSeq[p] +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                                           counter= counter + 1;
-                                           if(counter%3 === 0) {
-                                              attrValue= attrValue +"<br/>";
-                                             }
-                                          }
-//                                       attrValue= attrValue +"</font>";
-                                       attrValue= attrValue +"</span>";
-                                      }
-                               cell1.innerHTML= attrName;
-                               cell2.innerHTML= attrValue;
-                              }
-                           }
-
-                       // Get concept accessions.
-                       row= table.insertRow(table.rows.length); // new row.
-                       cell1= row.insertCell(0);
-                       cell1.innerHTML= "<b>Accessions:</b>"; // sub-heading
-                       for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].coaccessions.length; k++) {
-                           row= table.insertRow(table.rows.length); // new row.
-                           cell1= row.insertCell(0);
-                           cell2= row.insertCell(1);
-                           accessionID= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].elementOf;
-                           co_acc= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].accession;
-                           for(var u=0; u < url_mappings.html_acc.length; u++) {
-                               if(url_mappings.html_acc[u].cv === accessionID) {
-                                  coAccUrl= url_mappings.html_acc[u].weblink + co_acc; // co-accession url.
-                                  // open attribute url in new blank tab.
-//                                  attrValue= "<a href=\""+ coAccUrl +"\" target=\"_blank\">"+ co_acc +"</a>";
-                                  co_acc= "<a href=\""+ coAccUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ co_acc +"</a>";
-                                 }
-                               }
-                           cell1.innerHTML= accessionID;
-                           cell2.innerHTML= co_acc;
-                          }
-                      }
-                   }
-               }
-             else if(this.isEdge()) {
-                     var row= table.insertRow(0);
-                     // Insert new cells in this row.
-                     var cell1= row.insertCell(0);
-                     var cell2= row.insertCell(1);
-                     // Store the necessary data in the cells.
-                     cell1.innerHTML= "Relation Label:";
-                     cell2.innerHTML= this.data('label'); // relation label
-                     // Relation 'source'.
-                     row= table.insertRow(1);
-                     cell1= row.insertCell(0);
-                     cell2= row.insertCell(1);
-                     cell1.innerHTML= "From:";
-                     cell2.innerHTML= this.data('source'); // relation source ('fromConcept').
-                     // Relation 'target'.
-                     row= table.insertRow(2);
-                     cell1= row.insertCell(0);
-                     cell2= row.insertCell(1);
-                     cell1.innerHTML= "To:";
-                     cell2.innerHTML= this.data('target'); // relation target ('toConcept').
-                     // Get all metadata for this relation from the metadataJSON variable.
-                     for(var j=0; j < metadataJSON.ondexmetadata.relations.length; j++) {
-                         if(this.id() === metadataJSON.ondexmetadata.relations[j].id) {
-                            // Get evidence information.
-                            var relationEvidences= "";
-                            row= table.insertRow(table.rows.length); // new row.
-                            cell1= row.insertCell(0);
-                            cell2= row.insertCell(1);
-                            cell1.innerHTML= "Evidence:";
-                            for(var k=0; k < metadataJSON.ondexmetadata.relations[j].evidences.length; k++) {
-                                if(metadataJSON.ondexmetadata.relations[j].evidences[k] !== "") {
-                                   relationEvidences= relationEvidences + metadataJSON.ondexmetadata.relations[j].evidences[k] +", ";
-                                  }
-                               }
-                            cell2.innerHTML= relationEvidences.substring(0, relationEvidences.length-2);
-
-                            // Get relation 'attributes'.
-                            row= table.insertRow(table.rows.length); // new row.
-                            cell1= row.insertCell(0);
-                            cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
-                            for(var k=0; k < metadataJSON.ondexmetadata.relations[j].attributes.length; k++) {
-                                if((metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "size")
-                                    && (metadataJSON.ondexmetadata.relations[j].attributes[k].attrname !== "visible")) {
-                                   row= table.insertRow(table.rows.length); // new row.
-                                   cell1= row.insertCell(0);
-                                   cell2= row.insertCell(1);
-                                   cell1.innerHTML= metadataJSON.ondexmetadata.relations[j].attributes[k].attrname;
-                                   cell2.innerHTML= metadataJSON.ondexmetadata.relations[j].attributes[k].value;
-                                  }
-                              }
-                           }
-                       }
-                    }
-             }
-             catch(err) { 
-                   itemInfo= "Selected element is neither a Concept nor a Relation"; 
-                   itemInfo= itemInfo +"<br/>Error details:<br/>"+ err.stack; // error details
-                   console.log(itemInfo);
-                  }
+         select: function() {
+             // Display Item Info.
+             showItemInfo(this);
             }
         },
             
@@ -922,21 +749,16 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    * @type type
    */
    function showItemInfo(selectedElement) {
-/*    itemInfo= window.open("ItemInfo.html", "itemInfoWindow", "height=200, width=400, location=no, 
-                 toolbar=no, menubar=no, scrollbars=no, resizable=no, titlebar=no, directories=no, status=no");
-    var nodeInfo= "<div>Concept Type: "+ selectedElement.data('conceptType') +"<br/> Value: "+ selectedElement.data('value') +
-                    "<br/> <br/><u>Properties:</u> <br/> id: "+ selectedElement.id() +"<br/> Shape: "+ selectedElement.data('conceptShape') +
-                    "<br/> Color: "+ selectedElement.data('conceptColor') +"</div>";
-    // Show Item info. in a new window.
-    itemInfo.document.write("<html><body><b><u>Node details</u></b><br/>"+ nodeInfo +"</body></html>"); */
     var itemInfo= "";
-    console.log("Display Item Info. for id: "+ selectedElement.id());
-/*  $("#infoDialog").dialog(); // initialize a dialog box.
-*/
+    var metadataJSON= allGraphData; // using the dynamically included metadata JSON object directly.
+/*    console.log("Display Item Info. for id: "+ selectedElement.id() +", isNode ?= "+ 
+            selectedElement.isNode() +", isEdge ?= "+ selectedElement.isEdge());*/
     try {
          // Show Item Info Pane.
          openItemInfoPane();
 
+         // Display the Item Info table in its parent div.
+         document.getElementById("itemInfo_Table").style.display= "inline";
          // Display item information in the itemInfo <div> in a <table>.
          var table= document.getElementById("itemInfo_Table").getElementsByTagName('tbody')[0]; // get the Item Info. table.
          // Clear the existing table body contents.
