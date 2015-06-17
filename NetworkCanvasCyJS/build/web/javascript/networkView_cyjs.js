@@ -501,24 +501,30 @@ cy.elements().qtip({
         {
          content: 'Item Info',
          select: function() {
+             // Show Item Info Pane.
+             openItemInfoPane();
+
              // Display Item Info.
              showItemInfo(this);
             }
         },
             
         {
-         content: 'Show All',
+         content: 'Show Links',
          select: function() {
-             cy.elements('node').show(); // show all nodes using eles.show().
-             cy.elements('edge').show(); // show all edges using eles.show().
-             // Relayout the graph.
-             rerunLayout();
+             if(this.isNode()) {
+                // Show concept neighborhood.
+                var selectedNode= this;
+                selectedNode.neighborhood().nodes().show();
+                selectedNode.neighborhood().edges().show();
 
-             // Remove shadows around nodes, if any.
-             cy.nodes().forEach(function( ele ) {
-              removeNodeShadow(ele);
-             });
-            }
+                // Remove shadow effect from the nodes that had hidden nodes in their neighborhood.
+                removeNodeShadow(this);
+
+                // Relayout the graph.
+                rerunLayout();
+               }
+           }
         },
 
         {
@@ -720,8 +726,8 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
   }
 
   // Show concept neighbourhood.
-  function showNeighbourhood() {
-//   console.log("Show neighborhood: Display concepts in the neighbourhood of the selected concept (node)...");
+/*  function showNeighbourhood() {
+   console.log("Show neighborhood: Display concepts in the neighbourhood of the selected concept (node)...");
    var selectedNodes= cy.nodes(':selected');
    selectedNodes.neighborhood().nodes().show();
    selectedNodes.neighborhood().edges().show();
@@ -731,6 +737,19 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     removeNodeShadow(ele);
    });
 
+  }*/
+  
+  // Show all concepts & relations.
+  function showAll() {
+   cy.elements('node').show(); // show all nodes using eles.show().
+   cy.elements('edge').show(); // show all edges using eles.show().
+   // Relayout the graph.
+   rerunLayout();
+
+   // Remove shadows around nodes, if any.
+   cy.nodes().forEach(function( ele ) {
+       removeNodeShadow(ele);
+      });
   }
   
   // Show/ Hide labels for concepts and relations.
@@ -754,9 +773,6 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 /*    console.log("Display Item Info. for id: "+ selectedElement.id() +", isNode ?= "+ 
             selectedElement.isNode() +", isEdge ?= "+ selectedElement.isEdge());*/
     try {
-         // Show Item Info Pane.
-         openItemInfoPane();
-
          // Display the Item Info table in its parent div.
          document.getElementById("itemInfo_Table").style.display= "inline";
          // Display item information in the itemInfo <div> in a <table>.
