@@ -408,6 +408,8 @@ cy.elements().qtip({
 
   // On a 'touchmove' or 'mouseover' event, show jagged edges signifying the number of nodes connected to this node.
 //  var hidden_neighbor_edges= "";
+  var hidden_neigbor_edgesCollection= cy.collection();
+  var hidden_neigbor_nodesCollection= cy.collection();
   cy.on('tapdragover', function (e) {
     var thisElement= e.cyTarget;
     try {
@@ -419,74 +421,36 @@ cy.elements().qtip({
          var neighborhood_circleLayout= { name: 'circle', radius: 2,
                  boundingBox: eleBBox, avoidOverlap: true, fit: true, handleDisconnected: true };
          thisElement.neighborhood().layout(neighborhood_circleLayout);*/
-//         var hidden_neighbor_nodes= thisElement.neighborhood().nodes().filter('node[conceptDisplay = "none"]');
+// test...
+hidden_neigbor_nodesCollection.forEach(function( el ) {
+console.log("tapdragover: old nodes left: "+ el.id());
+});
 
-//         var hidden_neighbor_edges= thisElement.neighborhood().edges();//.filter('edge[relationDisplay = "none"]');
-//         var hidden_neighbor_edges= /*thisElement.neighborhood()*/cy.edges().filter('edge[source = '+thisElement.id()+']');
-         var hidden_neighbor_edges= thisElement.connectedEdges().filter('edge[source = '+eleID+']');
+         // Get the hidden, connected relations (edges) for this concept (node).
+         var hidden_neighbor_edges= thisElement.connectedEdges();
 
-         var neighbor_relationDisplay/*, neighbor_edge, neighbor_relationSource, neighbor_relationTarget*/;
-/*         for(var j=0; j < hidden_neighbor_edges.length; j++) {
-             neighbor_edge= hidden_neighbor_edges[j];
-             neighbor_relationSource= neighbor_edge.data('source');
-             neighbor_relationDisplay= neighbor_edge.data('relationDisplay');
-             if(neighbor_relationSource === thisElement.id() && neighbor_relationDisplay === "none") {
-                console.log("this.id: "+ eleID +" -> neighbor_edge: id: "+ neighbor_edge.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationSource);
-//                neighbor_edge.style({'display': 'element' });
-                neighbor_edge.show();
-               }
-            }*/
-         hidden_neighbor_edges/*cy.edges()*/.forEach(function( ele ) {
-//             neighbor_relationSource= ele.data('source');
+         // Find and show hidden relations starting from this concept to other concepts.
+         var neighbor_relationDisplay, neighbor_relationSource;
+         hidden_neighbor_edges.forEach(function( ele ) {
+             neighbor_relationSource= ele.data('source');
              neighbor_relationDisplay= ele.data('relationDisplay');
-//             neighbor_relationTarget= ele.data('target');
-             if(/*neighbor_relationSource === eleID && */neighbor_relationDisplay === "none") {
-                console.log("tapdragover>> this.id: "+ eleID +" -> neighbor_edge: id: "+ ele.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ /*neighbor_relationSource*/ele.data('source'));
-                ele.connectedNodes()/*.filter('node[conceptDisplay = "none"]')*/.show();
-//                ele.connectedNodes().filter('node[conceptDisplay = "none"]').style({'display': 'element'/*, 'opacity': '0.0'*/ });
-                ele.show();
-//                ele.style({'display': 'element'/*, 'opacity': '0.5'*/ });
+             console.log("tapdragover>> thisElement.id: "+ eleID +"; neighbor_edge: id: "+ ele.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationSource);
+             if(neighbor_relationSource === eleID && neighbor_relationDisplay === "none") {
+//                console.log("tapdragover>> thisElement.id: "+ eleID +"; neighbor_edge: id: "+ ele.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationSource);
+                // Get the hidden concepts (nodes) connected to this relation (edge).
+                var hiddenConnectedNodes= ele.connectedNodes().filter('node[conceptDisplay = "none"]');
+                hiddenConnectedNodes.forEach(function( el ) {
+                    // Show the hidden, connected concept (node).
+                    el.style({'display': 'element', 'opacity': '0.01' });
+                    // Add this concept (node) to a collection, later used to re-set its visual CSS properties
+                    hidden_neigbor_nodesCollection= hidden_neigbor_nodesCollection.add(el);
+                });
+                // Show the hidden, connected relation (edge) as well.
+                ele.style({'display': 'element', 'opacity': '0.5' });
+                // Add this relation (edge) to a collection as well, later used to re-set its visual CSS properties
+                hidden_neigbor_edgesCollection= hidden_neigbor_edgesCollection.add(ele);
                }
             });
-
-//         hidden_neighbor_nodes.style({'opacity': '0'});
-//         hidden_neighbor_edges.style({'display': 'element'/*, 'curve-style': 'unbundled-bezier', 'opacity': '0.5'*/ });
-
-/*         var nodeID, connectedNodesCount= 0;
-//         var shadowColor= "";
-         var neighbor_node, neighbor_nodeID, neighbor_nodeDisplay, connected_hiddenNodesCount= 0;
-         if(thisElement.isNode()) {
-            nodeID= thisElement.id();
-//            shadowColor= thisElement.data('conceptColor');
-
-            // Get the number of nodes connected to this node from the graph's JSON data.
-            for(var k=0; k < networkJSON.edges.length; k++) {
-                if(networkJSON.edges[k].data.source === nodeID) {
-                   connectedNodesCount= connectedNodesCount + 1;
-                  }
-               }
-//            console.log("Node tapdragover (touchmove/ mouseover) event: No. of connected nodes= "+ connectedNodesCount);
-
-            // Retrieve the nodes in this element's neighborhood.
-            var neighborhood_nodes= thisElement.neighborhood().nodes();
-            // Find the hidden nodes connected to this node.
-            for(var j=0; j < neighborhood_nodes.length; j++) {
-                neighbor_node= neighborhood_nodes[j];
-                neighbor_nodeID= neighbor_node.id();
-                neighbor_nodeDisplay= neighbor_node.data('conceptDisplay');
-//                console.log("neighbor_node: "+ neighbor_node +" ; id: "+ neighbor_nodeID +" , display: "+ neighbor_nodeDisplay);
-                if(neighbor_nodeDisplay === "none") { // Find the hidden, connected nodes.
-                   connected_hiddenNodesCount= connected_hiddenNodesCount + 1;
-                  }
-               }
-            console.log("No. of connected, hidden nodes= "+ connected_hiddenNodesCount);
-
-            if(connected_hiddenNodesCount > 0) {
-//               console.log("shadowColor= "+ shadowColor);
-               // Show shadow around nodes that have hidden, connected nodes.
-               thisElement.addClass('nodeShadowAndOverlay');
-             }
-           }*/
          }
       }
     catch(err) { console.log("tapdragover event: Error: "+ err.stack); }
@@ -500,51 +464,20 @@ cy.elements().qtip({
          var eleID= thisElement.id();
          console.log("tapdragout (touchmove or mouseout event) on concept ID: "+ eleID +
                  "... ; hasClass(nodeShadowAndOverlay): "+ thisElement.hasClass('nodeShadowAndOverlay'));
-         // Remove 'circle' layout from the neighborhood.
-/*         var neighborhood_defaultLayout= { name: 'cola', refresh: 1, animate: true, fit: true, padding: 10,
-             boundingBox: undefined, maxSimulationTime: 4000, ungrabifyWhileSimulating: false, 
-             ready: function() {}, stop: function() {}, randomize: false, avoidOverlap: true, 
-             handleDisconnected: true, flow: undefined, alignment: undefined, 
-             unconstrIter: 10, userConstIter: 10, allConstIter: 10, infinite: false };
-         thisElement.neighborhood().layout(neighborhood_defaultLayout);*/
-
-//         var hidden_neighbor_edges= thisElement.neighborhood().edges();//.filter('edge[relationDisplay = "none"]');
-//         var hidden_neighbor_edges= /*thisElement.neighborhood()*/cy.edges().filter('edge[source = '+thisElement.id()+']');
-         var hidden_neighbor_edges= thisElement.connectedEdges().filter('edge[source = '+eleID+']');
-
-         var neighbor_relationDisplay/*, neighbor_edge, neighbor_relationSource*/;
-/*         for(var j=0; j < hidden_neighbor_edges.length; j++) {
-             neighbor_edge= hidden_neighbor_edges[j];
-             neighbor_relationSource= neighbor_edge.data('source');
-             neighbor_relationDisplay= neighbor_edge.data('relationDisplay');
-             if(neighbor_relationSource === eleID && neighbor_relationDisplay === "none") {
-                console.log("this.id: "+ eleID +" -> neighbor_edge: id: "+ neighbor_edge.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationDisplay);
-//                neighbor_edge.style({'display': 'element' });
-                neighbor_edge.hide();
-               }
-            }*/
-         hidden_neighbor_edges/*cy.edges()*/.forEach(function( ele ) {
-//             neighbor_relationSource= ele.data('source');
-             neighbor_relationDisplay= ele.data('relationDisplay');
-//             neighbor_relationTarget= ele.data('target');
-             if(/*neighbor_relationSource === eleID && */neighbor_relationDisplay === "none") {
-                console.log("tapdragover>> this.id: "+ eleID +" -> neighbor_edge: id: "+ ele.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ /*neighbor_relationSource*/ele.data('source'));
-//                ele.style({'display': 'none'/*, 'opacity': '1.0'*/ });
-                ele.hide();
-                ele.connectedNodes().filter('node[conceptDisplay = "none"]').hide();
-//                ele.connectedNodes().filter('node[conceptDisplay = "none"]').style({'display': 'none'/*, 'opacity': '1.0'*/ });
-               }
-            });
-
-//         hidden_neighbor_edges.style({'display': 'none'/*, 'curve-style': 'unbundled-bezier',
-//             'control-point-step-size': '10px', 'control-point-distance': '20px', 
-//             'control-point-weight': '50', 'opacity': '1.0'*/ });
-      }
-/*
-      if(thisElement.hasClass('nodeShadowAndOverlay')) {
-         // Remove any shadow created around the node.
-         thisElement.removeClass('nodeShadowAndOverlay');
-        }*/
+         // Re-set its visual CSS properties of all the concepts and relations in the 2 collections.
+         hidden_neigbor_nodesCollection.forEach(function( el ) {
+             el.style({'display': 'none', 'opacity': '1.0' });
+             hidden_neigbor_nodesCollection.remove(el); // to manage the size of the collection.
+         });
+         hidden_neigbor_edgesCollection.forEach(function( ele ) {
+             ele.style({'display': 'none', 'opacity': '1.0' });
+             hidden_neigbor_edgesCollection.remove(ele); // to manage the size of the collection.
+         });
+        }
+// test...
+hidden_neigbor_nodesCollection.forEach(function( el ) {
+console.log("tapdragout: nodes left: "+ el.id());
+});
      }
     catch(err) { console.log("tapdragout event: Error: "+ err.stack); }
   });
