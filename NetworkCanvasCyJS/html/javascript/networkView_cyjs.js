@@ -407,25 +407,54 @@ cy.elements().qtip({
 */
 
   // On a 'touchmove' or 'mouseover' event, show jagged edges signifying the number of nodes connected to this node.
+//  var hidden_neighbor_edges= "";
   cy.on('tapdragover', function (e) {
     var thisElement= e.cyTarget;
-    if(thisElement.isNode() && thisElement.hasClass('nodeShadowAndOverlay')) {
-       console.log("tapdragover (touchmove or mouseover event) on concept ID: "+ thisElement.id() +"...");
-       // Using cytoscapeJS, set a circle layout on the neighborhood & make the neighboring hidden nodes & edges transparent.
-       var eleBBox= thisElement.boundingBox();
-       var neighborhood_circleLayout= { name: 'circle', radius: 2,
-               boundingBox: /*undefined*/eleBBox, avoidOverlap: true, fit: true, handleDisconnected: true };
-       thisElement.neighborhood().layout(neighborhood_circleLayout);
-//       var hidden_neighbor_nodes= thisElement.neighborhood().nodes().filter('node[conceptDisplay = "none"]');
-       var hidden_neighbor_edges= thisElement.neighborhood().edges()
-                   .filter('edge[relationDisplay = "none"]');
-//       hidden_neighbor_nodes.style({'opacity': '0'});
-       hidden_neighbor_edges.style({'display': 'element', 'curve-style': 'unbundled-bezier' });
+    try {
+      if(thisElement.isNode() && thisElement.hasClass('nodeShadowAndOverlay')) {
+         var eleID= thisElement.id();
+         console.log("tapdragover (touchmove or mouseover event) on concept ID: "+ eleID +"...");
+         // Using cytoscapeJS, set a circle layout on the neighborhood & make the neighboring hidden nodes & edges transparent.
+/*         var eleBBox= thisElement.boundingBox();
+         var neighborhood_circleLayout= { name: 'circle', radius: 2,
+                 boundingBox: eleBBox, avoidOverlap: true, fit: true, handleDisconnected: true };
+         thisElement.neighborhood().layout(neighborhood_circleLayout);*/
+//         var hidden_neighbor_nodes= thisElement.neighborhood().nodes().filter('node[conceptDisplay = "none"]');
 
-/*       var nodeID, connectedNodesCount= 0;
-//       var shadowColor= "";
-       var neighbor_node, neighbor_nodeID, neighbor_nodeDisplay, connected_hiddenNodesCount= 0;
-       try {
+//         var hidden_neighbor_edges= thisElement.neighborhood().edges();//.filter('edge[relationDisplay = "none"]');
+//         var hidden_neighbor_edges= /*thisElement.neighborhood()*/cy.edges().filter('edge[source = '+thisElement.id()+']');
+         var hidden_neighbor_edges= thisElement.connectedEdges().filter('edge[source = '+eleID+']');
+
+         var neighbor_relationDisplay/*, neighbor_edge, neighbor_relationSource, neighbor_relationTarget*/;
+/*         for(var j=0; j < hidden_neighbor_edges.length; j++) {
+             neighbor_edge= hidden_neighbor_edges[j];
+             neighbor_relationSource= neighbor_edge.data('source');
+             neighbor_relationDisplay= neighbor_edge.data('relationDisplay');
+             if(neighbor_relationSource === thisElement.id() && neighbor_relationDisplay === "none") {
+                console.log("this.id: "+ eleID +" -> neighbor_edge: id: "+ neighbor_edge.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationSource);
+//                neighbor_edge.style({'display': 'element' });
+                neighbor_edge.show();
+               }
+            }*/
+         hidden_neighbor_edges/*cy.edges()*/.forEach(function( ele ) {
+//             neighbor_relationSource= ele.data('source');
+             neighbor_relationDisplay= ele.data('relationDisplay');
+//             neighbor_relationTarget= ele.data('target');
+             if(/*neighbor_relationSource === eleID && */neighbor_relationDisplay === "none") {
+                console.log("tapdragover>> this.id: "+ eleID +" -> neighbor_edge: id: "+ ele.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ /*neighbor_relationSource*/ele.data('source'));
+                ele.connectedNodes()/*.filter('node[conceptDisplay = "none"]')*/.show();
+//                ele.connectedNodes().filter('node[conceptDisplay = "none"]').style({'display': 'element'/*, 'opacity': '0.0'*/ });
+                ele.show();
+//                ele.style({'display': 'element'/*, 'opacity': '0.5'*/ });
+               }
+            });
+
+//         hidden_neighbor_nodes.style({'opacity': '0'});
+//         hidden_neighbor_edges.style({'display': 'element'/*, 'curve-style': 'unbundled-bezier', 'opacity': '0.5'*/ });
+
+/*         var nodeID, connectedNodesCount= 0;
+//         var shadowColor= "";
+         var neighbor_node, neighbor_nodeID, neighbor_nodeDisplay, connected_hiddenNodesCount= 0;
          if(thisElement.isNode()) {
             nodeID= thisElement.id();
 //            shadowColor= thisElement.data('conceptColor');
@@ -457,37 +486,65 @@ cy.elements().qtip({
                // Show shadow around nodes that have hidden, connected nodes.
                thisElement.addClass('nodeShadowAndOverlay');
              }
-           }
+           }*/
          }
-       catch(err) { console.log("tapdragover event: Error: "+ err.stack); }*/
       }
+    catch(err) { console.log("tapdragover event: Error: "+ err.stack); }
   });
 
   // On a 'touchmove' or 'mouseout' event, remove shadow effect from nodes, if it exists.
   cy.on('tapdragout', function (e) {
     var thisElement= e.cyTarget;
-    if(thisElement.isNode()) {
-       console.log("tapdragout (touchmove or mouseout event) on concept ID: "+ thisElement.id() +
-               "... ; hasClass(nodeShadowAndOverlay): "+ thisElement.hasClass('nodeShadowAndOverlay'));
-       // Remove 'circle' layout from the neighborhood.
-/*       var neighborhood_defaultLayout= { name: 'cola', refresh: 1, animate: true, fit: true, padding: 10,
-           boundingBox: undefined, maxSimulationTime: 4000, ungrabifyWhileSimulating: false, 
-           ready: function() {}, stop: function() {}, randomize: false, avoidOverlap: true, 
-           handleDisconnected: true, flow: undefined, alignment: undefined, 
-           unconstrIter: 10, userConstIter: 10, allConstIter: 10, infinite: false };
-       thisElement.neighborhood().layout(neighborhood_defaultLayout);*/
-
-       var hidden_neighbor_edges= thisElement.neighborhood().edges()
-                   .filter('edge[relationDisplay = "none"]');
-       hidden_neighbor_edges.style({/*'display': 'none',*/ 'curve-style': 'unbundled-bezier',
-           'control-point-step-size': '10px', 'control-point-distance': '20px', 
-           'control-point-weight': '50' });
-      }
     try {
+      if(thisElement.isNode() && thisElement.hasClass('nodeShadowAndOverlay')) {
+         var eleID= thisElement.id();
+         console.log("tapdragout (touchmove or mouseout event) on concept ID: "+ eleID +
+                 "... ; hasClass(nodeShadowAndOverlay): "+ thisElement.hasClass('nodeShadowAndOverlay'));
+         // Remove 'circle' layout from the neighborhood.
+/*         var neighborhood_defaultLayout= { name: 'cola', refresh: 1, animate: true, fit: true, padding: 10,
+             boundingBox: undefined, maxSimulationTime: 4000, ungrabifyWhileSimulating: false, 
+             ready: function() {}, stop: function() {}, randomize: false, avoidOverlap: true, 
+             handleDisconnected: true, flow: undefined, alignment: undefined, 
+             unconstrIter: 10, userConstIter: 10, allConstIter: 10, infinite: false };
+         thisElement.neighborhood().layout(neighborhood_defaultLayout);*/
+
+//         var hidden_neighbor_edges= thisElement.neighborhood().edges();//.filter('edge[relationDisplay = "none"]');
+//         var hidden_neighbor_edges= /*thisElement.neighborhood()*/cy.edges().filter('edge[source = '+thisElement.id()+']');
+         var hidden_neighbor_edges= thisElement.connectedEdges().filter('edge[source = '+eleID+']');
+
+         var neighbor_relationDisplay/*, neighbor_edge, neighbor_relationSource*/;
+/*         for(var j=0; j < hidden_neighbor_edges.length; j++) {
+             neighbor_edge= hidden_neighbor_edges[j];
+             neighbor_relationSource= neighbor_edge.data('source');
+             neighbor_relationDisplay= neighbor_edge.data('relationDisplay');
+             if(neighbor_relationSource === eleID && neighbor_relationDisplay === "none") {
+                console.log("this.id: "+ eleID +" -> neighbor_edge: id: "+ neighbor_edge.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationDisplay);
+//                neighbor_edge.style({'display': 'element' });
+                neighbor_edge.hide();
+               }
+            }*/
+         hidden_neighbor_edges/*cy.edges()*/.forEach(function( ele ) {
+//             neighbor_relationSource= ele.data('source');
+             neighbor_relationDisplay= ele.data('relationDisplay');
+//             neighbor_relationTarget= ele.data('target');
+             if(/*neighbor_relationSource === eleID && */neighbor_relationDisplay === "none") {
+                console.log("tapdragover>> this.id: "+ eleID +" -> neighbor_edge: id: "+ ele.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ /*neighbor_relationSource*/ele.data('source'));
+//                ele.style({'display': 'none'/*, 'opacity': '1.0'*/ });
+                ele.hide();
+                ele.connectedNodes().filter('node[conceptDisplay = "none"]').hide();
+//                ele.connectedNodes().filter('node[conceptDisplay = "none"]').style({'display': 'none'/*, 'opacity': '1.0'*/ });
+               }
+            });
+
+//         hidden_neighbor_edges.style({'display': 'none'/*, 'curve-style': 'unbundled-bezier',
+//             'control-point-step-size': '10px', 'control-point-distance': '20px', 
+//             'control-point-weight': '50', 'opacity': '1.0'*/ });
+      }
+/*
       if(thisElement.hasClass('nodeShadowAndOverlay')) {
          // Remove any shadow created around the node.
          thisElement.removeClass('nodeShadowAndOverlay');
-        }
+        }*/
      }
     catch(err) { console.log("tapdragout event: Error: "+ err.stack); }
   });
@@ -534,31 +591,38 @@ cy.elements().qtip({
         {
          content: 'Hide',
          select: function() {
-             this.hide(); // hide the selected 'node' element.
+             this.hide(); // hide the selected 'node' or 'edge' element.
             }
         },
 
         {
          content: 'Hide by Type',
          select: function() { // Hide all concepts (nodes) of the same type.
-             var thisConceptType= this.data('conceptType');
-             console.log("Hide by Type: this.Type: "+ thisConceptType);
-             cy.nodes().forEach(function( ele ) {
-              if(ele.data('conceptType') === thisConceptType) {
-                 ele.hide();
-                }
-             });
-             // Relayout the graph.
-             rerunLayout();
-            }
+             if(this.isNode()) {
+                var thisConceptType= this.data('conceptType');
+                console.log("Hide Concept by Type: "+ thisConceptType);
+                cy.nodes().forEach(function( ele ) {
+                 if(ele.data('conceptType') === thisConceptType) {
+                    ele.hide();
+                   }
+                });
+                // Relayout the graph.
+                rerunLayout();
+               }
+             else if(this.isEdge()) { // Hide all relations (edges) of the same type.
+                var thisRelationType= this.data('label');
+                console.log("Hide Relation (by Label type): "+ thisRelationType);
+                cy.edges().forEach(function( ele ) {
+                 if(ele.data('label') === thisRelationType) {
+                    ele.hide();
+                   }
+                });
+                // Relayout the graph.
+                rerunLayout();
+               }
+           }
         },
 
-/*        {
-         content: 'Reset',
-         select: function() {
-             cy.reset(); // reset the graph's zooming & panning properties.
-            }
-        },*/
         {
          content: 'Show Selections',
          select: function() {
