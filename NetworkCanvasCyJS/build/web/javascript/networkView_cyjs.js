@@ -417,17 +417,18 @@ cy.elements().qtip({
          var eleID= thisElement.id();
          console.log("tapdragover (touchmove or mouseover event) on concept ID: "+ eleID +" , value: "+ thisElement.data('value'));
          // Using cytoscapeJS, set a circle layout on the neighborhood & make the neighboring hidden nodes & edges transparent.
-         var eleBBox= thisElement.boundingBox();
-         var neighborhood_circleLayout= { name: 'circle', radius: 1, boundingBox: eleBBox/*, 
-                 avoidOverlap: true, fit: true, handleDisconnected: true*/ };
-//         thisElement.neighborhood().layout(neighborhood_circleLayout);
+         var eleBBox= thisElement.boundingBox(/*{'includeNodes': 'true', 'includeEdges': 'false', 'includeLabels': 'false' }*/);
+         console.log("eleBBox: x1= "+ eleBBox.x1 +", x2= "+ eleBBox.x2 +", y1= "+ eleBBox.y1 +", y2= "+ eleBBox.y2 +", w= "+ eleBBox.w +", h= "+ eleBBox.h);
+         var neighborhood_circleLayout= { name: 'circle', radius: 0.2, boundingBox: eleBBox, 
+                 avoidOverlap: true/*, fit: true, handleDisconnected: true*/ };
+//         thisElement.neighborhood().layout(neighborhood_circleLayout); // DISABLED for now.
 
          // Get all the connected relations (edges) for this concept (node).
          var hidden_neighbor_edges= thisElement.connectedEdges();
          // Get hidden, connected relations (edges) for this concept (node), that start from this node & are not visible.
 //         var hidden_neighbor_edges= cy.edges().sources(thisElement).filter('node[relationDisplay = "none"]');
 
-//         hidden_neighbor_edges.filter('node[relationDisplay = "none"]').layout(neighborhood_circleLayout);
+//         hidden_neighbor_edges.filter('edge[relationDisplay = "none"]').filter('edge[source = '+eleID+']').layout(neighborhood_circleLayout);
 
          // Find and show hidden relations starting from this concept to other concepts.
          var neighbor_relationDisplay, neighbor_relationSource;
@@ -435,7 +436,8 @@ cy.elements().qtip({
              neighbor_relationSource= ele.data('source');
              neighbor_relationDisplay= ele.data('relationDisplay');
              if(neighbor_relationSource === eleID && neighbor_relationDisplay === "none") {
-                console.log("tapdragover>> thisElement.id: "+ eleID +"; neighbor_edge: id: "+ ele.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationSource);
+                console.log("tapdragover>> thisElement.id: "+ eleID +"; neighbor_edge: id: "+ ele.id() +
+                        " , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationSource);
                 // Get the hidden concepts (nodes) connected to this relation (edge).
                 var hiddenConnectedNodes= ele.connectedNodes().filter('node[conceptDisplay = "none"]');
                 hiddenConnectedNodes.forEach(function( el ) {
