@@ -418,14 +418,14 @@ cy.elements().qtip({
          console.log("tapdragover (touchmove or mouseover event) on concept ID: "+ eleID +"...");
          // Using cytoscapeJS, set a circle layout on the neighborhood & make the neighboring hidden nodes & edges transparent.
          var eleBBox= thisElement.boundingBox();
-         var neighborhood_circleLayout= { name: 'circle', radius: 1, boundingBox: eleBBox, 
-                 avoidOverlap: true/*, fit: true, handleDisconnected: true*/ };
+         var neighborhood_circleLayout= { name: 'circle', radius: 1, boundingBox: eleBBox/*, 
+                 avoidOverlap: true, fit: true, handleDisconnected: true*/ };
 //         thisElement.neighborhood().layout(neighborhood_circleLayout);
 
          // Get the hidden, connected relations (edges) for this concept (node).
          var hidden_neighbor_edges= thisElement.connectedEdges();
 
-//         hidden_neighbor_edges.layout(neighborhood_circleLayout);
+//         hidden_neighbor_edges.filter('node[relationDisplay = "none"]').layout(neighborhood_circleLayout);
 
          // Find and show hidden relations starting from this concept to other concepts.
          var neighbor_relationDisplay, neighbor_relationSource;
@@ -444,7 +444,7 @@ cy.elements().qtip({
                     hidden_neigbor_nodesCollection= hidden_neigbor_nodesCollection.add(el);
                 });
                 // Show the hidden, connected relation (edge) as well.
-                ele.style({'display': 'element', 'opacity': '0.75' });
+                ele.style({'display': 'element', 'opacity': '0.75', 'curve-style': 'haystack' });
                 // Add this relation (edge) to a collection as well, later used to re-set its visual CSS properties
                 hidden_neigbor_edgesCollection= hidden_neigbor_edgesCollection.add(ele);
                }
@@ -454,10 +454,17 @@ cy.elements().qtip({
     catch(err) { console.log("tapdragover event: Error: "+ err.stack); }
   });
 
-  // On a 'touchmove' or 'mouseout' event, remove shadow effect from nodes, if it exists.
+  // On a 'touchmove' or 'mouseout' event, remove css style changes, if any, from nodes and edges.
   cy.on('tapdragout', function (e) {
     var thisElement= e.cyTarget;
     try {
+      resetRelationCSS(thisElement);
+     }
+    catch(err) { console.log("tapdragout event: Error: "+ err.stack); }
+  });
+
+  // Remove css style changes occurring from a 'tapdragover' ('mouseover') event, if any, from nodes and edges.
+  function resetRelationCSS(thisElement) {
       if(thisElement.isNode() && thisElement.hasClass('nodeShadowAndOverlay')) {
          var eleID= thisElement.id();
          console.log("tapdragout (touchmove or mouseout event) on concept ID: "+ eleID +
@@ -468,16 +475,14 @@ cy.elements().qtip({
         //     hidden_neigbor_nodesCollection.remove(el); // to manage the size of the collection.
          });
          hidden_neigbor_edgesCollection.forEach(function( ele ) {
-             ele.style({'display': 'none', 'opacity': '1.0' });
+             ele.style({'display': 'none', 'opacity': '1.0', 'curve-style': 'unbundled-bezier' });
         //     hidden_neigbor_edgesCollection.remove(ele); // to manage the size of the collection.
          });
         }
 // test...
 //console.log("tapdragout: nodes left: "+ hidden_neigbor_nodesCollection.length);
 //console.log("tapdragout: edges left: "+ hidden_neigbor_edgesCollection.length);
-     }
-    catch(err) { console.log("tapdragout event: Error: "+ err.stack); }
-  });
+  }
 
  /** Popup (context) menu: a circular Context Menu for each Node (concept) & Edge (relation) using the 'cxtmenu' jQuery plugin. */
  var contextMenu= {
@@ -504,8 +509,11 @@ cy.elements().qtip({
          content: 'Show Links',
          select: function() {
              if(this.isNode()) {
-                // Show concept neighborhood.
                 var selectedNode= this;
+                // Remove css style changes occurring from a 'tapdragover' ('mouseover') event.
+                resetRelationCSS(selectedNode);
+
+                // Show concept neighborhood.
                 selectedNode.neighborhood().nodes().show();
                 selectedNode.neighborhood().edges().show();
 
