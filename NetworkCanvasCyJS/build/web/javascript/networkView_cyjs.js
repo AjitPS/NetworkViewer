@@ -415,15 +415,17 @@ cy.elements().qtip({
     try {
       if(thisElement.isNode() && thisElement.hasClass('nodeShadowAndOverlay')) {
          var eleID= thisElement.id();
-         console.log("tapdragover (touchmove or mouseover event) on concept ID: "+ eleID +"...");
+         console.log("tapdragover (touchmove or mouseover event) on concept ID: "+ eleID +" , value: "+ thisElement.data('value'));
          // Using cytoscapeJS, set a circle layout on the neighborhood & make the neighboring hidden nodes & edges transparent.
          var eleBBox= thisElement.boundingBox();
          var neighborhood_circleLayout= { name: 'circle', radius: 1, boundingBox: eleBBox/*, 
                  avoidOverlap: true, fit: true, handleDisconnected: true*/ };
 //         thisElement.neighborhood().layout(neighborhood_circleLayout);
 
-         // Get the hidden, connected relations (edges) for this concept (node).
+         // Get all the connected relations (edges) for this concept (node).
          var hidden_neighbor_edges= thisElement.connectedEdges();
+         // Get hidden, connected relations (edges) for this concept (node), that start from this node & are not visible.
+//         var hidden_neighbor_edges= cy.edges().sources(thisElement).filter('node[relationDisplay = "none"]');
 
 //         hidden_neighbor_edges.filter('node[relationDisplay = "none"]').layout(neighborhood_circleLayout);
 
@@ -432,9 +434,8 @@ cy.elements().qtip({
          hidden_neighbor_edges.forEach(function( ele ) {
              neighbor_relationSource= ele.data('source');
              neighbor_relationDisplay= ele.data('relationDisplay');
-             console.log("tapdragover>> thisElement.id: "+ eleID +"; neighbor_edge: id: "+ ele.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationSource);
              if(neighbor_relationSource === eleID && neighbor_relationDisplay === "none") {
-//                console.log("tapdragover>> thisElement.id: "+ eleID +"; neighbor_edge: id: "+ ele.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationSource);
+                console.log("tapdragover>> thisElement.id: "+ eleID +"; neighbor_edge: id: "+ ele.id() +" , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationSource);
                 // Get the hidden concepts (nodes) connected to this relation (edge).
                 var hiddenConnectedNodes= ele.connectedNodes().filter('node[conceptDisplay = "none"]');
                 hiddenConnectedNodes.forEach(function( el ) {
@@ -468,7 +469,7 @@ cy.elements().qtip({
       if(thisElement.isNode() && thisElement.hasClass('nodeShadowAndOverlay')) {
          var eleID= thisElement.id();
          console.log("tapdragout (touchmove or mouseout event) on concept ID: "+ eleID +
-                 "... ; hasClass(nodeShadowAndOverlay): "+ thisElement.hasClass('nodeShadowAndOverlay'));
+                 " , value: "+ thisElement.data('value') +" ; hasClass(nodeShadowAndOverlay): "+ thisElement.hasClass('nodeShadowAndOverlay'));
          // Re-set its visual CSS properties of all the concepts and relations in the 2 collections.
          hidden_neigbor_nodesCollection.forEach(function( el ) {
              el.style({'display': 'none', 'opacity': '1.0' });
