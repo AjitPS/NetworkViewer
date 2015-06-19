@@ -417,17 +417,15 @@ cy.elements().qtip({
          var eleID= thisElement.id();
          console.log("tapdragover (touchmove or mouseover event) on concept ID: "+ eleID +"...");
          // Using cytoscapeJS, set a circle layout on the neighborhood & make the neighboring hidden nodes & edges transparent.
-/*         var eleBBox= thisElement.boundingBox();
-         var neighborhood_circleLayout= { name: 'circle', radius: 2,
-                 boundingBox: eleBBox, avoidOverlap: true, fit: true, handleDisconnected: true };
-         thisElement.neighborhood().layout(neighborhood_circleLayout);*/
-// test...
-hidden_neigbor_nodesCollection.forEach(function( el ) {
-console.log("tapdragover: old nodes left: "+ el.id());
-});
+         var eleBBox= thisElement.boundingBox();
+         var neighborhood_circleLayout= { name: 'circle', radius: 1, boundingBox: eleBBox, 
+                 avoidOverlap: true/*, fit: true, handleDisconnected: true*/ };
+//         thisElement.neighborhood().layout(neighborhood_circleLayout);
 
          // Get the hidden, connected relations (edges) for this concept (node).
          var hidden_neighbor_edges= thisElement.connectedEdges();
+
+//         hidden_neighbor_edges.layout(neighborhood_circleLayout);
 
          // Find and show hidden relations starting from this concept to other concepts.
          var neighbor_relationDisplay, neighbor_relationSource;
@@ -446,7 +444,7 @@ console.log("tapdragover: old nodes left: "+ el.id());
                     hidden_neigbor_nodesCollection= hidden_neigbor_nodesCollection.add(el);
                 });
                 // Show the hidden, connected relation (edge) as well.
-                ele.style({'display': 'element', 'opacity': '0.5' });
+                ele.style({'display': 'element', 'opacity': '0.75' });
                 // Add this relation (edge) to a collection as well, later used to re-set its visual CSS properties
                 hidden_neigbor_edgesCollection= hidden_neigbor_edgesCollection.add(ele);
                }
@@ -467,17 +465,16 @@ console.log("tapdragover: old nodes left: "+ el.id());
          // Re-set its visual CSS properties of all the concepts and relations in the 2 collections.
          hidden_neigbor_nodesCollection.forEach(function( el ) {
              el.style({'display': 'none', 'opacity': '1.0' });
-             hidden_neigbor_nodesCollection.remove(el); // to manage the size of the collection.
+        //     hidden_neigbor_nodesCollection.remove(el); // to manage the size of the collection.
          });
          hidden_neigbor_edgesCollection.forEach(function( ele ) {
              ele.style({'display': 'none', 'opacity': '1.0' });
-             hidden_neigbor_edgesCollection.remove(ele); // to manage the size of the collection.
+        //     hidden_neigbor_edgesCollection.remove(ele); // to manage the size of the collection.
          });
         }
 // test...
-hidden_neigbor_nodesCollection.forEach(function( el ) {
-console.log("tapdragout: nodes left: "+ el.id());
-});
+//console.log("tapdragout: nodes left: "+ hidden_neigbor_nodesCollection.length);
+//console.log("tapdragout: edges left: "+ hidden_neigbor_edgesCollection.length);
      }
     catch(err) { console.log("tapdragout event: Error: "+ err.stack); }
   });
