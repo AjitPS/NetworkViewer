@@ -453,7 +453,7 @@ console.log("tapdragover: EMPTIED... edges left now: "+ hidden_neigbor_edgesColl
              avoidOverlap: true, fit: true, handleDisconnected: true, padding: 10, animate: false, 
              counterclockwise: false, rStepSize: 0.01 };
          // Set the layout.
-         thisElement.neighborhood().filter('node[conceptDisplay = "none"]').layout(mini_circleLayout); // DISABLED for now.
+         thisElement.neighborhood().filter('node[conceptDisplay = "none"]').layout(mini_circleLayout);
 //         neighbor_edges/*.filter('edge[relationDisplay = "none"]')*/.filter('edge[source = '+eleID+']').connectedNodes().layout(mini_circleLayout);
 
 /*         var hidden_nodes_on_Edges= neighbor_edges.connectedNodes();
