@@ -449,9 +449,9 @@ console.log("tapdragover: EMPTIED... edges left now: "+ hidden_neigbor_edgesColl
          console.log("\t eleBBox: x1= "+ eleBBox.x1 +", x2= "+ eleBBox.x2 +", y1= "+ eleBBox.y1 +", y2= "+ eleBBox.y2 +", w= "+ eleBBox.w +", h= "+ eleBBox.h);
 
          // Define the neighborhood's layout.
-         var mini_circleLayout= { name: 'circle', radius: 0.1, boundingBox: eleBBox,
-             avoidOverlap: true, fit: true, handleDisconnected: true, padding: 10, 
-             counterclockwise: false, animate: false, rStepSize: 0.1 };
+         var mini_circleLayout= { name: 'circle', radius: 0.01, boundingBox: eleBBox,
+             avoidOverlap: true, fit: true, handleDisconnected: true, padding: 10, animate: false, 
+             counterclockwise: false, rStepSize: 0.01 };
          // Set the layout.
          thisElement.neighborhood().filter('node[conceptDisplay = "none"]').layout(mini_circleLayout); // DISABLED for now.
 //         neighbor_edges/*.filter('edge[relationDisplay = "none"]')*/.filter('edge[source = '+eleID+']').connectedNodes().layout(mini_circleLayout);
@@ -482,7 +482,8 @@ console.log("tapdragover: EMPTIED... edges left now: "+ hidden_neigbor_edgesColl
                     }
                 });
                 // Show the hidden, connected relation (edge) as well.
-                ele.style({'display': 'element', 'opacity': '0.75'/*, 'curve-style': 'haystack'*/ });
+//                ele.style({'display': 'element', 'opacity': '0.75', 'curve-style': 'haystack', 'target-arrow-shape': 'none', 'control-point-weight': '1', 'content': '', 'haystack-radius': '0' });
+                ele.style({'display': 'element', 'opacity': '0.75'/*, 'target-arrow-shape': 'none'*/ });
                 // Add this relation (edge) to a collection as well, later used to re-set its visual CSS properties
 //                hidden_neigbor_edgesCollection= hidden_neigbor_edgesCollection.add(ele);
                }
@@ -531,7 +532,7 @@ console.log("tapdragover: EMPTIED... edges left now: "+ hidden_neigbor_edgesColl
          hidden_neigbor_edgesCollection.forEach(function( ele ) {
 //             if(ele.data("source") !== thisElement.id()) {
              if(ele.data("target") !== thisElement.id()) {
-                ele.style({'display': 'none', 'opacity': '1.0'/*, 'curve-style': 'unbundled-bezier'*/ /* });
+                ele.style({'display': 'none', 'opacity': '1.0'/*, 'curve-style': 'unbundled-bezier', 'target-arrow-shape': 'triangle'*/ /* });
                }
          });*/
          // Get all the connected relations (edges) for this concept (node).
