@@ -421,15 +421,15 @@ hidden_neigbor_nodesCollection.forEach(function( el ) {
      hidden_neigbor_nodesCollection.remove(el); // to manage the size of the collection.
     });
 console.log("\n tapdragover: EMPTIED... nodes left now: "+ hidden_neigbor_nodesCollection.length);
-hidden_neigbor_nodesCollection.forEach(function( el ) { console.log("tapdragout: nodes left: node "+ el.id() +" : "+ el.data("value")); });
+hidden_neigbor_nodesCollection.forEach(function( el ) { console.log("nodes left: node "+ el.id() +" : "+ el.data("value")); });
 hidden_neigbor_edgesCollection.forEach(function( ele ) {
      hidden_neigbor_edgesCollection.remove(ele); // to manage the size of the collection.
     });
 console.log("tapdragover: EMPTIED... edges left now: "+ hidden_neigbor_edgesCollection.length);
 //if(hidden_neigbor_nodesCollection.length >0) { hidden_neigbor_nodesCollection.remove(); }
-//console.log("\n tapdragout: nodes left: "+ hidden_neigbor_nodesCollection.length);
+//console.log("\n nodes left: "+ hidden_neigbor_nodesCollection.length);
 //if(hidden_neigbor_edgesCollection.length >0) { hidden_neigbor_edgesCollection.remove(); }
-//console.log("tapdragout: edges left: "+ hidden_neigbor_edgesCollection.length);
+//console.log("edges left: "+ hidden_neigbor_edgesCollection.length);
 }*/
 
       if(thisElement.isNode() && thisElement.hasClass('BlurNode')) {
