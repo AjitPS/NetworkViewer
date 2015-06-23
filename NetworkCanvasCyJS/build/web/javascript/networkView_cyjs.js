@@ -445,15 +445,16 @@ console.log("tapdragover: EMPTIED... edges left now: "+ hidden_neigbor_edgesColl
          // First, get the bounding box for the layout to make it closely clustered.
 //         var eleBBox= thisElement.boundingBox({'includeNodes': 'true', 'includeEdges': 'false', 'includeLabels': 'false' });
 
-         var eleBBox= neighbor_edges.connectedNodes().boundingBox(/*{'includeNodes': 'true', 'includeEdges': 'false', 'includeLabels': 'false' }*/);
-//         console.log("\t eleBBox: x1= "+ eleBBox.x1 +", x2= "+ eleBBox.x2 +", y1= "+ eleBBox.y1 +", y2= "+ eleBBox.y2 +", w= "+ eleBBox.w +", h= "+ eleBBox.h);
+         var eleBBox= /*neighbor_edges.connectedNodes()*/thisElement.boundingBox(/*{'includeNodes': 'true', 'includeEdges': 'false', 'includeLabels': 'false' }*/);
+         console.log("\t eleBBox: x1= "+ eleBBox.x1 +", x2= "+ eleBBox.x2 +", y1= "+ eleBBox.y1 +", y2= "+ eleBBox.y2 +", w= "+ eleBBox.w +", h= "+ eleBBox.h);
 
          // Define the neighborhood's layout.
-         var mini_circleLayout= { name: 'circle', radius: 0.1, boundingBox: eleBBox, avoidOverlap: true
-             /*, fit: true, handleDisconnected: true*/ };
+         var mini_circleLayout= { name: 'circle', radius: 0.1, boundingBox: eleBBox,
+             avoidOverlap: true, fit: true, handleDisconnected: true, padding: 10, 
+             counterclockwise: false, animate: false, rStepSize: 0.1 };
          // Set the layout.
-//         thisElement.neighborhood().layout(mini_circleLayout); // DISABLED for now.
-         neighbor_edges/*.filter('edge[relationDisplay = "none"]')*/.filter('edge[source = '+eleID+']').connectedNodes().layout(mini_circleLayout);
+         thisElement.neighborhood().filter('node[conceptDisplay = "none"]').layout(mini_circleLayout); // DISABLED for now.
+//         neighbor_edges/*.filter('edge[relationDisplay = "none"]')*/.filter('edge[source = '+eleID+']').connectedNodes().layout(mini_circleLayout);
 
 /*         var hidden_nodes_on_Edges= neighbor_edges.connectedNodes();
          console.log("hidden_nodes_on_Edges: size: "+ hidden_nodes_on_Edges.length);*/
@@ -628,7 +629,7 @@ console.log("tapdragover: EMPTIED... edges left now: "+ hidden_neigbor_edgesColl
                 });*/
 
                 try { // Relayout the graph.
-                  rerunGraphLayout(/*selectedNode.neighborhood()*/selectedNode.connectedEdges().connectedNodes());
+                  rerunGraphLayout(selectedNode.neighborhood()/*selectedNode.connectedEdges().connectedNodes()*/);
                  }
                 catch(err) { console.log("Error occurred while setting layout on selected element's neighborhood: "+ err.stack); }
                }
