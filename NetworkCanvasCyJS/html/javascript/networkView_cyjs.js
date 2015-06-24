@@ -445,8 +445,8 @@ console.log("tapdragover: EMPTIED... edges left now: "+ hidden_neigbor_edgesColl
          // First, get the bounding box for the layout to make it closely clustered.
 //         var eleBBox= thisElement.boundingBox({'includeNodes': 'true', 'includeEdges': 'false', 'includeLabels': 'false' });
 
-         var eleBBox= /*neighbor_edges.connectedNodes()*/thisElement.boundingBox(/*{'includeNodes': 'true', 'includeEdges': 'false', 'includeLabels': 'false' }*/);
-         console.log("\t eleBBox: x1= "+ eleBBox.x1 +", x2= "+ eleBBox.x2 +", y1= "+ eleBBox.y1 +", y2= "+ eleBBox.y2 +", w= "+ eleBBox.w +", h= "+ eleBBox.h);
+         var eleBBox= /*neighbor_edges.connectedNodes()*/thisElement.boundingBox();
+//         console.log("\t eleBBox: x1= "+ eleBBox.x1 +", x2= "+ eleBBox.x2 +", y1= "+ eleBBox.y1 +", y2= "+ eleBBox.y2 +", w= "+ eleBBox.w +", h= "+ eleBBox.h);
 
          // Define the neighborhood's layout.
          var mini_circleLayout= { name: 'circle', radius: 0.01, boundingBox: eleBBox,
@@ -464,7 +464,7 @@ console.log("tapdragover: EMPTIED... edges left now: "+ hidden_neigbor_edgesColl
          neighbor_edges.forEach(function( ele ) {
              neighbor_relationSource= ele.data('source');
              neighbor_relationDisplay= ele.data('relationDisplay');
-             if(neighbor_relationSource === eleID && neighbor_relationDisplay === "none") {
+             if(/*neighbor_relationSource === eleID && */neighbor_relationDisplay === "none") {
                 console.log("tapdragover>> thisElement.id: "+ eleID +"; neighbor_edge: id: "+ ele.id() +
                         " , display: "+ neighbor_relationDisplay +" , source: "+ neighbor_relationSource);
                 // Get the hidden concepts (nodes) connected to this relation (edge).
@@ -558,19 +558,19 @@ console.log("tapdragover: EMPTIED... edges left now: "+ hidden_neigbor_edgesColl
       var eleID= thisElement.id();
       console.log("resetRelationCSS>> concept ID: "+ eleID +" , value: "+ thisElement.data('value') +
              " ; hasClass(BlurNode): "+ thisElement.hasClass('BlurNode'));
-      
+
       // Get all the connected relations (edges) for this concept (node).
       var neighbor_edges= thisElement.connectedEdges();
       neighbor_edges.forEach(function( ele ) {
-          console.log("neighbor_edge: id: "+ ele.id() +" , display: "+ ele.data('relationDisplay') +
-                  " , source: "+ ele.data('source') +" , opacity: "+ ele.style('opacity'));
           if(ele.style('opacity') === '0.75') {
+             console.log("neighbor_edge: id: "+ ele.id() +" , display: "+ ele.data('relationDisplay') +
+                     " , source: "+ ele.data('source') +" , new opacity: "+ ele.style('opacity'));
              // Get the hidden concepts (nodes) connected to this relation (edge).
              var hiddenConnectedNodes= ele.connectedNodes();
              hiddenConnectedNodes.forEach(function( el ) {
-                 console.log("neighbor_node: id: "+ el.id() +" , value: "+ el.data('value') +" , display: "+ 
-                         el.data('conceptDisplay') + " , opacity: "+ el.style('opacity'));
                  if(el.style('opacity') === '0.01') {
+                    console.log("neighbor_node: id: "+ el.id() +" , value: "+ el.data('value') +" , display: "+ 
+                            el.data('conceptDisplay') + " , new opacity: "+ el.style('opacity'));
                     el.removeStyle(); // remove all overridden style properties from this Concept.
                    }
              });
@@ -622,7 +622,7 @@ console.log("tapdragover: EMPTIED... edges left now: "+ hidden_neigbor_edgesColl
                 removeNodeBlur(this);
                 // Remove shadow effect from neighborhood nodes too.
 //                selectedNode.neighborhood().nodes.forEach(function( el ) {
-/*                selectedNode.connectedEdges().connectedNodes().forEach(function( el ) {
+/*                selectedNode.connectedEdges().connectedNodes().filter('node[conceptDisplay = "element"]').forEach(function( el ) {
                  removeNodeBlur(el);
                  // Show neighborhood of connected elements too.
 //                 el.neighborhood().nodes().show();
@@ -1136,63 +1136,23 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
     cy.nodes().forEach(function( ele ) {
     var thisElement= ele;
-    var eleID, /*neighbor_nodeDisplay,*/ connected_hiddenNodesCount= 0;
-    try {
-         // Retrieve the nodes in this element's neighborhood.
+    var eleID, connected_hiddenNodesCount= 0;
+    try { // Retrieve the nodes in this element's neighborhood.
 //         var neighborhood_nodes= thisElement.neighborhood().nodes();
 
          eleID= thisElement.id(); // element ID.
          // Retrieve the directly connected nodes in this element's neighborhood.
          var connected_edges= thisElement.connectedEdges();
-         var connected_hidden_nodes= connected_edges.connectedNodes().filter('node[conceptDisplay = "none"]');
-//         console.log("Concept ID: "+ eleID +" , value: "+ thisElement.data("value")+" ; connected_edges= "+ connected_edges.length +" , connected_hidden_Nodes= "+ connected_hidden_nodes.length);
+         // Get all the relations (edges) with this concept (node) as the source.
+//         var connected_edges= thisElement.connectedEdges().filter('edge[source = '+eleID+']');
 
-         // Find the hidden nodes connected to this node.
-/*         for(var j=0; j < connected_hidden_nodes.length; j++) {
-             neighbor_nodeDisplay= connected_hidden_nodes[j].data('conceptDisplay');
-//             console.log("neighbor_nodeDisplay: "+ neighbor_nodeDisplay);
-             if(neighbor_nodeDisplay === "none") { // Find the number of hidden, connected nodes.
-                connected_hiddenNodesCount= connected_hiddenNodesCount + 1;
-               }
-            }*/
+         var connected_hidden_nodes= connected_edges.connectedNodes().filter('node[conceptDisplay = "none"]');
          // Find the number of hidden, connected nodes.
          connected_hiddenNodesCount= connected_hidden_nodes.length;
-//         console.log("No. of connected, hidden nodes= "+ connected_hiddenNodesCount);
 
          if(connected_hiddenNodesCount > 0) {
-//            console.log("Highlight node ID (has connected, hidden nodes)= "+ thisElement.data('value') +" , it's own visibility: "+ thisElement.data('conceptDisplay'));
             // Show shadow around nodes that have hidden, connected nodes.
             thisElement.addClass('BlurNode');
-
-/*          // Using cytoscapeJS, set a circle layout on the neighborhood & make the neighboring hidden nodes & edges transparent.
-            var mini_circleLayout= { name: 'circle', roots: thisElement, radius: '0.1',
-                rStepSize: '0.1' };
-            thisElement.neighborhood().layout(mini_circleLayout);
-            var hidden_neighbor_nodes= thisElement.neighborhood().nodes()
-                    .filter('node[conceptDisplay = "none"]');
-            var hidden_neighbor_edges= thisElement.neighborhood().edges()
-                    .filter('edge[relationDisplay = "none"]')
-            hidden_neighbor_nodes.style({'opacity': '0', 'display': 'element'});
-            hidden_neighbor_edges.style({'opacity': '0.5', 'display': 'element'});
-*/
-
-            /* Show small, outward edges (rotated rectanges with a gradient) signifying the number 
-             * of connected nodes. */
-/*            // D3.js code
-            var w = thisElement.data('conceptSize') - 6,
-                h = thisElement.data('conceptSize') - 6,
-                x = w / 2 + 25 * Math.cos(r * connected_hiddenNodesCount),
-                y = h / 2 + 30 * Math.sin(r * connected_hiddenNodesCount),
-                rect = new cola.vpsc.Rectangle(0, w, 0, h),
-                vi = rect.rayIntersection(x, y);
-            var dview = d3.select("#"+v.name()+"_spikes");
-            dview.append("rect")
-                .attr("class", "spike")
-                .attr("rx", 1).attr("ry", 1)
-                .attr("x", 0).attr("y", 0)
-                .attr("width", 10).attr("height", 2)
-                .attr("transform", "translate("+vi.x+","+vi.y+") rotate("+(360*i/hiddenEdges)+")")
-                .on("click", function () { click(v) });*/
           }
       }
     catch(err) { 
