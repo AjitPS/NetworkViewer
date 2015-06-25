@@ -398,7 +398,7 @@ cy.elements().qtip({
    });
 // cxttap - normalised right click or 2-finger tap event.
 
-  // On a 'touchmove' or 'mouseover' event, show jagged edges signifying the number of nodes connected to this node.
+  // On a 'touchmove' or 'mouseover' event, show edges signifying the number of nodes connected to this node.
   cy.on('tapdragover', function (e) {
     var thisElement= e.cyTarget;
     try {
