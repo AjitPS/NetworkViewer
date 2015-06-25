@@ -413,10 +413,11 @@ cy.elements().qtip({
          var eleBBox= thisElement.boundingBox(); // get the bounding box of thie selected concept (node) for the layout to run around it.
          // Define the neighborhood's layout.
          var mini_circleLayout= { name: 'circle', radius: 0.01, boundingBox: eleBBox,
-             avoidOverlap: true, /*fit: true, handleDisconnected: true, padding: 10, */animate: false, 
-             /*counterclockwise: false, */rStepSize: 0.01 };
+             avoidOverlap: true, fit: true, handleDisconnected: true, padding: 10, animate: false, 
+             counterclockwise: false, rStepSize: 0.01 };
          // Set the layout only using the hidden concepts (nodes).
          thisElement.neighborhood().filter('node[conceptDisplay = "none"]').layout(mini_circleLayout);
+//         neighbor_edges.connectedNodes().filter('node[conceptDisplay = "none"]').layout(mini_circleLayout);
 
          // Find and show hidden relations starting from this concept to other concepts.
          var neighbor_relationDisplay, neighbor_relationSource;
@@ -542,7 +543,8 @@ cy.elements().qtip({
                   var eleBBox= selectedNode.boundingBox(); // get the bounding box of thie selected concept (node) for the layout to run around it.
                   // Define the neighborhood's layout.
                   var mini_circleLayout= { name: 'circle', radius: 0.01, boundingBox: eleBBox,
-                      avoidOverlap: true, animate: false, rStepSize: 0.01 };
+                      avoidOverlap: true, fit: true, handleDisconnected: true, padding: 10, 
+                      animate: false, counterclockwise: false, rStepSize: 0.01 };
                   // Set the layout only using the hidden concepts (nodes).
                   console.log("Node neighborhood size: "+ selectedNode.neighborhood().length);
                   if(selectedNode.neighborhood().length > 5/*2*/) {
