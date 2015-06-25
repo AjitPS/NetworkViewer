@@ -206,14 +206,12 @@
    console.log("setBreadthfirstLayout()>> animate_layout= "+ animate_layout);
    var bfNetworkLayout= {
       name: 'breadthfirst', // Breadth first layout (Ondex Web: Hierarchial)
-      fit: true, directed: true, padding: 10/*30*/ /*10*/, circle: false, boundingBox: undefined, avoidOverlap: true, 
-      handleDisconnected: true, maximalAdjustments: 0, animate: animate_layout /*false*/, 
-//      animationDuration: 1000 /*500*/, 
-//    maxSimulationTime: 4000/*8000*/
+      fit: true, directed: true, padding: 10, circle: false, boundingBox: undefined, avoidOverlap: true, 
+      handleDisconnected: true, maximalAdjustments: 0, animate: animate_layout, 
       spacingFactor: 1.75, // positive spacing factor, larger= more space between nodes.
       roots: undefined, // '#n12', 
       ready: undefined, stop: undefined,
-      nodeSpacing: 20//, edgeLength: 10
+      nodeSpacing: 20
    };
    eles.layout(bfNetworkLayout); // run the Breadthfirst layout.
   }
