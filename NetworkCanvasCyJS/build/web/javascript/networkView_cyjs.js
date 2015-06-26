@@ -218,9 +218,6 @@ $('#cy').cytoscape({
   
   // Layout of the Network.
 //  layout: defaultNetworkLayout,
-/*  layout: { name: 'circle', animate: false, padding: 30, avoidOverlap: true, 
-      boundingBox: undefined, handleDisconnected: true, fit: true, counterclockwise: false,
-      radius: 3, rStepSize: 2 }, */
 
   // these options hide parts of the graph during interaction.
 //  hideEdgesOnViewport: true,
