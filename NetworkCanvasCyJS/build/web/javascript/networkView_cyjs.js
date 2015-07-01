@@ -149,7 +149,8 @@ $(function() { // on dom ready
           /** Using 'data(conceptColor)' leads to a "null" mapping error if that attribute is not defined 
            * in cytoscapeJS. Using 'data[conceptColor]' is hence preferred as it limits the scope of 
            * assigning a property value only if it is defined in cytoscapeJS as well. */
-          'display': 'data(conceptDisplay)' // display: 'element' (show) or 'none' (hide).
+          'display': 'data(conceptDisplay)', // display: 'element' (show) or 'none' (hide).
+          'text-opacity': '0' // to make the label invisible by default.
          })
       .selector('edge')
         .css({
@@ -166,7 +167,8 @@ $(function() { // on dom ready
           'line-style': 'solid', // 'solid' or 'dotted' or 'dashed'
           'target-arrow-shape': 'triangle',
           'target-arrow-color': 'gray',
-          'display': 'data(relationDisplay)' // display: 'element' (show) or 'none' (hide).
+          'display': 'data(relationDisplay)', // display: 'element' (show) or 'none' (hide).
+          'text-opacity': '0' // to make the label invisible by default.
         })
       .selector('.highlighted')
         .css({
@@ -219,9 +221,9 @@ $('#cy').cytoscape({
   // Layout of the Network.
 //  layout: defaultNetworkLayout,
 
-  // these options hide parts of the graph during interaction.
-//  hideEdgesOnViewport: true,
+  // these options hide parts of the graph during interaction such as panning, dragging, etc. to enable faster rendering for larger graphs.
 //  hideLabelsOnViewport: true,
+//  hideEdgesOnViewport: true,
 
   // this is an alternative that uses a bitmap during interaction.
   textureOnViewport: false, // true,
@@ -526,14 +528,14 @@ cy.elements().qtip({
                   // Define the neighborhood's layout.
                   var mini_circleLayout= { name: 'circle', radius: 2/*0.01*/, boundingBox: eleBBox,
                       avoidOverlap: true, fit: true, handleDisconnected: true, padding: 10, animate: false, 
-                      counterclockwise: false, rStepSize: 1/*0.01*/, ready: undefined, 
-                      stop: function() { cy.center(); cy.fit(); } };
+                      counterclockwise: false, rStepSize: 1/*0.01*/, ready: /*undefined*/function() { cy.center(); cy.fit(); /*cy.resize();*/ }, 
+                      stop: undefined/*function() { cy.center(); cy.fit(); }*/ };
 
                   // Set the layout only using the hidden concepts (nodes).
 //                  console.log("Node neighborhood.filter(visible) size: "+ selectedNode.neighborhood().filter('node[conceptDisplay = "none"]').length);
-                  if(selectedNode.neighborhood().length > 5/*2*/) {
+//                  if(selectedNode.neighborhood().length > 5/*2*/) {
                      selectedNode.neighborhood().filter('node[conceptDisplay = "none"]').layout(mini_circleLayout);
-                    }
+//                    }
                  }
                 catch(err) { console.log("Error occurred while setting layout on selected element's neighborhood: "+ err.stack); }
                }
@@ -1078,4 +1080,19 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
     catch(err) {
           console.log("Error occurred while removing Shadow from concepts with connected, hidden elements. \n"+"Error Details: "+ err.stack);
          }
+  }
+
+  // Show node and edge labels.
+  function showAllLabels() {
+   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+   if(document.getElementById("show_allLabels").checked) {
+      console.log("Show All concept and relation Labels...");
+      cy.nodes().style({'text-opacity': '1'});
+      cy.edges().style({'text-opacity': '1'});
+     }
+   else {
+      console.log("Hide All concept and relation Labels...");
+      cy.nodes().style({'text-opacity': '0'});
+      cy.edges().style({'text-opacity': '0'});
+     }
   }
