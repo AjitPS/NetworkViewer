@@ -1134,6 +1134,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    else {
       console.log("Hide Concept labels...");
       cy.nodes().style({'text-opacity': '0'});
+      // Also hide labels on Genes.
+      document.getElementById("show_GeneLabels").checked= false;
+      showGeneLabels();
      }
   }
 
