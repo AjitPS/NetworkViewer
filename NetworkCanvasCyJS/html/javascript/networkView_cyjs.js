@@ -655,7 +655,7 @@ cy.elements().qtip({
                   }
                   else {
                    elements.forEach(function( ele ) {
-                    if(ele.data('conceptType') === thisElementType) {
+                    if(ele.data(eleType) === thisElementType) {
                        ele.style({'text-opacity': '0'}); // hide the concept/ relation Label.
                       }
                    });
