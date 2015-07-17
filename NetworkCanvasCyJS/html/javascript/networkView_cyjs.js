@@ -140,7 +140,6 @@ $(function() { // on dom ready
           'control-point-step-size': '10px', //'1px' // specifies the distance between successive bezier edges.
           'control-point-distance': '20px', /* overrides control-point-step-size to curves single edges as well, in addition to parallele edges */
           'control-point-weight': '50'/*'0.7'*/, // '0': curve towards source node, '1': curve towards target node.
-          // 'width': use mapData() mapper to allow for curved edges for inter-connected nodes.
           'width': 'data(relationSize)', // 'mapData(relationSize, 70, 100, 2, 6)', // '3px',
           'line-color': 'data(relationColor)', // 'gray',
           'line-style': 'solid', // 'solid' or 'dotted' or 'dashed'
