@@ -1,8 +1,8 @@
 /**
  * @author Ajit Singh
  * @name Network View example
- * @description example code for Network View using Javascript, jQuery, CytoscapeJS, JQuery UI, cxtmenu, 
- * QTip, multi-select (using Shift + click), JSON, WebCola.js & other layout algorithms.
+ * @description example code for Network View using Javascript, jQuery, CytoscapeJS, JQuery UI, 
+ * cxtmenu, QTip, multi-select (using Shift + click), JSON, WebCola.js & other layout algorithms.
  * @returns
  **/
 window.onload= function () {
@@ -38,62 +38,11 @@ function generateNetworkGraph(jsonFileName) {
 
   }
 
-/*
-   // Event occurring when the cytoscapeJS container <div> is dragged.
-   function dragCyContainer() {
-//    console.log("cy container dragged.");
-    // resize the cytoscapeJS container.
-    $('#cy').cytoscape('get').pan();
-   }*/
-
 function initializeNetworkView() {
 // On startup
 $(function() { // on dom ready
   var networkJSON= graphJSON; // using the dynamically included graphJSON object directly.
   var metadataJSON= allGraphData; // using the dynamically included metadata JSON object directly.
-/*
-  console.log("networkJSON: "+ networkJSON +"\n \n metadataJSON: "+ metadataJSON +"\n");
-
-  // Display 'networkJSON' elements.nodes data in console.
-  for(var j = 0; j < networkJSON.nodes.length; j++) {
-      console.log("JSON node.data (id, type, value, pid): "+ 
-              networkJSON.nodes[j].data.id +", "+ networkJSON.nodes[j].data.conceptType +", "+ 
-              networkJSON.nodes[j].data.value +", "+ networkJSON.nodes[j].data.pid +
-              " ; Size, Shape, Colour, conceptDisplay: "+ networkJSON.nodes[j].data.conceptSize +" , "+ 
-              networkJSON.nodes[j].data.conceptShape +" , "+ networkJSON.nodes[j].data.conceptColor +
-              " , "+ networkJSON.nodes[j].data.conceptDisplay);
-     }
-  console.log("\n \n");
-  for(var k = 0; k < networkJSON.edges.length; k++) {
-      console.log("JSON edge.data (id, label, From, To, Color, Size, relationDisplay): "+ 
-              networkJSON.edges[k].data.id +", "+ networkJSON.edges[k].data.label +", "+ 
-              networkJSON.edges[k].data.source +", "+ networkJSON.edges[k].data.target +", "+ 
-              networkJSON.edges[k].data.relationColor +", "+ networkJSON.edges[k].data.relationSize +
-              ", "+ networkJSON.edges[k].data.relationDisplay);
-     }
-  console.log("\n \n");
-
-  // Display concept accessions from JSON metadata.
-  for(var j=0; j < metadataJSON.ondexmetadata.concepts.length; j++) {
-      displayAccessionsString= "";
-      console.log("JSON concept.data (id, ofType): "+ metadataJSON.ondexmetadata.concepts[j].id +", "+ 
-              metadataJSON.ondexmetadata.concepts[j].ofType +"\n"+"Concept accessions: ");
-      for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].coaccessions.length; k++) {
-          displayAccessionsString= displayAccessionsString + 
-                  metadataJSON.ondexmetadata.concepts[j].coaccessions[k].elementOf +": "+ 
-                  metadataJSON.ondexmetadata.concepts[j].coaccessions[k].accession +", ";
-         }
-      console.log(displayAccessionsString.substring(0, displayAccessionsString.length-2));
-     }
-  console.log("\n \n");
-
-  // Display url mappings (for html accessions) imported from url_mappings.json config file.
-  for(var k = 0; k < url_mappings.html_acc.length; k++){
-      console.log("url_mappings (cv, weblink, cc_restriction): "+ url_mappings.html_acc[k].cv +", "+ 
-              url_mappings.html_acc[k].weblink +", "+ url_mappings.html_acc[k].cc_restriction);
-     }
-  console.log("\n \n");
-*/
 
    // Define the stylesheet to be used for nodes & edges in the cytoscape.js container.
    var networkStylesheet= cytoscape.stylesheet()
@@ -217,23 +166,8 @@ $(function() { // on dom ready
         .css({ // settings for using shadow effect on nodes when they have hidden, connected nodes.
               'shadow-blur': '25', // disable for larger network graphs, use x & y offset(s) instead.
               'shadow-color': 'black', // 'data(conceptColor)',
-//            'shadow-offset-x': '5',
-//            'shadow-offset-y': '2',
               'shadow-opacity': '0.9'
-
-              // settings for overlay effect.
-/*              'overlay-color': 'data(conceptColor)',
-              'overlay-padding': '1.5px',
-              'overlay-opacity': '0.5' */
         });
-
-// Initialise a cytoscape container instance as a Javascript object.
-/* var cy= cytoscape({
-  container: document.getElementById('cy'),
-  elements: networkJSON,
-  layout: defaultNetworkLayout,
-  ready: function() { console.log('ready'); window.cy= this; }
-});*/
 
 // Initialise a cytoscape container instance on the HTML DOM using JQuery.
 $('#cy').cytoscape({
@@ -268,8 +202,7 @@ $('#cy').cytoscape({
   zoomingEnabled: true, // zooming: both by user and programmatically.
 //  userZoomingEnabled: true, // user-enabled zooming.
   zoom: 1, // the initial zoom level of the graph before the layout is set.
-//  minZoom: 1e-50,
-//  maxZoom: 1e50,
+//  minZoom: 1e-50, maxZoom: 1e50,
   /* mouse wheel sensitivity settings to enable a more gradual Zooming process. A value between 0 and 1 
    * reduces the sensitivity (zooms slower) & a value greater than 1 increases the sensitivity. */
   wheelSensitivity: 0.05,
@@ -296,15 +229,11 @@ $('#cy').cytoscape({
 // Get the cytoscape instance as a Javascript object from JQuery.
 var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
 
-// Pan & zooms the graph to fit all the elements (concept nodes) in the graph.
-// cy.fit();
-
 // cy.boxSelectionEnabled(true); // enable box selection (highlight & select multiple elements for moving via mouse click and drag).
 cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning, i.e., dragging the entire graph.
 
 // Set requisite background image for each concept (node) instead of using cytoscapeJS shapes.
-/*
- cy.nodes().forEach(function( ele ) {
+/* cy.nodes().forEach(function( ele ) {
   var conType= ele.data('conceptType');
   var imgName= 'Gene'; // default
   if(conType === "Biological_Process") {
@@ -379,7 +308,6 @@ cy.elements().qtip({
       var qtipMsg= "";
       try {
       if(this.isNode()) {
-//         qtipMsg= "ID: "+ this.id() +", Type: "+ this.data('conceptType') +", Value: "+ this.data('value');
          qtipMsg= "Concept: "+ this.data('value') +", type: "+ this.data('conceptType') +", PID: "+ 
                   this.data('pid') +" , flagged: "+ this.data('flagged') +"<br>"+"Annotation: "+ 
                   this.data('annotation');
@@ -415,7 +343,6 @@ cy.elements().qtip({
        showItemInfo(thisElement);
       }
       else if(thisElement.isEdge()) {
-//              info= "Relation selected: id: "+ thisElement.id() +", Relation Label: "+ thisElement.data('label');
               info= "Relation selected: "+ thisElement.data('label') +", From: "+ 
                       thisElement.data('source') +", To: "+ thisElement.data('target');
              }
@@ -427,8 +354,7 @@ cy.elements().qtip({
    });
 // cxttap - normalised right click or 2-finger tap event.
 
-/*
-  // On a 'touchmove' or 'mouseover' event, show edges signifying the number of nodes connected to this node.
+/*  // On a 'touchmove' or 'mouseover' event, show edges signifying the number of nodes connected to this node.
   cy.on('tapdragover', function (e) {
     var thisElement= e.cyTarget;
     try {
@@ -1222,4 +1148,3 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
         });
      }
   }*/
-
