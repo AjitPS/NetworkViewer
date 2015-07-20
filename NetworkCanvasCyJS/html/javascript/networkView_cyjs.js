@@ -58,6 +58,8 @@ $(function() { // on dom ready
                       else {
                          label= ele.data('value');
                         }
+                      // Trim the label's length.
+                      if(label.length> 30) { label= label.substr(0,29)+'...'; }
                       return label;
                      },
      //     'text-valign': 'center', // to have 'content' displayed in the middle of the node.
