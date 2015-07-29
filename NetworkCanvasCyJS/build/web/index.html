@@ -1,6 +1,11 @@
 <html>
     <head>
+<!--        <link href="css/indexStyle.css" rel="stylesheet" /> -->
+
+<!--        <link href="css/old_style.css" rel="stylesheet" /> -->
+
         <meta charset=utf-8 />
+        <script src="libs/jquery-1.11.2.min.js"></script>
         <script src="./javascript/mainPage_js.js"></script>
         <title>Network View</title>
     </head>
@@ -9,5 +14,6 @@
             Generate Network: <input type="button" id="genNetwork" value="Launch Network" 
                                      onclick="generateCyJSNetwork('./sampleFiles/result_ara_geneNames.json');" title="Show network graph using cytoscapeJS">
         </div>
+        <div id='NetworkCanvas'></div>
     </body>
 </html>

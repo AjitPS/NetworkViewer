@@ -860,8 +860,12 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                     cell2= row.insertCell(1);
                     cell1.innerHTML= "<b>Synonyms:</b>";
                     for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].conames.length; k++) {
-                        if(metadataJSON.ondexmetadata.concepts[j].conames[k].name !== "") {
-                           all_concept_names= all_concept_names + metadataJSON.ondexmetadata.concepts[j].conames[k].name +"<br/>";
+                        co_name= metadataJSON.ondexmetadata.concepts[j].conames[k].name;
+                        if(co_name !== "") {
+                           console.log("co_name: "+ co_name);
+                           // Display concept synonyms along with an eye icon to use them as preferred concept name.
+                           all_concept_names= all_concept_names + co_name +
+                                   " <a><img src='image/eye_icon.png' alt='Use' onclick='useAsPreferredConceptName(selectedElement.data('value'), co_name)'></a>" +"<br/>";
                           }
                        }
                     cell2.innerHTML= all_concept_names; // all synonyms.
@@ -930,6 +934,8 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                                co_acc= "<a href=\""+ coAccUrl +"\" onclick=\"window.open(this.href,'_blank');return false;\">"+ co_acc +"</a>";
                               }
                             }
+                        // Display concept accessions along with an eye icon to use them as preferred concept name.
+                        co_acc= co_acc +" <a><img src='image/eye_icon.png' alt='Use' onclick='useAsPreferredConceptName(selectedElement.data('value'), co_acc)'></a>";
                         cell1.innerHTML= accessionID;
                         cell2.innerHTML= co_acc;
                        }
@@ -1095,6 +1101,24 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
      }
     catch(err) {
           console.log("Error occurred while removing Shadow from concepts with connected, hidden elements. \n"+"Error Details: "+ err.stack);
+         }
+  }
+
+  // Set the given name for the selected concept.
+  function useAsPreferredConceptName(current_name, new_conceptName) {
+   try {
+     console.log("Set the given name: "+ new_conceptName +" for the selected concept: "+ current_name);
+     var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+
+     cy.nodes().forEach(function(ele) {
+      if(ele.data('value') === current_name) {
+         console.log("Use new preferred name: "+ new_conceptName);
+         ele.data('value', new_conceptName);
+        }
+     });
+    }
+   catch(err) {
+          console.log("Error occurred while updating preferred concept name. \n"+"Error Details: "+ err.stack);
          }
   }
 
