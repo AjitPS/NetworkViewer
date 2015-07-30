@@ -805,6 +805,11 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
          // Clear the existing table body contents.
          table.innerHTML= "";
          if(selectedElement.isNode()) {
+            conID= selectedElement.id(); // id
+            conValue= selectedElement.data('value'); // value
+            // Explicity select (highlight) the element.
+            cy.$('#'+conID).select();
+
             var row= table.insertRow(0); // create a new, empty row.
             // Insert new cells in this row.
             var cell1= row.insertCell(0);
@@ -817,7 +822,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
             cell1= row.insertCell(0);
             cell2= row.insertCell(1);
             cell1.innerHTML= "Value:";
-            cell2.innerHTML= selectedElement.data('value');
+            cell2.innerHTML= conValue;
             // Concept 'PID'.
             row= table.insertRow(2);
             cell1= row.insertCell(0);
@@ -862,10 +867,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                     for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].conames.length; k++) {
                         co_name= metadataJSON.ondexmetadata.concepts[j].conames[k].name;
                         if(co_name !== "") {
-                           console.log("co_name: "+ co_name);
                            // Display concept synonyms along with an eye icon to use them as preferred concept name.
                            all_concept_names= all_concept_names + co_name +
-                                   " <a><img src='image/eye_icon.png' alt='Use' onclick='useAsPreferredConceptName(selectedElement.data('value'), co_name)'></a>" +"<br/>";
+                                   " <a><img src='image/eye_icon.png' alt='Use' id='"+ co_name +"' onclick='useAsPreferredConceptName(this.id);' title='Use as concept Label'/></a>" +"<br/>";
                           }
                        }
                     cell2.innerHTML= all_concept_names; // all synonyms.
@@ -926,6 +930,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                         cell2= row.insertCell(1);
                         accessionID= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].elementOf;
                         co_acc= metadataJSON.ondexmetadata.concepts[j].coaccessions[k].accession;
+                        accession= co_acc; // retain the original accession value for the eye icon
                         for(var u=0; u < url_mappings.html_acc.length; u++) {
                             if(url_mappings.html_acc[u].cv === accessionID) {
                                coAccUrl= url_mappings.html_acc[u].weblink + co_acc; // co-accession url.
@@ -935,7 +940,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                               }
                             }
                         // Display concept accessions along with an eye icon to use them as preferred concept name.
-                        co_acc= co_acc +" <a><img src='image/eye_icon.png' alt='Use' onclick='useAsPreferredConceptName(selectedElement.data('value'), co_acc)'></a>";
+                        co_acc= co_acc +" <a><img src='image/eye_icon.png' alt='Use' id='"+ accession +"' onclick='useAsPreferredConceptName(this.id);' title='Use as concept Label'/></a>";
                         cell1.innerHTML= accessionID;
                         cell2.innerHTML= co_acc;
                        }
@@ -1104,21 +1109,20 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
          }
   }
 
-  // Set the given name for the selected concept.
-  function useAsPreferredConceptName(current_name, new_conceptName) {
+  // Set the given name (label) for the selected concept.
+  function useAsPreferredConceptName(new_conceptName) {
    try {
-     console.log("Set the given name: "+ new_conceptName +" for the selected concept: "+ current_name);
      var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
 
      cy.nodes().forEach(function(ele) {
-      if(ele.data('value') === current_name) {
-         console.log("Use new preferred name: "+ new_conceptName);
+      if(ele.selected()) {
+         console.log("Selected concept: "+ ele.data('value') +"; \t Use new preferred name (for concept Label): "+ new_conceptName);
          ele.data('value', new_conceptName);
         }
      });
     }
    catch(err) {
-          console.log("Error occurred while updating preferred concept name. \n"+"Error Details: "+ err.stack);
+          console.log("Error occurred while altering preferred concept name. \n"+"Error Details: "+ err.stack);
          }
   }
 
