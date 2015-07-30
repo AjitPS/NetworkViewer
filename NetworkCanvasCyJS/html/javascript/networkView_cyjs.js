@@ -807,7 +807,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
          if(selectedElement.isNode()) {
             conID= selectedElement.id(); // id
             conValue= selectedElement.data('value'); // value
-            // Explicity select (highlight) the element.
+            // Unselect other concepts.
+            cy.$(':selected').nodes().unselect();
+            // Explicity select (highlight) the concept.
             cy.$('#'+conID).select();
 
             var row= table.insertRow(0); // create a new, empty row.
