@@ -14,126 +14,9 @@ body {
 	font-family:Verdana, Arial, Helvetica, sans-serif;
 }
 
-a {
-	text-decoration:none; 
-	color:#4184C1;
-}
-a img {
-	border:none;	
-}
-
-.redText {
-	color:red;
-}
-
-a:hover {
-	text-decoration:underline;
-}
-.textBlock
-{
-	max-width:210px;
-    display:block; 
-    margin-top:-16px; 
-    margin-left:28px;
-}
-.button {
-	height:25px;
-	font-size:14px;
-	cursor:pointer;
-}
-.button_link {
-    background:transparent;
-	overflow:visible;
-    margin:0;
-    padding:0;
-    border:0;
-    color: #3B53A5;
-	text-decoration:none;
-	font-weight:bold;
-    background:transparent; 
-    line-height:normal; 
-    cursor:pointer;
-    -moz-user-select:text;
-}
-
-div#loadingDiv {
-	width:30px;
-	height:35px;
-	padding-left:20px;
-	color:#D56048;
-	position:relative;
-	top:3px;
-}
-div#loadingNetworkDiv {
-	float:right;
-	width:210px;
-	height:30px;
-	padding-top:13px;
-	padding-right:5px;
-	color:#D56048;
-}
-div#loadingNetworkDiv img {
-	float:right;
-}
-div#loadingDiv ul li{
-	padding-left:20px;
-}
-
-div#networkButton {
-	width:101%;
-	height:30px;
-	margin-top:8px;
-}
-div#networkButton input[type="button"] {
-	float:right;
-	margin:10px;
-}
-
-/* tooltip */
-span.hint {
-	display:inline-block;
-	cursor:help;
-}
-span.hint-small {
-	position:absolute;
-	right: 10px;
-	height: 19px;
-	width: 19px;
-	background: url(../image/Hint_small.png) 0 0 no-repeat;
-}
-
-span.hint-small:hover {
-	//background-position: -19px 0;
-}
-
-span.hint-big {
-	background: url(../image/Hint_big.png) 0 0 no-repeat;
-	cursor: pointer;
-}
-
-span.hint-big:hover {
-	background-position: -36px 0;
-}
-
-.tooltip {
-	min-width: 250px;
-	margin:8px;
-	padding:8px;
-	border:1px solid grey;
-	background-color:#FBF2D7;
-	position:absolute;
-	margin-bottom:20px;
-	z-index:100000;
-}
-
-
-.exampleQuery {
-	cursor:pointer;
-}
-
-#NetworkCanvas{position:relative;padding-bottom:20px;float:left; border: 1px solid; }
+#NetworkCanvas{position:relative;padding-bottom:5px;float:left;border: 1px solid;}
 /* css for the iframe containing the cytoscapejs Network Graph */
-#networkGraph_iframe {position:relative; width: 95%; height: 95%;padding-bottom:5px;float:left; }
+#new_NetworkViewer {width: 98%; height: 98%;border: 1px solid; }
 
 /*
  * networkview Modal popupBox
@@ -154,6 +37,7 @@ span.hint-big:hover {
 	position: relative;
 	width: 760px;
 	height: 750px;
+        border: 1px solid;
 }
 
 .modalBox.modalBoxVisible  {
@@ -181,8 +65,6 @@ span.hint-big:hover {
 	bottom: 0px;
 }
 
-
-
 .modalBox.modalBoxVisible #legend_frame {
 	background-color: #fff;
 }
@@ -201,8 +83,7 @@ span.hint-big:hover {
 /*
  * network Buttons
  */
- 
-.networkButtons {
+ .networkButtons {
 	height: 36px;
 	width: 36px;
 	margin-left: 3px;
