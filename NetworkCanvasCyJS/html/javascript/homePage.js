@@ -2,17 +2,17 @@
  * Generates the new lightweight Network graph, using cytoscapeJS.
  * @author: Ajit Singh.
  */
-var cyjs_networkView= false;
+//var cyjs_networkView= false;
 
 function generateCyJSNetwork(jsonFileName) {
     var jsonFile= jsonFileName; // the JSON file received from index.html.
     console.log("generateCyJSNetwork>> jsonFile from index.html: "+ jsonFile);
   //  try {
-         if(cyjs_networkView && !cyjs_networkView.closed) {
+/*         if(cyjs_networkView && !cyjs_networkView.closed) {
             // If the window is already open.
             // close the window to reopen it later using new JSON dataset (file).
             cyjs_networkView.close();
-           }
+           }*/
 //         else {
 /*           cyjs_networkView= window.open("networkGraph.html", "Network View", 
                     "fullscreen=yes, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, titlebar=yes, status=yes"); */
@@ -25,7 +25,7 @@ function generateCyJSNetwork(jsonFileName) {
         // Embed the Network Viewer in the 'Network View' tab on the page.
         var output ="<div id='buttonBox'>" +
         			"<a title='Maximise' href='javascript:;' id='maximiseNetwork' class='networkButtons' type='button'></a>" +
-        			"<a title='Download network' href="+jsonFile +" target=_blank id='downloadNetworkTab' class='networkButtons' type='button'></a>" +
+        			"<a title='Download network' href="+ jsonFile +" target=_blank id='downloadNetworkTab' class='networkButtons' type='button'></a>" +
 	        		"<a title='Open in new window' href='javascript:;' id='newNetworkWindow' class='networkButtons' type='button'></a>" +
 	        		"<span id='networkViewerHelp' class='networkButtons hint-big' title='Network Viewer Help'></span>" +
 	        	"</div>" +
@@ -36,7 +36,7 @@ function generateCyJSNetwork(jsonFileName) {
 	        			"<a title='Restore' href='javascript:;' id='restoreNetwork' class='networkButtons'></a>" +
 		        		"<div id='OndexWebContainer'>" +
 //                                        "<div id='new_networkViewer'><object type='text/html' data='networkGraph.html' style='width:100%; height: 96%;' onload='makeNetworkGraph(jsonFile)'></object></div>"+
-                                        "<iframe name='new_networkViewer'></iframe>"+
+//                                        "<iframe name='new_networkViewer'></iframe>"+
 		        		"</div>" +
 //		        		legendHtmlContainer +
 	        		"</div>" +
@@ -49,7 +49,7 @@ function generateCyJSNetwork(jsonFileName) {
 //        console.log("cyjs_networkView iframe.contentWindow: "+ cyjs_networkView.contentWindow);
 
 	$('#NetworkCanvas').html(output);
-        console.log("new_NetworkViewer div added...");
+        console.log("new_NetworkViewer iframe added...");
 
         // Using Ajax & jQuery to load the body and head fragments of the networkGraph.html page.
 /*        console.log("Fetch 'head' of networkGraph.html...");
@@ -76,8 +76,9 @@ function generateCyJSNetwork(jsonFileName) {
             }*/
 /*        });*/
 
+        // Generate the network graph using cytoscapeJS.
         makeNetworkGraph(jsonFile);
-
+/*
 	$('#networkViewerHelp').click(function() {
 		$('#networkHelpBox').slideToggle(300);
 	});
@@ -85,7 +86,7 @@ function generateCyJSNetwork(jsonFileName) {
 	$('#networkHelpBox').click(function() {
 		$('#networkHelpBox').slideToggle(300);
 	})
-	
+*/	
 	$("#newNetworkWindow").click(function(){
            var cyjs_networkView= window.open("networkGraph.html", "Network View", 
                     "fullscreen=yes, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, titlebar=yes, status=yes");
@@ -126,31 +127,40 @@ function generateCyJSNetwork(jsonFileName) {
 //	activateButton('NetworkCanvas');
 }
 
+        // Generate the network graph using the new cytoscapeJS Network Viewer.
         function makeNetworkGraph(jsonFile) {
-         console.log("makeNetworkGraph>> jsonFile from index.html: "+ jsonFile);
-//         $('#new_networkViewer').contentWindow.generateNetworkGraph(jsonFile);
-//         generateNetworkGraph(jsonFile);
-/*         var cyjs_networkView= $('#new_networkViewer').load("networkGraph.html");
-         // Pass the JSON file path to a global variable in the new window.
-         cyjs_networkView.jsonFile= jsonFile;
-         console.log("makeNetworkGraph>> cyjs_networkView.jsonFile= "+ cyjs_networkView.jsonFile);*/
+         // Insert network graph as an iframe.
+         $("#OndexWebContainer").html("<iframe name='new_networkViewer' src='networkGraph.html' width='100%' height='96%'></iframe>");  
+         $("#OndexWebContainer").css("display", "block");
          // Set iframe source.
-         $('#new_networkViewer').src= "networkGraph.html";
-         // Call function inside iframe once it's ready.
-/*         $("#new_networkViewer").load(function () {                        
-        frames["new_networkViewer"].document.body.innerHTML = htmlValue;
-    });*/
+//         $('#new_networkViewer').src= "networkGraph.html";
+
          var doc= null;
          if($('#new_networkViewer')[0].contentDocument) // For Firefox or Chrome
             doc= $('#new_networkViewer')[0].contentDocument;
          else if($('#new_networkViewer')[0].contentWindow) // For IE
                  doc= $('#new_networkViewer')[0].contentWindow.document;
 //         $('#new_networkViewer')[0].contentWindow.generateNetworkGraph(jsonFile);
-         doc.generateNetworkGraph(jsonFile);
+
+         console.log("makeNetworkGraph>> jsonFile from index.html: "+ jsonFile);
+         doc.generateNetworkGraph(jsonFile); // call iframe function.
+
+         // Call function inside iframe once it's ready.
+/*         $("#new_networkViewer").load(function () {                        
+        frames["new_networkViewer"].document.body.innerHTML = htmlValue;
+    });*/
         }
 
         function downloadJSON() {
 //         document.getElementById('networkGraph_iframe').contentWindow.exportAsJson();
 //         $('#new_networkViewer').contentWindow.exportAsJson()
-         exportAsJson();
+//         exportAsJson();
+
+         var doc= null;
+         if($('#new_networkViewer')[0].contentDocument) // For Firefox or Chrome
+            doc= $('#new_networkViewer')[0].contentDocument;
+         else if($('#new_networkViewer')[0].contentWindow) // For IE
+                 doc= $('#new_networkViewer')[0].contentWindow.document;
+//         $('#new_networkViewer')[0].contentWindow.exportAsJson();
+         doc.exportAsJson(); // call iframe function.
         }
