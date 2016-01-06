@@ -1,11 +1,11 @@
 /* 
-    Created on : 12-Mar-2015
+    Created on : 12-May-2015
     Author     : Ajit Singh
     Description:
         CSS for the cytoscapeJS Network Viewer page.
 */
 
-      root { 
+/*      root { 
          display: block;
       }
 
@@ -13,7 +13,7 @@
         font: 14px helvetica neue, helvetica, arial, sans-serif;
         margin: 0px;
         padding: 0px;
-      }
+      }*/
       
 /*      #layouts_table {
        cellspacing: 1px;
@@ -26,8 +26,8 @@
 
       /* CytoscapeJS "core" container */
       #cy {
-        height: 900px; //950px; //600px;
-        width: 1200px;
+        height: 98%;/*900px;*/ //950px; //600px;
+        width: 98%;/*1200px;*/
         position: relative;
         margin: auto;
         top: 2px;
@@ -185,7 +185,12 @@
           padding: 10px; 
           border-radius: 6px;
       }*/
-      
+
+      /* cytoscapeJS radial context menu */
+      .cxtmenu-content {
+       font-size: 12px;
+      }
+
       /* page footer */
       #pageFooter {
           position: relative;
