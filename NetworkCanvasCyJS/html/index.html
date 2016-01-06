@@ -4,8 +4,8 @@
 <!--        <link href="css/old_style.css" rel="stylesheet" /> -->
 
         <meta charset=utf-8 />
-<!--        <script src="libs/jquery-1.11.2.min.js"></script>
-        <script src="./javascript/networkView_cyjs.js"></script> -->
+        <script src="libs/jquery-1.11.2.min.js"></script>
+<!--        <script src="./javascript/networkView_cyjs.js"></script> -->
         <script src="./javascript/mainPage_js_winTest.js"></script>
 <!--        <script src="./javascript/homePage.js"></script> -->
         <title>Network Viewer</title>
@@ -13,10 +13,11 @@
     <body>
         <div>
             Show Network: <input type="button" id="genNetwork" value="View Network (new)" 
-                                     onclick="generateCyJSNetwork('./sampleFiles/test_141015.json');" title="Show network graph using cytoscapeJS">
+                                     onclick="generateCyJSNetwork('./sampleFiles/colaLayout_issue.json');" title="Show network graph using cytoscapeJS">
         </div>
         <!-- div to show NetworkCanvas iframe -->
 <!--        <div id='NetworkCanvas'></div> -->
+    <div id="loadingNetworkDiv" style="font-weight: bold; color: red"></div>
     </body>
 </html>
 
