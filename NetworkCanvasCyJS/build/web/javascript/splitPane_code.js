@@ -71,7 +71,7 @@ $(document).ready(function () {
                 },
 
                 center__minWidth: 600, //800 // min. width for the center pane.
-//		center__resizable: false, // OVERRIDE the pane-default of 'resizable=true'
+//		center__resizable: true, // OVERRIDE the pane-default of 'resizable=true'
 
 		showDebugMessages: true // log and/or display messages from debugging & testing code
                });

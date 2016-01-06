@@ -5,6 +5,9 @@
 var cyjs_networkView= false;
 
 function generateCyJSNetwork(jsonFileName) {
+    // Add notification to the loading div.
+    $("#loadingNetworkDiv").html("Loading, please wait...");
+
     var jsonFile= jsonFileName; // the JSON file received from index.html.
     console.log("generateCyJSNetwork>> jsonFile from index.html: "+ jsonFile);
 
@@ -42,4 +45,7 @@ function generateCyJSNetwork(jsonFileName) {
            cyjs_networkView.jsonFile= jsonFile;
            console.log("OpenNewWindow>> cyjs_networkView.jsonFile= "+ cyjs_networkView.jsonFile);
 //          }
+
+    // Clear the loading div.
+    $("#loadingNetworkDiv").html("");
 }
