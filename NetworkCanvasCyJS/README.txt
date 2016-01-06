@@ -28,7 +28,7 @@
 * Item Info. table added which displays detailed metadata about a node/ edge (including external url's and various attribute scores) when right clicked.
 
 
-### New features [02-06-2015]:
+### New features [06-01-2016]:
 
 * All layouts now only use the visible graph elements (nodes & edges) while rendering. Showing or hiding elements re-renders the layout automatically with the now-visible elements. This also increases initialisation performance for large networks with many initially-hidden elements.
 * Item Info. table/ window re-designed using Split Panes,via jquery-ui-layout,that enable users to display or hide the north, east and south Panes while having only the network (center pane) visible by default.
@@ -38,11 +38,10 @@
 * "Relayout" feature added to allow users to refresh the layout.
 * Node shape and colour reverted to using options available in CytoscapeJS for better performance for larger networks. New node types added (QTL and Scaffold).
 * Toggle layout animation on/ off feature added (useful for faster rendering in case the network graph is too large).
+* Show/ Hide labels feature (for nodes and edges) yet to be added.
 
 
 ### Other features currently under development:
 
 * Radial sub-menus yet to de developed for the circular context menu.
 * "Annotate edges by attribute" feature which will allow users to re-size relations (edges) based on a particular attribute (such as Score, z-index, P-value, etc.).
-* Item Info. window: Modify to allow multi-select nodes/ edges and view their Item Info. in a comparison table. 
-* Show/ Hide labels feature (for nodes and edges) yet to be added.
