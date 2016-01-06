@@ -30,6 +30,25 @@
   /** Define the default layout for the network, using WebCola layout from Cola.js (similar to the "Gem" layout in 
     * Ondex Web). */
    var defaultNetworkLayout= {
+    name: 'cola', animate: animate_layout, refresh: 1, maxSimulationTime: 4000,
+    ungrabifyWhileSimulating: false, fit: true, padding: 10, 
+    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+    ready: function(){}, stop: function(){},
+    // positioning options
+    randomize: false, avoidOverlap: true, handleDisconnected: true,
+    nodeSpacing: function( node ){ return 10; },
+    flow: undefined, alignment: undefined,
+//    edgeLength: undefined, // sets edge length directly in simulation
+//    edgeSymDiffLength: 50/*undefined*//*20*/ /*13*/, // symmetric diff edge length in simulation
+//    edgeJaccardLength: undefined, // jaccard edge length in simulation
+    unconstrIter: 10/*undefined*/, // unconstrained initial layout iterations
+    userConstIter: 20/*undefined*/, // initial layout iterations with user-specified constraints
+    allConstIter: 20/*undefined*/, // initial layout iterations with all constraints including non-overlap
+    // infinite layout options
+    infinite: false
+   };
+
+   var defaultNetworkLayout2= {
     name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
     refresh: 1/*0.1*/ /*0.5*/, animate: animate_layout, fit: true, padding: 10/*30*/, 
     boundingBox: undefined, // animationDuration: 4000,
@@ -56,11 +75,33 @@
     infinite: false
    };
 
+   var defaultNetworkLayout_new= {
+    name: 'cola', animate: animate_layout, refresh: 1, maxSimulationTime: 4000,
+    ungrabifyWhileSimulating: false, fit: true, padding: 10,
+//    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+    ready: function(){}, stop: function(){},
+    // positioning options
+    randomize: false, avoidOverlaps: true, handleDisconnected: true,
+    flow: undefined, alignment: undefined,
+//    nodeSpacing: function( node ){ return 10; },
+//    symmetricDiffLinkLengths: 10,
+    jaccardLinkLengths: 250,
+//    linkDistance: 500
+    // iterations of cola algorithm; uses default values on undefined
+    unconstrIter: 10,
+    userConstIter: 15,//10
+    allConstIter: 20, //10
+    // infinite layout options
+    infinite: false
+   };
+
   // Set WebCola layout (default).
   function setColaLayout(eles) {
    console.log("setColaLayout()>> animate_layout= "+ animate_layout);
+//   var d3cola = cola.d3adaptor().linkDistance(50);
    // run the default (WebCola) layout algorithm.
-   eles.layout(defaultNetworkLayout);
+   eles.layout(/*defaultNetworkLayout*/defaultNetworkLayout_new);
+//   eles.layout({ name:'cola', animate: animate_layout }); // basic
 
 //   cy.reset(); // reset the graph's zooming & panning properties.
 //   cy.fit();
