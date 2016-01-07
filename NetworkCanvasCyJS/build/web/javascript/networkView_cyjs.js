@@ -375,17 +375,18 @@ cy.elements().qtip({
        info= "Concept selected: "+ thisElement.data('value') +", type: "+ thisElement.data('conceptType')
                +", PID: "+ thisElement.data('pid');
        // Also update the Item Info table & display it.
-       showItemInfo(thisElement);
+//       showItemInfo(thisElement);
       }
       else if(thisElement.isEdge()) {
               info= "Relation selected: "+ thisElement.data('label') +", From: "+ 
                       thisElement.data('source') +", To: "+ thisElement.data('target');
              }
        // Also update the Item Info table & display it.
-       showItemInfo(thisElement);
+//       showItemInfo(thisElement);
       }
       catch(err) { info= "Selected element is neither a Concept nor a Relation"; }
     console.log(info);
+    showItemInfo(thisElement);
    });
 // cxttap - normalised right click or 2-finger tap event.
 
@@ -1037,6 +1038,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    else if(document.getElementById("cose").checked) {
            setCoseLayout(eles);
           }
+   else if(document.getElementById("cose_bilkent").checked) {
+           setCoseBilkentLayout(eles);
+          }
    else if(document.getElementById("arbor").checked) {
            setArborLayout(eles);
           }
@@ -1049,9 +1053,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    else if(document.getElementById("springy").checked) {
            setSpringyLayout(eles);
           }
-/*   else if(document.getElementById("spread").checked) {
+   else if(document.getElementById("spread").checked) {
            setSpreadLayout(eles);
-          }*/
+          }
    else if(document.getElementById("grid").checked) {
            setGridLayout(eles);
           }
@@ -1136,7 +1140,8 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
         var its_connected_hidden_nodes= elem.connectedEdges().connectedNodes().filter('node[conceptDisplay = "none"]');
         var its_connected_hiddenNodesCount= its_connected_hidden_nodes.length;
         console.log("connectedNode: id: "+ elem.id() +", label: "+ elem.data('value') +", its_connected_hiddenNodesCount= "+ its_connected_hiddenNodesCount);
-        if(its_connected_hiddenNodesCount /*<*/=== /*<=*/ 0/*1*/) {
+        if(its_connected_hiddenNodesCount </*<=*/ 1) {
+//        if(its_connected_hiddenNodesCount /*<*/=== 0/*1*/) {
            removeNodeBlur(elem);
 //           elem.connectedEdges().show();
           }
