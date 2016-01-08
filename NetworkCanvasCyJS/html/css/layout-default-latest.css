@@ -134,13 +134,19 @@ body {
 		opacity: 1.00;
 		filter:  alpha(opacity=100);
 	}
-	.ui-layout-toggler-north ,
+        .ui-layout-toggler-north ,
+/*        .ui-layout-toggler-north {
+//	 	border-width: 0 1px;
+         	background-image: url('../image/down-arrow.png');
+        }*/
 	.ui-layout-toggler-south {
-		border-width: 0 1px; /* left/right borders */
+	 	border-width: 0 1px; /* left/right borders */
+//         	background-image: url('../image/up-arrow.png');
 	}
 	.ui-layout-toggler-west ,
 	.ui-layout-toggler-east {
 		border-width: 1px 0; /* top/bottom borders */
+//         	background-image: url('../image/left-arrow.png');
 	}
 	/* hide the toggler-button when the pane is 'slid open' */
 	.ui-layout-resizer-sliding  .ui-layout-toggler {

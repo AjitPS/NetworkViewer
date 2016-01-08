@@ -3,6 +3,8 @@
         <link href="css/cyjsNetworkViewer_Style.css" rel="stylesheet" />
         <!-- jQuery-ui-layout: CSS for split panes -->
         <link href="css/layout-default-latest.css" type="text/css" rel="stylesheet" />
+        <!-- jQuery Ajax MaskLoader: CSS for Loader overlay -->
+        <link href="css/maskloader.css" rel="stylesheet">
 
         <meta charset=utf-8 />
         <script src="libs/jquery-1.11.2.min.js"></script>
@@ -12,24 +14,33 @@
 <!--        <script src="libs/cytoscape-css-renderer.js"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/70964f0306e770837dbe2b81197c12fdc7804e38/cytoscape-qtip.js"></script>
-        <script src="https://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.js" type="text/javascript"></script>
+<!--        <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/70964f0306e770837dbe2b81197c12fdc7804e38/cytoscape-qtip.js"></script> -->
+        <script src="libs/cytoscape-qtip.js"></script>
+<!--        <script src="https://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.js" type="text/javascript"></script>
         <link href="https://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
-        <script src="https://medialize.github.io/jQuery-contextMenu/src/jquery.ui.position.js" type="text/javascript"></script>
+        <script src="https://medialize.github.io/jQuery-contextMenu/src/jquery.ui.position.js" type="text/javascript"></script> -->
         <!-- jQuery-ui-layout: for adding split panes -->
 	<script src="libs/jquery.layout-latest.js"></script>
+        <!-- jQuery Ajax MaskLoader: for Loader overlay, for the container while the network loads -->
+        <script src="libs/jquery.maskloader.js"></script>
         <!-- For WebCola layout -->
+<!--        <script src="libs/cola_new/d3.v3.min.js"></script> -->
         <script src="libs/cola.v3.min.js"></script>
         <script src="libs/cola.adaptor.js"></script>
+<!--        <script src="libs/cola.v3.min.js"></script>
+        <script src="libs/cytoscape-cola.js"></script> -->
         <!-- For Arbor layout -->
         <script src="libs/arbor.js"></script>
-        <!-- For Springy layout -->
-        <script src="libs/springy.js"></script>
         <!-- For Dagre (Tree) layout -->
         <script src="libs/dagre.js"></script>
+<!--        <script src="libs/dagre.min.js"></script> -->
+<!--        <script src="libs/cytoscape-dagre.js"></script> -->
         <!-- For Spread layout -->
         <script src="libs/foograph.js"></script>
         <script src="libs/rhill-voronoi-core.js"></script>
+<!--        <script src="libs/cytoscape-spread.js"></script> -->
+        <!-- For Springy layout -->
+        <script src="libs/springy.js"></script>
         <!-- URL mappings config file used for generating url's in Item Info table -->
         <script type="text/javascript" src="config/url_mappings.json"></script>
 
@@ -44,25 +55,37 @@
   <body>
     <!-- North pane of split pane added using jquery-ui-layout -->
     <div class="ui-layout-north" onmouseover="myLayout.allowOverflow('north')" onmouseout="myLayout.resetOverflow(this)">
-        <b>Network Graph using CytoscapeJS</b><br/><br/>
+        <b>KNETviewer</b><br/>
         <div id=layouts_container>
-            <div id="animationCheckbox">Enable Layout Animation:<input type="checkbox" name="layoutAnimation_Chkbx" id="animateLayout" value="Enable Layout Animation" onclick="setLayoutAnimationSetting();" ondblclick="setLayoutAnimationSetting();" onmousedown="setLayoutAnimationSetting();" checked title="Check to enable layout Animation and uncheck to disable."><br/></div>
+            <div id="animationCheckbox">Enable Animation:<input type="checkbox" name="layoutAnimation_Chkbx" id="animateLayout" value="Enable Layout Animation" onclick="setLayoutAnimationSetting();" ondblclick="setLayoutAnimationSetting();" onmousedown="setLayoutAnimationSetting();" checked title="Check to enable layout Animation and uncheck to disable."><br/></div>
             <table id=layouts_table cellspacing=1>
                 <thead><u>Layouts:</u></thead><tr>
                     <td align=center><input type="radio" name="layoutButton" id="default" value="Default_layout" onclick="setColaLayout($('#cy').cytoscape('get').$(':visible'));" checked title="using WebCola layout algorithm">Default (WebCola)</td>
                     <td align=center><input type="radio" name="layoutButton" id="circle" value="Circle_layout" onclick="setCircleLayout($('#cy').cytoscape('get').$(':visible'));">Circular</td>
+                    <td align=center><input type="radio" name="layoutButton" id="cose" value="Cose_layout" onclick="setCoseLayout($('#cy').cytoscape('get').$(':visible'));" title="using CoSE layout algorithm (with node clustering, but performance-intensive for larger networks)">CoSE</td>
+                    <td align=center><input type="radio" name="layoutButton" id="cose_bilkent" value="Cose_Bilkent_layout" onclick="setCoseBilkentLayout($('#cy').cytoscape('get').$(':visible'));" title="using CoSE-Bilkent layout (with node clustering)">CoSE-Bilkent</td>
+                    <td align=center><input type="radio" name="layoutButton" id="concentric" value="Concentric_layout" onclick="setConcentricLayout($('#cy').cytoscape('get').$(':visible'));">Concentric</td>
+                    <td align=center><input type="radio" name="layoutButton" id="breadthfirst" value="Breadthfirst_layout" onclick="setBreadthfirstLayout($('#cy').cytoscape('get').$(':visible'));" title="Layout using Breadthfirst graph traversal (may not work for networks with multiple roots/ starting points)">Breadthfirst</td>
                     <td align=center><input type="radio" name="layoutButton" id="arbor" value="Arbor_layout" onclick="setArborLayout($('#cy').cytoscape('get').$(':visible'));" title="using Arbor layout algorithm">Arbor</td>
                     <td align=center><input type="radio" name="layoutButton" id="dagre" value="Tree_layout" onclick="setTreeLayout($('#cy').cytoscape('get').$(':visible'));" title="using Dagre layout algorithm">Tree</td>
                     <td align=center><input type="radio" name="layoutButton" id="grid" value="Grid_layout" onclick="setGridLayout($('#cy').cytoscape('get').$(':visible'));">Grid</td>
-                    <td align=center><input type="radio" name="layoutButton" id="breadthfirst" value="Breadthfirst_layout" onclick="setBreadthfirstLayout($('#cy').cytoscape('get').$(':visible'));" title="Layout using Breadthfirst graph traversal (may not work for networks with multiple roots/ starting points)">Breadthfirst</td>
-                    <td align=center><input type="radio" name="layoutButton" id="cose" value="Cose_layout" onclick="setCoseLayout($('#cy').cytoscape('get').$(':visible'));" title="using CoSE layout algorithm (with node clustering, but performance-intensive for larger networks)">Cose</td>
+                    <td align=center><input type="radio" name="layoutButton" id="spread" value="Spread_layout" onclick="setSpreadLayout($('#cy').cytoscape('get').$(':visible'));" title="using foograph.js & rhill-voronoi-core.js">Spread</td>
                     <td align=center><input type="radio" name="layoutButton" id="springy" value="Springy_layout" onclick="setSpringyLayout($('#cy').cytoscape('get').$(':visible'));" title="using Springy layout algorithm (not suitable for larger networks)">Springy</td>
-<!--                    <td align=center><input type="radio" name="layoutButton" id="spread" value="Spread_layout" onclick="setSpreadLayout($('#cy').cytoscape('get').$(':visible'));" title="using foograph.js & rhill-voronoi-core.js">Spread</td> -->
-                    <td align=center><input type="radio" name="layoutButton" id="concentric" value="Concentric_layout" onclick="setConcentricLayout($('#cy').cytoscape('get').$(':visible'));">Concentric</td>
                 </tr>
             </table>
         </div><hr>
 <!--        <br/>-->
+        <div>
+<!--            Show concept neighbourhood: <input type="button" value="Show Neighbourhood" onclick="showNeighbourhood();" title="Display concept neighbourhood">-->
+            Show All: <input type="button" value="Show All" onclick="showAll();" title="Display all concept & relations in the Network">
+            Export graph JSON: <input type="button" value="Export JSON" onclick="exportAsJson();" title="Export the Network graph as a JSON object and show it in a new Tab">
+            Export graph Image: <input type="button" value="Export Image" onclick="exportAsImage();" title="Export the Network graph as a .png image (generated below)">
+
+            <u>Show Labels:</u> Concepts:<input type="checkbox" name="showConceptLabels_Chkbx" id="show_ConceptLabels" value="Concepts" onclick="showConceptLabels();" ondblclick="showConceptLabels();" onmousedown="showConceptLabels();" title="Check to show Concept labels.">
+            Relations:<input type="checkbox" name="showRelationLabels_Chkbx" id="show_RelationLabels" value="Relations" onclick="showRelationLabels();" ondblclick="showRelationLabels();" onmousedown="showRelationLabels();" title="Check to show Relation labels.">
+<!--            Genes only:<input type="checkbox" name="showGeneLabels_Chkbx" id="show_GeneLabels" value="Genes" onclick="showGeneLabels();" ondblclick="showGeneLabels();" onmousedown="showGeneLabels();" title="Check to show labels on Genes only."> -->
+        </div>
+        <br/>
         <div>
              Re-run Layout: <input type="button" value="Relayout" onclick="rerunLayout();" title="Re-run the graph Layout">
 <!--             Annotate relations by attribute: <input type="button" value="Annotate" disabled onclick="annotateByAttribute();" title="Annotate relations by any attribute"> -->
@@ -73,14 +96,20 @@
              Zoom: <input type="button" value="Zoom" onclick="zoomGraph();" title="Zoom the graph">
              Center: <input type="button" value="Center" onclick="centerGraph();" title="Center the graph">
              Pan: <input type="button" value="Pan" onclick="panGraph();" title="Pan the graph"> -->
-        </div>
-        <br/>
-        <div>
-<!--            Show concept neighbourhood: <input type="button" value="Show Neighbourhood" onclick="showNeighbourhood();" title="Display concept neighbourhood">-->
-            Show All: <input type="button" value="Show All" onclick="showAll();" title="Display all concept & relations in the Network">
-            Export graph JSON: <input type="button" value="Export JSON" onclick="exportAsJson();" title="Export the Network graph as a JSON object and show it in a new Tab">
-            Export graph Image: <input type="button" value="Export Image" onclick="exportAsImage();" title="Export the Network graph as a .png image (generated below)">
-            Show All Labels:<input type="checkbox" name="showAllLabels_Chkbx" id="show_allLabels" value="Show All Labels" onclick="showAllLabels();" ondblclick="showAllLabels();" onmousedown="showAllLabels();" title="Check to show all Labels."><br/></div>
+             Label font size: <select onChange="changeLabelFontSize(this.value);">
+                 <option value="8">8px</option>
+                 <option value="12">12px</option>
+                 <option value="16" selected="selected">16px</option>
+                 <option value="20">20px</option>
+                 <option value="24">24px</option>
+                 <option value="28">28px</option>
+                 <option value="32">32px</option>
+                 <option value="36">36px</option>
+                 <option value="40">40px</option>
+                 <option value="44">44px</option>
+                 <option value="48">48px</option>
+                 <option value="52">52px</option>
+             </select>
         </div>
 <!--    <br/>-->
 	<!-- these Show/ Hide buttons have events added dynamically in document.ready -->
@@ -106,8 +135,8 @@
                 	<td align=center><img src=image/Compound.png></td>
                 	<td align=center><img src=image/Enzyme.png></td>
                 	<td align=center><img src=image/Reaction.png></td>
-                	<td align=center><img src=image/Publication.png></td>
                 	<td align=center><img src=image/QTL.png></td>
+                	<td align=center><img src=image/Publication.png></td>
                     </tr><tr>
                         <td align=center><font size=1.8px>Gene</font></td>
                 	<td align=center><font size=1.8px>Protein</font></td>
@@ -115,8 +144,8 @@
                 	<td align=center><font size=1.8px>SNP</font></td>
                 	<td align=center><font size=1.8px>Enzyme</font></td>
                 	<td align=center><font size=1.8px>Reaction</font></td>
-                	<td align=center><font size=1.8px>Publication</font></td>
                 	<td align=center><font size=1.8px>QTL</font></td>
+                	<td align=center><font size=1.8px>Publication</font></td>
                     </tr><tr><td align=center></td></tr><tr>
                         <td align=center><img src=image/Phenotype.png></td>
                 	<td align=center><img src=image/Biological_process.png></td>
@@ -124,16 +153,16 @@
                 	<td align=center><img src=image/Protein_domain.png></td>
                 	<td align=center><img src=image/Trait_ontology.png></td>
                 	<td align=center><img src=image/Molecular_function.png></td>
+                	<td align=center><img src=image/Trait.png></td>
                 	<td align=center><img src=image/Enzyme_classification.png></td>
-<!--                	<td align=center><img src=image/Scaffold.png></td>-->
                     </tr><tr><td align=center><font size=1.8px>Phenotype</font></td>
                 	<td align=center><font size=1.8px>Biol. Process</font></td>
                 	<td align=center><font size=1.8px>Cell. Component</font></td>
                 	<td align=center><font size=1.8px>Protein Domain</font></td>
                 	<td align=center><font size=1.8px>Trait Ontology</font></td>
                 	<td align=center><font size=1.8px>Mol. Function</font></td>
+                	<td align=center><font size=1.8px>Trait</font></td>
                 	<td align=center><font size=1.8px>Enzyme Classification</font></td>
-<!--                	<td align=center><font size=1.8px>Scaffold</font></td>-->
                     </tr></table>
             </div>
         </div>
@@ -142,7 +171,8 @@
 
      <!-- South pane of split pane added using jquery-ui-layout -->
     <div class="ui-layout-south" id="pageFooter">
-        <b>QTLNetMiner</b>: New Network Viewer using Cytoscape.js
+        <b>QTLNetMiner</b>: New lightweight Network Viewer, implemented using Cytoscape.js
+        <br/>Eye Icon made by <a href="http://www.flaticon.com/authors/icomoon" title="Icomoon">Icomoon</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>
     </div>
 
      <!-- East pane of split pane added using jquery-ui-layout -->
