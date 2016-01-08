@@ -95,12 +95,20 @@
     infinite: false
    };
 
-  // Set WebCola layout (default).
+   var defaultNetworkLayout_2016= {
+    name: 'cola', animate: animate_layout, 
+    nodeSpacing: 10/*5*/, edgeLengthVal: 45, randomize: false, 
+//    fit: true, avoidOverlaps: true, handleDisconnected: true,
+    maxSimulationTime: 4000/*1500*/, avoidOverlap: true
+   };
+
+// Set WebCola layout (default).
   function setColaLayout(eles) {
    console.log("setColaLayout()>> animate_layout= "+ animate_layout);
 //   var d3cola = cola.d3adaptor().linkDistance(50);
    // run the default (WebCola) layout algorithm.
-   eles.layout(/*defaultNetworkLayout*/defaultNetworkLayout);
+//   eles.layout(/*defaultNetworkLayout_new*/defaultNetworkLayout);
+   eles.layout(defaultNetworkLayout_2016);
 //   eles.layout({ name:'cola', animate: animate_layout }); // basic
 
 //   cy.reset(); // reset the graph's zooming & panning properties.
@@ -112,18 +120,13 @@
    console.log("setCircleLayout()>> animate_layout= "+ animate_layout);
    var circleNetworkLayout= {
       name: 'circle', // Circle layout (Ondex Web: Circular)
-      /*directed: true, roots: undefined, */
       padding: 10/*30*/, avoidOverlap: true, boundingBox: undefined, handleDisconnected: true,
-      animate: animate_layout /*false*/, fit: true, counterclockwise: false,
+      animate: animate_layout, fit: true, counterclockwise: false,
       radius: 3 /*undefined*/,
 //      startAngle: 3/2 * Math.PI,
       rStepSize: 2
    };
-   var circleNetworkLayout2= {
-      name: 'circle', // Circle layout (Ondex Web: Circular)
-      animate: animate_layout /*false*/, fit: true, avoidOverlap: true
-   };
-   eles.layout(circleNetworkLayout2); // run the Circle layout.
+   eles.layout(circleNetworkLayout); // run the Circle layout.
   }
 
   // Set Cose layout.
@@ -185,7 +188,7 @@
      return 2 },
     animate: animate_layout /*false*/
    };
-   eles.layout(concentricNetworkLayout2); // run the Concentric layout.
+   eles.layout(concentricNetworkLayout); // run the Concentric layout.
   }
 
   // Set Breadthfirst layout (may not work for networks with multiple roots/ starting points).
@@ -212,21 +215,19 @@
    console.log("setArborLayout()>> animate_layout= "+ animate_layout);
    var arborNetworkLayout= {
     name: 'arbor', // Arbor layout using Arbor.js (Ondex Web: Kamada Kawai).
-    animate: animate_layout /*true*/, fit: true, //animationDuration: 4000/*15000*/ /*500*/, 
-//    maxSimulationTime: 8000/*4000*/ /*20000*/ /*1.7976931348623157E+10308 // (infinite, constant simultaion) */, 
-    padding: 10/*30*//*[ 50, 50, 50, 50 ]*/, boundingBox: undefined, /*simulationBounds: undefined, */
-    ungrabifyWhileSimulating: false, ready: undefined/*function() {}*/, stop: undefined/*function() {}*/, 
+    animate: animate_layout, fit: true, //animationDuration: 4000, 
+//    maxSimulationTime: 8000 /*1.7976931348623157E+10308 // (infinite, constant simulation) */, 
+    padding: 10/*30*/, boundingBox: undefined, //simulationBounds: undefined, 
+    ungrabifyWhileSimulating: false, 
+    ready: undefined/*function() {}*/, stop: undefined/*function() {}*/, 
     avoidOverlap: true, handleDisconnected: true, randomize: false, //liveUpdate: true /*false*/, 
     // forces used by arbor (use arbor default on undefined)
     stiffness: undefined/*600*/, // the rigidity of the edges 
     repulsion: undefined/*400000*/ /*3000*/ /*1000*/, // the force repelling nodes from each other (to avoid overlap).
     friction: 0.3 /*1.0*/ /*20*/, // the amount of damping (should allow for clustering) in the system.
     gravity: true, // attracting nodes to the origin (can be true for 'center' and false for 'none').
-//    shake: 30,
     fps: undefined/*30*/, // frames per second
     precision: undefined /*1*/ /*100*/, // accuracy vs. speed in force calculations (0: fast but jittery, 1: smooth but CPU-intensive)
-//    nodeMass: undefined/*15*/, edgeLength: undefined/*10*/,
-//    springTension: 512, 
     // static numbers or functions that dynamically return what these values should be for each element
     // e.g. nodeMass: function(n){ return n.data('weight') }
     nodeSpacing: 10/*20*/, // for extra spacing around nodes
@@ -263,11 +264,7 @@
 //    maxSimulationTime: 4000/*8000*/
     ready: function(){}, stop: function(){} //, edgeLength: 10
    };
-   var dagreNetworkLayout2= {
-    name: 'dagre', // Dagre layout, using the Ranking algorithm from dagre.js (Ondex Web: RadialTree).
-    animate: animate_layout /*false*/
-   };
-   eles.layout(dagreNetworkLayout2); // run the Dagre layout algorithm.
+   eles.layout(dagreNetworkLayout); // run the Dagre layout algorithm.
   }
 
   // Set Grid layout.
@@ -285,11 +282,7 @@
     ready: undefined, stop: undefined,
     nodeSpacing: 20//, edgeLength: 10
    };
-   var gridNetworkLayout2= {
-    name: 'grid', 
-    animate: animate_layout
-   };
-   eles.layout(gridNetworkLayout2); // run the Grid layout.
+   eles.layout(gridNetworkLayout); // run the Grid layout.
   }
 
   // Set Spread layout, using foograph.js & rhill-voronoi-core.js.
@@ -309,7 +302,7 @@
     boundingBox: undefined
    };
    var spreadNetworkLayout2= {
-    name: 'spread', minDist: 40,
+    name: 'spread', minDist: 20/*40*/,
     animate: animate_layout
    };
    eles.layout(spreadNetworkLayout2); // run the Spread layout.
@@ -332,5 +325,9 @@
     // springy forces
     stiffness: 400, repulsion: 400, damping: 0.5 
    };
-   eles.layout(springyNetworkLayout); // run the Springy layout algorithm.
+   var springyNetworkLayout2= {
+    name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
+    animate: animate_layout, fit: true, avoidOverlap: true, minDist: 20
+   };
+   eles.layout(springyNetworkLayout2); // run the Springy layout algorithm.
   }
