@@ -96,10 +96,14 @@
    };
 
    var defaultNetworkLayout_2016= {
-    name: 'cola', animate: animate_layout, 
-    nodeSpacing: 10/*5*/, edgeLengthVal: 45, randomize: false, 
-//    fit: true, avoidOverlaps: true, handleDisconnected: true,
-    maxSimulationTime: 4000/*1500*/, avoidOverlap: true
+    name: 'cola', animate: animate_layout, fit: true,
+    randomize: false, maxSimulationTime: 4000/*1500*/, avoidOverlap: true, handleDisconnected: true,
+//    padding: 10, refresh: 1, ungrabifyWhileSimulating: false,
+//    boundingBox: undefined, ready: function(){}, stop: function(){},
+    nodeSpacing: 10/*5*/, edgeLengthVal: 45
+//    flow: undefined, alignment: undefined,
+//    unconstrIter: 10/*undefined*/, userConstIter: 20/*undefined*/, allConstIter: 20/*undefined*/,
+//    infinite: false
    };
 
 // Set WebCola layout (default).
@@ -327,7 +331,10 @@
    };
    var springyNetworkLayout2= {
     name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
-    animate: animate_layout, fit: true, avoidOverlap: true, minDist: 20
+    animate: animate_layout, fit: true, avoidOverlap: true, 
+    randomize: false,
+    // springy forces
+    stiffness: 10, repulsion: 10, damping: 0.5
    };
    eles.layout(springyNetworkLayout2); // run the Springy layout algorithm.
   }
