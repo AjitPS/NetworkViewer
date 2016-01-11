@@ -686,39 +686,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
   function resetGraph() {
    cy.reset(); // reset the graph's zooming & panning properties.
    cy.fit();
-//   cy.pan({ x: 100, y: 100 });
-//   cy.center();
   }
-
-/*
-  // Reset: Re-position the network graph.
-  function onlyResetGraph() {
-   cy.reset(); // reset the graph's zooming & panning properties.
-  }
-
-  // Reset: Re-position the network graph.
-  function centerGraph() {
-   cy.center();
-  }
-
-  // Reset: Re-position the network graph.
-  function panGraph() {
-   cy.pan({ x: 50, y: 50 });
-  }
-
-  // Reset: Re-position the network graph.
-  function fitGraph() {
-   cy.fit();
-  }
-
-  // Reset: Re-position the network graph.
-  function zoomGraph() {
-   cy.zoom({
-     level: 7.0, // zoom level
-     renderedPosition: { x: 50, y: 50 }
-    });
-  }
-*/
 
   // Search the graph for a concept using BFS: breadthfirst search
   function findConcept(conceptName) {

@@ -48,62 +48,16 @@
     infinite: false
    };
 
-   var defaultNetworkLayout2= {
-    name: 'cola', // WebCola layout, using Cola.v3.min.js & Cola.adaptor.js (Ondex Web: Gem)
-    refresh: 1/*0.1*/ /*0.5*/, animate: animate_layout, fit: true, padding: 10/*30*/, 
-    boundingBox: undefined, // animationDuration: 4000,
-    maxSimulationTime: 4000/*8000*/, // max length in ms to run the layout
-    ungrabifyWhileSimulating: false, ready: function() {}, stop: function() {},
-    randomize: false, 
-    avoidOverlap: true, // avoidOverlaps: true,
-    handleDisconnected: true, 
-//    nodeSpacing: function( node ){ return 10/*20*/; },
-    flow: undefined, alignment: undefined,
-//    edgeLength: undefined/*20*/ /*13*/,
-//    edgeSymDiffLength: undefined/*20*/ /*13*/, // symmetric diff edge length in simulation
-//    edgeJaccardLength: undefined/*20*/ /*13*/, // jaccard edge length in simulation
-//    gravity: 15, shake: 10/*30*/,
-//    nodeRepulsion: 400000/*400*/, //numIter: 10 /*100*/, 
-    // iterations of cola algorithm; uses default values on undefined
-    unconstrIter: 10,
-    userConstIter: 10,// undefined, //3
-    allConstIter: 10, //3
-//    edgeElasticity: 20, // roots: undefined,
-//    coolingFactor: 0.95 // to enable clustering.
-//    maxIter: 10, horizontalNodeSpacing: 75, verticalNodeSpacing: 75,
-    // infinite layout options
-    infinite: false
-   };
-
-   var defaultNetworkLayout_new= {
-    name: 'cola', animate: animate_layout, refresh: 1, maxSimulationTime: 4000,
-    ungrabifyWhileSimulating: false, fit: true, padding: 10,
-//    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-    ready: function(){}, stop: function(){},
-    // positioning options
-    randomize: false, avoidOverlaps: true, handleDisconnected: true,
-    flow: undefined, alignment: undefined,
-//    nodeSpacing: function( node ){ return 10; },
-//    symmetricDiffLinkLengths: 10,
-    jaccardLinkLengths: 250,
-//    linkDistance: 500
-    // iterations of cola algorithm; uses default values on undefined
-    unconstrIter: 10,
-    userConstIter: 15,//10
-    allConstIter: 20, //10
-    // infinite layout options
-    infinite: false
-   };
-
-   var defaultNetworkLayout_2016= {
+   var defaultNetworkLayout_webcola= {
     name: 'cola', animate: animate_layout, fit: true,
-    randomize: false, maxSimulationTime: 4000/*1500*/, avoidOverlap: true, handleDisconnected: true,
-//    padding: 10, refresh: 1, ungrabifyWhileSimulating: false,
-//    boundingBox: undefined, ready: function(){}, stop: function(){},
-    nodeSpacing: 10/*5*/, edgeLengthVal: 45
-//    flow: undefined, alignment: undefined,
+    randomize: false, avoidOverlap: true, handleDisconnected: true, maxSimulationTime: 4000/*1500*/, 
+    padding: 10, refresh: 1, ungrabifyWhileSimulating: false,
+    boundingBox: undefined, // ready: function(){}, stop: function(){},
+    nodeSpacing: 10/*5*/, edgeLengthVal: 45,
+//    edgeLength: 10,
+    flow: undefined, alignment: undefined,
 //    unconstrIter: 10/*undefined*/, userConstIter: 20/*undefined*/, allConstIter: 20/*undefined*/,
-//    infinite: false
+    infinite: false
    };
 
 // Set WebCola layout (default).
@@ -111,12 +65,13 @@
    console.log("setColaLayout()>> animate_layout= "+ animate_layout);
 //   var d3cola = cola.d3adaptor().linkDistance(50);
    // run the default (WebCola) layout algorithm.
-//   eles.layout(/*defaultNetworkLayout_new*/defaultNetworkLayout);
-   eles.layout(defaultNetworkLayout_2016);
-//   eles.layout({ name:'cola', animate: animate_layout }); // basic
+   eles.layout(defaultNetworkLayout_webcola);
 
-//   cy.reset(); // reset the graph's zooming & panning properties.
-//   cy.fit();
+   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+   cy.reset();
+   cy.fit();
+   console.log("cy: extent: "+ cy.extent());
+   console.log("cy: width: "+ cy.width() +", height: "+ cy.height());
   }
 
   // Set Circle layout.
@@ -138,26 +93,12 @@
   function setCoseLayout(eles) {
    console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
    var coseNetworkLayout= {
-    name: 'cose', // CytoscapeJS Cose layout
-    animate: animate_layout /*true*/, /*animationDuration: 500,*/
-//    maxSimulationTime: 8000/*20000*/,
-    refresh: 0.1, edgeElasticity : 20, fit: true, gravity : 15, shake: 10/*30*/,
-    handleDisconnected: true, avoidOverlap: true,
-//    nodeRepulsion: 400000, numIter: 10 /*100*/, 
-//    boundingBox: undefined, ready: function() {} /*undefined*/, stop: function() {} /*undefined*/, 
-    roots: undefined, padding: 10/*30*/, 
-    randomize: false/*true*/, //edgeLength: undefined/*13*/, /*idealEdgeLength: 13, */
-    nodeSpacing: 20,/*function( node ){ return 20; },*/ // for extra spacing around nodes
-//    debug: false, nestingFactor: 5, 
-//    /*nodeOverlap: 10,*/ coolingFactor: 0.95, initialTemp: 200, minTemp: 1.0
-    coolingFactor: 0.95 // to enable clustering.
-   };
-   var coseNetworkLayout2= {
     name: 'cose', // CytoscapeJS CoSE layout
     animate: animate_layout /*true*/,
+    handleDisconnected: true, avoidOverlap: true,
     idealEdgeLength: 100, nodeOverlap: 20
    };
-   eles.layout(coseNetworkLayout2); // run the CoSE layout algorithm.
+   eles.layout(coseNetworkLayout); // run the CoSE layout algorithm.
   }
 
   // Set CoSE-Bilkent layout.
@@ -184,14 +125,6 @@
     animate: animate_layout /*false*/, animationDuration: 500, ready: undefined, stop: undefined,
     radius: 5 /*undefined*/
    };
-   var concentricNetworkLayout2= {
-    name: 'concentric', 
-    concentric: function(node){ // returns numeric value for each node, placing higher nodes in levels towards the centre
-     return node.degree(); },
-    levelWidth: function(nodes){ // the variation of concentric values in each level
-     return 2 },
-    animate: animate_layout /*false*/
-   };
    eles.layout(concentricNetworkLayout); // run the Concentric layout.
   }
 
@@ -207,11 +140,7 @@
       ready: undefined, stop: undefined,
       nodeSpacing: 20
    };
-   var bfNetworkLayout2= {
-      name: 'breadthfirst', // Breadth first layout (Ondex Web: Hierarchial)
-      directed: true, padding: 10, animate: animate_layout
-   };
-   eles.layout(bfNetworkLayout2); // run the Breadthfirst layout.
+   eles.layout(bfNetworkLayout); // run the Breadthfirst layout.
   }
 
 // Set Arbor layout.
@@ -293,23 +222,13 @@
   function setSpreadLayout(eles) {
    console.log("setSpreadLayout()>> animate_layout= "+ animate_layout);
    var spreadNetworkLayout= {
-    name: 'spread',
-    animate: animate_layout, ready: undefined, stop: undefined,
-    fit: true, padding: 10, 
-    minDist: 20, // Minimum distance between nodes
-    expandingFactor: -1.0, // If the network does not satisfy the minDist criteria then it expands 
-    // the network by this amount.
-    // If it is set to -1.0 the amount of expansion is automatically calculated based on the minDist,
-    // the aspect ratio & the number of nodes.
+    name: 'spread', minDist: 20/*40*/,
+    animate: animate_layout, fit: true,
     maxFruchtermanReingoldIterations: 50, // Maximum number of initial force-directed iterations
     maxExpandIterations: 4, // Maximum number of expanding iterations
     boundingBox: undefined
    };
-   var spreadNetworkLayout2= {
-    name: 'spread', minDist: 20/*40*/,
-    animate: animate_layout
-   };
-   eles.layout(spreadNetworkLayout2); // run the Spread layout.
+   eles.layout(spreadNetworkLayout); // run the Spread layout.
   }
 
   // Set Springy layout.
@@ -318,23 +237,11 @@
    console.log("setSpringyLayout()>> animate_layout= "+ animate_layout);
    var springyNetworkLayout= {
     name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
-    animate: animate_layout, fit: true, padding: 10, maxSimulationTime: 4000, 
-    ungrabifyWhileSimulating: false, 
-    boundingBox: undefined, random: false, infinite: false, 
-    ready: undefined, stop: undefined, 
-    avoidOverlap: true, handleDisconnected: true,
-    nodeSpacing: 10, // for extra spacing around nodes
-//    edgeLength: undefined/*10*/, flow: undefined, alignment: undefined, 
-//    gravity: 15, //shake: 30,
-    // springy forces
-    stiffness: 400, repulsion: 400, damping: 0.5 
-   };
-   var springyNetworkLayout2= {
-    name: 'springy', // Springy layout, uses springy.js (OndexWeb: ForceDirected).
     animate: animate_layout, fit: true, avoidOverlap: true, 
+    padding: 10, maxSimulationTime: 4000, 
     randomize: false,
     // springy forces
-    stiffness: 10, repulsion: 10, damping: 0.5
+    stiffness: 10/*400*/, repulsion: 10/*400*/, damping: 0.5
    };
-   eles.layout(springyNetworkLayout2); // run the Springy layout algorithm.
+   eles.layout(springyNetworkLayout); // run the Springy layout algorithm.
   }
