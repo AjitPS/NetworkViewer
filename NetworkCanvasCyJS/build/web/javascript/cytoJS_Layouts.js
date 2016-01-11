@@ -49,15 +49,13 @@
    };
 
    var defaultNetworkLayout_webcola= {
-    name: 'cola', animate: animate_layout, fit: true,
-    randomize: false, avoidOverlap: true, handleDisconnected: true, maxSimulationTime: 4000/*1500*/, 
-    padding: 10, refresh: 1, ungrabifyWhileSimulating: false,
-    boundingBox: undefined, // ready: function(){}, stop: function(){},
-    nodeSpacing: 10/*5*/, edgeLengthVal: 45,
-//    edgeLength: 10,
-    flow: undefined, alignment: undefined,
-//    unconstrIter: 10/*undefined*/, userConstIter: 20/*undefined*/, allConstIter: 20/*undefined*/,
-    infinite: false
+    name: 'cola', animate: animate_layout, handleDisconnected: true, avoidOverlap: true, 
+    randomize: false, fit: true,
+    maxSimulationTime: 4000/*1500*/, padding: 10/*30*/, refresh: 1, ungrabifyWhileSimulating: false,
+//    boundingBox: undefined/*{ x1: 0, y1: 0, w: 1200, h: 900 }*/,
+    nodeSpacing: 5/*205*/, 
+    edgeLengthVal: 45/*10*/,
+    edgeLength: 45/*10*/ //, infinite: false
    };
 
 // Set WebCola layout (default).
@@ -66,12 +64,6 @@
 //   var d3cola = cola.d3adaptor().linkDistance(50);
    // run the default (WebCola) layout algorithm.
    eles.layout(defaultNetworkLayout_webcola);
-
-   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
-   cy.reset();
-   cy.fit();
-   console.log("cy: extent: "+ cy.extent());
-   console.log("cy: width: "+ cy.width() +", height: "+ cy.height());
   }
 
   // Set Circle layout.
@@ -89,7 +81,7 @@
   }
 
   // Set Cose layout.
-  /* Slow and performance-hampering for larger networks */
+  /* Useful for larger networks with clustering. */
   function setCoseLayout(eles) {
    console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
    var coseNetworkLayout= {
@@ -102,6 +94,7 @@
   }
 
   // Set CoSE-Bilkent layout.
+  /* with node clustering, but performance-intensive for larger networks */
   function setCoseBilkentLayout(eles) {
    console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
    var coseBilkentNetworkLayout= {
@@ -156,11 +149,11 @@
     avoidOverlap: true, handleDisconnected: true, randomize: false, //liveUpdate: true /*false*/, 
     // forces used by arbor (use arbor default on undefined)
     stiffness: undefined/*600*/, // the rigidity of the edges 
-    repulsion: undefined/*400000*/ /*3000*/ /*1000*/, // the force repelling nodes from each other (to avoid overlap).
+    repulsion: undefined/*400000*/ /*1000*/, // the force repelling nodes from each other (to avoid overlap).
     friction: 0.3 /*1.0*/ /*20*/, // the amount of damping (should allow for clustering) in the system.
     gravity: true, // attracting nodes to the origin (can be true for 'center' and false for 'none').
     fps: undefined/*30*/, // frames per second
-    precision: undefined /*1*/ /*100*/, // accuracy vs. speed in force calculations (0: fast but jittery, 1: smooth but CPU-intensive)
+    precision: undefined /*1*/, // accuracy vs. speed in force calculations (0: fast but jittery, 1: smooth but CPU-intensive)
     // static numbers or functions that dynamically return what these values should be for each element
     // e.g. nodeMass: function(n){ return n.data('weight') }
     nodeSpacing: 10/*20*/, // for extra spacing around nodes
@@ -193,8 +186,7 @@
     fit: true, padding: 10/*30*/, animate: animate_layout /*false*/, 
 //    animationDuration: 500, // duration of animation in ms if enabled
     boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-    avoidOverlap: true, handleDisconnected: true, 
-//    maxSimulationTime: 4000/*8000*/
+    avoidOverlap: true, handleDisconnected: true, // maxSimulationTime: 4000,
     ready: function(){}, stop: function(){} //, edgeLength: 10
    };
    eles.layout(dagreNetworkLayout); // run the Dagre layout algorithm.
@@ -206,14 +198,12 @@
    var gridNetworkLayout= {
     name: 'grid', // CytoscapeJS Grid layout
     fit: true, padding: 10/*30*/, boundingBox: undefined, avoidOverlap: true, handleDisconnected: true, 
-    animate: animate_layout /*false*/,
-//      animationDuration: 1000 /*500*/, 
-//    maxSimulationTime: 4000/*8000*/
+    animate: animate_layout, // maxSimulationTime: 4000,
     rows: undefined, // force num of rows in the grid
     columns: undefined, // force num of cols in the grid
     position: function( node ){}, // returns { row, col } for element
     ready: undefined, stop: undefined,
-    nodeSpacing: 20//, edgeLength: 10
+    nodeSpacing: 20
    };
    eles.layout(gridNetworkLayout); // run the Grid layout.
   }
