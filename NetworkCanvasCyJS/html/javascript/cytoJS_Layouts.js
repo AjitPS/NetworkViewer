@@ -23,13 +23,40 @@
    // Get the cytoscape instance as a Javascript object from JQuery.
    var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
    var eles= cy.$(':visible'); // get only the visible elements.
-   setColaLayout(eles);
+   setColaLayout(eles); // CoSE layout
 //   setTimeout(setColaLayout, 200);
+  }
+
+  // Set Cose layout.
+  /* Useful for larger networks with clustering. */
+  function setCoseLayout(eles) {
+   console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
+   var coseNetworkLayout= {
+    name: 'cose', // CytoscapeJS CoSE layout
+    animate: animate_layout /*true*/,
+    handleDisconnected: true, avoidOverlap: true,
+    idealEdgeLength: 100, nodeOverlap: 20
+   };
+   eles.layout(coseNetworkLayout); // run the CoSE layout algorithm.
+  }
+
+  // Set Circle layout.
+  function setCircleLayout(eles) {
+   console.log("setCircleLayout()>> animate_layout= "+ animate_layout);
+   var circleNetworkLayout= {
+      name: 'circle', // Circle layout (Ondex Web: Circular)
+      padding: 10/*30*/, avoidOverlap: true, boundingBox: undefined, handleDisconnected: true,
+      animate: animate_layout, fit: true, counterclockwise: false,
+      radius: 3 /*undefined*/,
+//      startAngle: 3/2 * Math.PI,
+      rStepSize: 2
+   };
+   eles.layout(circleNetworkLayout); // run the Circle layout.
   }
 
   /** Define the default layout for the network, using WebCola layout from Cola.js (similar to the "Gem" layout in 
     * Ondex Web). */
-   var defaultNetworkLayout= {
+   var webColaNetworkLayout= {
     name: 'cola', animate: animate_layout, refresh: 1, maxSimulationTime: 4000,
     ungrabifyWhileSimulating: false, fit: true, padding: 10, 
     boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
@@ -48,14 +75,14 @@
     infinite: false
    };
 
-   var defaultNetworkLayout_webcola= {
+   var webColaNetworkLayout_new= {
     name: 'cola', animate: animate_layout, handleDisconnected: true, avoidOverlap: true, 
-    randomize: false, fit: true,
+    randomize: /*true*/false, fit: true,
     maxSimulationTime: 4000/*1500*/, padding: 10/*30*/, refresh: 1, ungrabifyWhileSimulating: false,
 //    boundingBox: undefined/*{ x1: 0, y1: 0, w: 1200, h: 900 }*/,
-    nodeSpacing: 5/*205*/, 
-    edgeLengthVal: 45/*10*/,
-    edgeLength: 45/*10*/ //, infinite: false
+    nodeSpacing: 5/*20*/, 
+//    edgeLengthVal: 45/*10*/,
+//    edgeLength: 45/*10*/ //, infinite: false
    };
 
 // Set WebCola layout (default).
@@ -63,34 +90,7 @@
    console.log("setColaLayout()>> animate_layout= "+ animate_layout);
 //   var d3cola = cola.d3adaptor().linkDistance(50);
    // run the default (WebCola) layout algorithm.
-   eles.layout(defaultNetworkLayout_webcola);
-  }
-
-  // Set Circle layout.
-  function setCircleLayout(eles) {
-   console.log("setCircleLayout()>> animate_layout= "+ animate_layout);
-   var circleNetworkLayout= {
-      name: 'circle', // Circle layout (Ondex Web: Circular)
-      padding: 10/*30*/, avoidOverlap: true, boundingBox: undefined, handleDisconnected: true,
-      animate: animate_layout, fit: true, counterclockwise: false,
-      radius: 3 /*undefined*/,
-//      startAngle: 3/2 * Math.PI,
-      rStepSize: 2
-   };
-   eles.layout(circleNetworkLayout); // run the Circle layout.
-  }
-
-  // Set Cose layout.
-  /* Useful for larger networks with clustering. */
-  function setCoseLayout(eles) {
-   console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
-   var coseNetworkLayout= {
-    name: 'cose', // CytoscapeJS CoSE layout
-    animate: animate_layout /*true*/,
-    handleDisconnected: true, avoidOverlap: true,
-    idealEdgeLength: 100, nodeOverlap: 20
-   };
-   eles.layout(coseNetworkLayout); // run the CoSE layout algorithm.
+   eles.layout(webColaNetworkLayout_new);
   }
 
   // Set CoSE-Bilkent layout.
