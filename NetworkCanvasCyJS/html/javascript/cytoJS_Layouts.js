@@ -17,13 +17,13 @@
     console.log("setLayoutAnimationSetting()>> checkbox checked: "+ document.getElementById("animateLayout").checked +" --> animate_layout= "+ animate_layout);
    }
 
-  // Relayout: Set default (WebCola) layout for the network graph.
+  // Relayout: Set default (CoSE) layout for the network graph.
   function setDefaultLayout() {
    console.log("cytoscapeJS container (cy) initialized... now set Default Layout (only on visible elements)...");
    // Get the cytoscape instance as a Javascript object from JQuery.
    var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
    var eles= cy.$(':visible'); // get only the visible elements.
-   setColaLayout(eles); // CoSE layout
+   setCoseLayout(eles); // CoSE layout
 //   setTimeout(setColaLayout, 200);
   }
 
@@ -89,8 +89,7 @@
   function setColaLayout(eles) {
    console.log("setColaLayout()>> animate_layout= "+ animate_layout);
 //   var d3cola = cola.d3adaptor().linkDistance(50);
-   // run the default (WebCola) layout algorithm.
-   eles.layout(webColaNetworkLayout_new);
+   eles.layout(webColaNetworkLayout_new); // run the WebCola layout algorithm.
   }
 
   // Set CoSE-Bilkent layout.
