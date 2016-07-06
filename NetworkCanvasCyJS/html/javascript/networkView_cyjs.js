@@ -85,7 +85,7 @@ $(function() { // on dom ready
           'content': //'data(value)',
                      function(ele) {
                       var label= '';
-                      if(ele.data('value').indexOf('<span') > -1) { // Strip html content from text.
+                      if(ele.data('value').indexOf('<span') > -1) { // For html content from text, use html tags.
                          var txtLabel= '<html>'+ ele.data('value') +'</html>';
                          label= jQuery(txtLabel).text();
                         }
@@ -998,13 +998,13 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
   // Re-run the graph's layout, but only on the visible elements.
   function rerunGraphLayout(eles) {
    if(document.getElementById("default").checked) {
-      setCoseLayout(eles);
+      setColaLayout(eles);
      }
    else if(document.getElementById("circle").checked) {
            setCircleLayout(eles);
           }
-   else if(document.getElementById("cola").checked) {
-           setColaLayout(eles);
+   else if(document.getElementById("cose").checked) {
+           setCoseLayout(eles);
           }
    else if(document.getElementById("cose_bilkent").checked) {
            setCoseBilkentLayout(eles);
