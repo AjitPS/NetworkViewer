@@ -76,6 +76,7 @@ function initializeNetworkView() {
 // On startup
 $(function() { // on dom ready
   var networkJSON= graphJSON; // using the dynamically included graphJSON object directly.
+  // modify for networkJSON to read JSON object from file and retain contents from "elements" section for nodes and edges info.
   var metadataJSON= allGraphData; // using the dynamically included metadata JSON object directly.
 
    // Define the stylesheet to be used for nodes & edges in the cytoscape.js container.
