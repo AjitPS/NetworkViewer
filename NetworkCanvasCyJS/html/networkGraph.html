@@ -23,24 +23,28 @@
 	<script src="libs_networkViewer/jquery.layout-latest.js"></script>
         <!-- jQuery Ajax MaskLoader: for Loader overlay, for the container while the network loads -->
         <script src="libs_networkViewer/jquery.maskloader.js"></script>
+
         <!-- For WebCola layout -->
         <!--<script src="libs_networkViewer/cola/cola.v3.min.js"></script>
         <script src="libs_networkViewer/cola/cytoscape-cola.js"></script> -->
         <script src="http://marvl.infotech.monash.edu/webcola/cola.v3.min.js"></script>
 	<script src="libs_010916/cola/cytoscape-cola.js"></script>
+        <!-- For CoSE-Bilkent layout -->
+        <script src="libs_networkViewer/cose_bilkent/cytoscape-cose-bilkent.js"></script>
         <!-- For Arbor layout -->
         <script src="libs_networkViewer/arbor/arbor.js"></script>
         <script src="libs_networkViewer/arbor/cytoscape-arbor.js"></script>
         <!-- For Dagre (Tree) layout -->
         <script src="libs_networkViewer/dagre/dagre.js"></script>
         <script src="libs_networkViewer/dagre/cytoscape-dagre.js"></script>
+        <!-- For Spread layout -->
+        <script src="libs_networkViewer/spread/cytoscape-spread.js"></script>
         <!-- For Springy layout -->
         <script src="libs_networkViewer/springy/springy.js"></script>
         <script src="libs_networkViewer/springy/cytoscape-springy.js"></script>
-        <!-- For Spread layout -->
-        <script src="libs_networkViewer/spread/cytoscape-spread.js"></script>
-        <!-- For CoSE-Bilkent layout -->
-        <script src="libs_networkViewer/cose_bilkent/cytoscape-cose-bilkent.js"></script>
+        <!-- For ngraph.force layout -->
+        <script src="libs_010916/ngraph_forceLayout/cytoscape-ngraph.forcelayout.js"></script>
+
         <!-- URL mappings config file used for generating url's in Item Info table -->
         <script type="text/javascript" src="config/url_mappings.json"></script>
 
@@ -71,6 +75,7 @@
                     <td align=center><input type="radio" name="layoutButton" id="grid" value="Grid_layout" onclick="setGridLayout($('#cy').cytoscape('get').$(':visible'));">Grid</td>
                     <td align=center><input type="radio" name="layoutButton" id="spread" value="Spread_layout" onclick="setSpreadLayout($('#cy').cytoscape('get').$(':visible'));" title="using foograph.js & rhill-voronoi-core.js">Spread</td>
 <!--                    <td align=center><input type="radio" name="layoutButton" id="springy" value="Springy_layout" onclick="setSpringyLayout($('#cy').cytoscape('get').$(':visible'));" title="using Springy layout algorithm (not suitable for larger networks)">Springy</td> -->
+                    <td align=center><input type="radio" name="layoutButton" id="ngraph_force" value="ngraph_force_layout" onclick="setNgraphForceLayout($('#cy').cytoscape('get').$(':visible'));" title="works well on planar graphs">ngraph_force</td>
                 </tr>
             </table>
         </div><hr>

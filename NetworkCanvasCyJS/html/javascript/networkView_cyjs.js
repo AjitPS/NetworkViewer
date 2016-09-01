@@ -1013,26 +1013,29 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    else if(document.getElementById("cose_bilkent").checked) {
            setCoseBilkentLayout(eles);
           }
+   else if(document.getElementById("concentric").checked) {
+           setConcentricLayout(eles);
+          }
    else if(document.getElementById("arbor").checked) {
            setArborLayout(eles);
           }
    else if(document.getElementById("dagre").checked) {
            setTreeLayout(eles);
           }
-   else if(document.getElementById("breadthfirst").checked) {
-           setBreadthfirstLayout(eles);
+   else if(document.getElementById("grid").checked) {
+           setGridLayout(eles);
+          }
+   else if(document.getElementById("ngraph_force").checked) {
+           setNgraphForceLayout(eles);
           }
    else if(document.getElementById("springy").checked) {
            setSpringyLayout(eles);
           }
+   else if(document.getElementById("breadthfirst").checked) {
+           setBreadthfirstLayout(eles);
+          }
    else if(document.getElementById("spread").checked) {
            setSpreadLayout(eles);
-          }
-   else if(document.getElementById("grid").checked) {
-           setGridLayout(eles);
-          }
-   else if(document.getElementById("concentric").checked) {
-           setConcentricLayout(eles);
           }
 //   console.log("Re-run layout complete...");
   }

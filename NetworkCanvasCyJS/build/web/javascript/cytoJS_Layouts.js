@@ -17,16 +17,6 @@
     console.log("setLayoutAnimationSetting()>> checkbox checked: "+ document.getElementById("animateLayout").checked +" --> animate_layout= "+ animate_layout);
    }
 
-  // Relayout: Set default (CoSE) layout for the network graph.
-  function setDefaultLayout() {
-   console.log("cytoscapeJS container (cy) initialized... now set Default Layout (only on visible elements)...");
-   // Get the cytoscape instance as a Javascript object from JQuery.
-   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
-   var eles= cy.$(':visible'); // get only the visible elements.
-   setColaLayout(eles); // CoSE layout
-//   setTimeout(setColaLayout, 200);
-  }
-
   /** Define the default layout for the network, using WebCola layout from Cola.js (similar to the "Gem" layout in 
     * Ondex Web). */
    var webColaNetworkLayout= {
@@ -58,24 +48,49 @@
 //    edgeLength: 45/*10*/ //, infinite: false
    };
 
+   var cola_sept2016= {
+    name: 'cola',
+    animate: animate_layout, // whether to show the layout as it's running
+    refresh: 1, // number of ticks per frame; higher is faster but more jerky
+    maxSimulationTime: /*1500*/4000, // max length in ms to run the layout
+    ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
+    fit: true, // on every layout reposition of nodes, fit the viewport
+    padding: 10/*5*/, // padding around the simulation
+
+    // positioning options
+    avoidOverlap: true, // if true, prevents overlap of node bounding boxes
+    handleDisconnected: true, // if true, avoids disconnected components from overlapping
+    nodeSpacing: function( node ){ return /*10*/5; }, // extra spacing around nodes
+    // Positioning approach #1:
+    randomize: false, // use random node positions at beginning of layout
+//    flow: undefined, // use DAG/tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
+
+    // Positioning approach #2: /*Spread wider by using x-axis Flow settings*/
+//    randomize: false, flow: { axis: 'x', minSeparation: 15 },
+
+    // Positioning approach #3:
+//    randomize: true, flow: null,
+    
+//    edgeLength: /*undefined*/45/*15*/ // sets edge length directly in simulation
+   // edgeLengthVal: /*45*/15
+
+   };
+
 // Set WebCola layout (default).
   function setColaLayout(eles) {
    console.log("setColaLayout()>> animate_layout= "+ animate_layout);
 //   var d3cola = cola.d3adaptor().linkDistance(50);
-   eles.layout(webColaNetworkLayout_new); // run the WebCola layout algorithm.
+   eles.layout(cola_sept2016/*webColaNetworkLayout_new*/); // run the WebCola layout algorithm.
   }
 
-  // Set Cose layout.
-  /* Useful for larger networks with clustering. */
-  function setCoseLayout(eles) {
-   console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
-   var coseNetworkLayout= {
-    name: 'cose', // CytoscapeJS CoSE layout
-    animate: animate_layout /*true*/,
-    handleDisconnected: true, avoidOverlap: true,
-    idealEdgeLength: 100, nodeOverlap: 20
-   };
-   eles.layout(coseNetworkLayout); // run the CoSE layout algorithm.
+  // Relayout: Set default (CoSE) layout for the network graph.
+  function setDefaultLayout() {
+   console.log("cytoscapeJS container (cy) initialized... now set Default Layout (only on visible elements)...");
+   // Get the cytoscape instance as a Javascript object from JQuery.
+   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+   var eles= cy.$(':visible'); // get only the visible elements.
+   setColaLayout(eles);
+//   setTimeout(setColaLayout, 200);
   }
 
   // Set Circle layout.
@@ -90,6 +105,19 @@
       rStepSize: 2
    };
    eles.layout(circleNetworkLayout); // run the Circle layout.
+  }
+
+  // Set Cose layout.
+  /* Useful for larger networks with clustering. */
+  function setCoseLayout(eles) {
+   console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
+   var coseNetworkLayout= {
+    name: 'cose', // CytoscapeJS CoSE layout
+    animate: animate_layout /*true*/,
+    handleDisconnected: true, avoidOverlap: true,
+    idealEdgeLength: 100, nodeOverlap: 20
+   };
+   eles.layout(coseNetworkLayout); // run the CoSE layout algorithm.
   }
 
   // Set CoSE-Bilkent layout.
@@ -207,15 +235,15 @@
    eles.layout(gridNetworkLayout); // run the Grid layout.
   }
 
-  // Set Spread layout, using foograph.js & rhill-voronoi-core.js.
+  // Set Spread layout.
   function setSpreadLayout(eles) {
    console.log("setSpreadLayout()>> animate_layout= "+ animate_layout);
    var spreadNetworkLayout= {
     name: 'spread', minDist: 20/*40*/,
-    animate: animate_layout/*, fit: true,
+    animate: animate_layout, fit: true,
     maxFruchtermanReingoldIterations: 50, // Maximum number of initial force-directed iterations
     maxExpandIterations: 4, // Maximum number of expanding iterations
-    boundingBox: undefined*/
+    boundingBox: undefined
    };
    eles.layout(spreadNetworkLayout); // run the Spread layout.
   }
@@ -233,4 +261,54 @@
     stiffness: 10/*400*/, repulsion: 10/*400*/, damping: 0.5
    };
    eles.layout(springyNetworkLayout); // run the Springy layout algorithm.
+  }
+
+  // Set Force layout.
+  function setNgraphForceLayout(eles) {
+   console.log("setNgraphForceLayout()>> animate_layout= "+ animate_layout);
+   var ngraph_forceNetworkLayout= {
+    name: 'cytoscape-ngraph.forcelayout',
+    animate: animate_layout, fit: true,
+ /*   async: {
+                 // tell layout that we want to compute all at once:
+                 maxIterations: 1000,
+                 stepsPerCycle: 30,
+
+                 // Run it till the end:
+                 waitForStep: false
+             },
+             physics: {
+                 // Ideal length for links (springs in physical model).
+                 springLength: 100,
+
+                 // Hook's law coefficient. 1 - solid spring.
+                 springCoeff: 0.0008,
+
+                 // Coulomb's law coefficient. It's used to repel nodes thus should be negative
+                 // if you make it positive nodes start attract each other :).
+                 gravity: -1.2,
+
+                 // Theta coefficient from Barnes Hut simulation. Ranged between (0, 1).
+                 // The closer it's to 1 the more nodes algorithm will have to go through.
+                 // Setting it to one makes Barnes Hut simulation no different from brute-force forces calculation (each node is considered).
+                 theta: 0.8,
+
+                 // Drag force coefficient. Used to slow down system, thus should be less than 1.
+                 // The closer it is to 0 the less tight system will be.
+                 dragCoeff: 0.02,
+
+                 // Default time step (dt) for forces integration
+                 timeStep: 20,
+                 iterations: 10000,
+                 fit: true,
+
+                 // Maximum movement of the system which can be considered as stabilized
+                 stableThreshold: 0.000009
+             },*/
+             iterations: 10000,
+             refreshInterval: 16, // in ms
+             refreshIterations: 10, // iterations until thread sends an update
+             stableThreshold: 2
+   };
+   eles.layout(ngraph_forceNetworkLayout); // run the Spread layout.
   }

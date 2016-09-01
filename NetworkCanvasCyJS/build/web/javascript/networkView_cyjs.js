@@ -76,6 +76,7 @@ function initializeNetworkView() {
 // On startup
 $(function() { // on dom ready
   var networkJSON= graphJSON; // using the dynamically included graphJSON object directly.
+  // modify for networkJSON to read JSON object from file and retain contents from "elements" section for nodes and edges info.
   var metadataJSON= allGraphData; // using the dynamically included metadata JSON object directly.
 
    // Define the stylesheet to be used for nodes & edges in the cytoscape.js container.
@@ -993,6 +994,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Re-run the graph's layout, but only on the visible elements.
    rerunGraphLayout(selected_elements);
+   
+   // Reset the graph/ viewport.
+   resetGraph();
   }
 
   // Re-run the graph's layout, but only on the visible elements.
@@ -1009,26 +1013,29 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
    else if(document.getElementById("cose_bilkent").checked) {
            setCoseBilkentLayout(eles);
           }
+   else if(document.getElementById("concentric").checked) {
+           setConcentricLayout(eles);
+          }
    else if(document.getElementById("arbor").checked) {
            setArborLayout(eles);
           }
    else if(document.getElementById("dagre").checked) {
            setTreeLayout(eles);
           }
-   else if(document.getElementById("breadthfirst").checked) {
-           setBreadthfirstLayout(eles);
+   else if(document.getElementById("grid").checked) {
+           setGridLayout(eles);
+          }
+   else if(document.getElementById("ngraph_force").checked) {
+           setNgraphForceLayout(eles);
           }
    else if(document.getElementById("springy").checked) {
            setSpringyLayout(eles);
           }
+   else if(document.getElementById("breadthfirst").checked) {
+           setBreadthfirstLayout(eles);
+          }
    else if(document.getElementById("spread").checked) {
            setSpreadLayout(eles);
-          }
-   else if(document.getElementById("grid").checked) {
-           setGridLayout(eles);
-          }
-   else if(document.getElementById("concentric").checked) {
-           setConcentricLayout(eles);
           }
 //   console.log("Re-run layout complete...");
   }
