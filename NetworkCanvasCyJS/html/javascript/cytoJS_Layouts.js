@@ -48,11 +48,39 @@
 //    edgeLength: 45/*10*/ //, infinite: false
    };
 
+   var cola_sept2016= {
+    name: 'cola',
+    animate: animate_layout, // whether to show the layout as it's running
+    refresh: 1, // number of ticks per frame; higher is faster but more jerky
+    maxSimulationTime: /*1500*/4000, // max length in ms to run the layout
+    ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
+    fit: true, // on every layout reposition of nodes, fit the viewport
+    padding: 10/*5*/, // padding around the simulation
+
+    // positioning options
+    avoidOverlap: true, // if true, prevents overlap of node bounding boxes
+    handleDisconnected: true, // if true, avoids disconnected components from overlapping
+    nodeSpacing: function( node ){ return /*10*/5; }, // extra spacing around nodes
+    // Positioning approach #1:
+    randomize: false, // use random node positions at beginning of layout
+//    flow: undefined, // use DAG/tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
+
+    // Positioning approach #2: /*Spread wider by using x-axis Flow*/
+//    randomize: false, flow: { axis: 'x', minSeparation: 15 },
+
+    // Positioning approach #3:
+//    randomize: true, flow: null,
+    
+//    edgeLength: /*undefined*/45/*15*/ // sets edge length directly in simulation
+   // edgeLengthVal: /*45*/15
+
+   };
+
 // Set WebCola layout (default).
   function setColaLayout(eles) {
    console.log("setColaLayout()>> animate_layout= "+ animate_layout);
 //   var d3cola = cola.d3adaptor().linkDistance(50);
-   eles.layout(webColaNetworkLayout_new); // run the WebCola layout algorithm.
+   eles.layout(cola_sept2016/*webColaNetworkLayout_new*/); // run the WebCola layout algorithm.
   }
 
   // Relayout: Set default (CoSE) layout for the network graph.

@@ -994,6 +994,9 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Re-run the graph's layout, but only on the visible elements.
    rerunGraphLayout(selected_elements);
+   
+   // Reset the graph/ viewport.
+   resetGraph();
   }
 
   // Re-run the graph's layout, but only on the visible elements.
