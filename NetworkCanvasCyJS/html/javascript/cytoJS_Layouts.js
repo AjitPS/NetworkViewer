@@ -17,16 +17,6 @@
     console.log("setLayoutAnimationSetting()>> checkbox checked: "+ document.getElementById("animateLayout").checked +" --> animate_layout= "+ animate_layout);
    }
 
-  // Relayout: Set default (CoSE) layout for the network graph.
-  function setDefaultLayout() {
-   console.log("cytoscapeJS container (cy) initialized... now set Default Layout (only on visible elements)...");
-   // Get the cytoscape instance as a Javascript object from JQuery.
-   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
-   var eles= cy.$(':visible'); // get only the visible elements.
-   setColaLayout(eles); // CoSE layout
-//   setTimeout(setColaLayout, 200);
-  }
-
   /** Define the default layout for the network, using WebCola layout from Cola.js (similar to the "Gem" layout in 
     * Ondex Web). */
    var webColaNetworkLayout= {
@@ -65,17 +55,14 @@
    eles.layout(webColaNetworkLayout_new); // run the WebCola layout algorithm.
   }
 
-  // Set Cose layout.
-  /* Useful for larger networks with clustering. */
-  function setCoseLayout(eles) {
-   console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
-   var coseNetworkLayout= {
-    name: 'cose', // CytoscapeJS CoSE layout
-    animate: animate_layout /*true*/,
-    handleDisconnected: true, avoidOverlap: true,
-    idealEdgeLength: 100, nodeOverlap: 20
-   };
-   eles.layout(coseNetworkLayout); // run the CoSE layout algorithm.
+  // Relayout: Set default (CoSE) layout for the network graph.
+  function setDefaultLayout() {
+   console.log("cytoscapeJS container (cy) initialized... now set Default Layout (only on visible elements)...");
+   // Get the cytoscape instance as a Javascript object from JQuery.
+   var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+   var eles= cy.$(':visible'); // get only the visible elements.
+   setColaLayout(eles);
+//   setTimeout(setColaLayout, 200);
   }
 
   // Set Circle layout.
@@ -90,6 +77,19 @@
       rStepSize: 2
    };
    eles.layout(circleNetworkLayout); // run the Circle layout.
+  }
+
+  // Set Cose layout.
+  /* Useful for larger networks with clustering. */
+  function setCoseLayout(eles) {
+   console.log("setCoseLayout()>> animate_layout= "+ animate_layout);
+   var coseNetworkLayout= {
+    name: 'cose', // CytoscapeJS CoSE layout
+    animate: animate_layout /*true*/,
+    handleDisconnected: true, avoidOverlap: true,
+    idealEdgeLength: 100, nodeOverlap: 20
+   };
+   eles.layout(coseNetworkLayout); // run the CoSE layout algorithm.
   }
 
   // Set CoSE-Bilkent layout.
@@ -207,15 +207,15 @@
    eles.layout(gridNetworkLayout); // run the Grid layout.
   }
 
-  // Set Spread layout, using foograph.js & rhill-voronoi-core.js.
+  // Set Spread layout.
   function setSpreadLayout(eles) {
    console.log("setSpreadLayout()>> animate_layout= "+ animate_layout);
    var spreadNetworkLayout= {
     name: 'spread', minDist: 20/*40*/,
-    animate: animate_layout/*, fit: true,
+    animate: animate_layout, fit: true,
     maxFruchtermanReingoldIterations: 50, // Maximum number of initial force-directed iterations
     maxExpandIterations: 4, // Maximum number of expanding iterations
-    boundingBox: undefined*/
+    boundingBox: undefined
    };
    eles.layout(spreadNetworkLayout); // run the Spread layout.
   }
