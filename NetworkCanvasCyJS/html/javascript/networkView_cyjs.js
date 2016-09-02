@@ -1001,41 +1001,44 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
 
   // Re-run the graph's layout, but only on the visible elements.
   function rerunGraphLayout(eles) {
-   if(document.getElementById("default").checked) {
+    //  var ld= document.getElementById("layouts_dropdown");
+      var ld_selected= /*ld.options[ld.selectedIndex].value*/$('#layouts_dropdown').val();
+   console.log("layouts_dropdown selectedOption: "+ ld_selected)
+   if(ld_selected === "Default_layout") {
       setColaLayout(eles);
      }
-   else if(document.getElementById("circle").checked) {
+   else if(ld_selected === "Circle_layout") {
            setCircleLayout(eles);
           }
-   else if(document.getElementById("cose").checked) {
+   else if(ld_selected === "Cose_layout") {
            setCoseLayout(eles);
           }
-   else if(document.getElementById("cose_bilkent").checked) {
+   else if(ld_selected === "Cose_Bilkent_layout") {
            setCoseBilkentLayout(eles);
           }
-   else if(document.getElementById("concentric").checked) {
+   else if(ld_selected === "Concentric_layout") {
            setConcentricLayout(eles);
           }
-   else if(document.getElementById("arbor").checked) {
+   else if(ld_selected === "Arbor_layout") {
            setArborLayout(eles);
           }
-   else if(document.getElementById("dagre").checked) {
+   else if(ld_selected === "Tree_layout") {
            setTreeLayout(eles);
           }
-   else if(document.getElementById("grid").checked) {
+   else if(ld_selected === "Grid_layout") {
            setGridLayout(eles);
           }
-   else if(document.getElementById("ngraph_force").checked) {
+   else if(ld_selected === "ngraph_force_layout") {
            setNgraphForceLayout(eles);
           }
-   else if(document.getElementById("springy").checked) {
-           setSpringyLayout(eles);
+   else if(ld_selected === "Spread_layout") {
+           setSpreadLayout(eles);
           }
-   else if(document.getElementById("breadthfirst").checked) {
+   else if(ld_selected === "Breadthfirst_layout") {
            setBreadthfirstLayout(eles);
           }
-   else if(document.getElementById("spread").checked) {
-           setSpreadLayout(eles);
+   else if(ld_selected === "Springy_layout") {
+           setSpringyLayout(eles);
           }
 //   console.log("Re-run layout complete...");
   }
