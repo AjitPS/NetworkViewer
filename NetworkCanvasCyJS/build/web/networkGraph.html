@@ -1,57 +1,51 @@
 <html>
     <head>
-        <link href="css/cyjsNetworkViewer_Style.css" rel="stylesheet" />
+        <link href="css_newWindow/cyjsNetworkViewer_Style.css" rel="stylesheet" />
         <!-- jQuery-ui-layout: CSS for split panes -->
-        <link href="css/layout-default-latest.css" type="text/css" rel="stylesheet" />
+        <link href="css_newWindow/layout-default-latest.css" type="text/css" rel="stylesheet" />
         <!-- jQuery Ajax MaskLoader: CSS for Loader overlay -->
-        <link href="css/maskloader.css" rel="stylesheet">
+        <link href="css_newWindow/maskloader.css" rel="stylesheet">
 
         <meta charset=utf-8 />
-        <script src="libs_networkViewer/jquery-1.11.2.min.js"></script>
-        <script src="libs_networkViewer/cytoscapejs_2.4.0/cytoscape.min.js"></script>
-        <script src="libs_networkViewer/jquery-ui.js"></script>
-        <script src="libs_networkViewer/cytoscape-cxtmenu.js"></script>
-<!--        <script src="libs_stable/cytoscape-css-renderer.js"></script> -->
+        <script src="libs_newWindow/jquery-1.11.2.min.js"></script>
+        <script src="libs_newWindow/cytoscapejs_2.4.0/cytoscape.min.js"></script>
+        <script src="libs_newWindow/jquery-ui.js"></script>
+        <script src="libs_newWindow/cytoscape-cxtmenu.js"></script>
+<!--        <script src="libs_newWindow/cytoscape-css-renderer.js"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
 <!--        <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/70964f0306e770837dbe2b81197c12fdc7804e38/cytoscape-qtip.js"></script> -->
-        <script src="libs_networkViewer/cytoscape-qtip.js"></script>
+        <script src="libs_newWindow/cytoscape-qtip.js"></script>
 <!--        <script src="https://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.js" type="text/javascript"></script>
         <link href="https://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
         <script src="https://medialize.github.io/jQuery-contextMenu/src/jquery.ui.position.js" type="text/javascript"></script> -->
         <!-- jQuery-ui-layout: for adding split panes -->
-	<script src="libs_networkViewer/jquery.layout-latest.js"></script>
+	<script src="libs_newWindow/jquery.layout-latest.js"></script>
         <!-- jQuery Ajax MaskLoader: for Loader overlay, for the container while the network loads -->
-        <script src="libs_networkViewer/jquery.maskloader.js"></script>
-
+        <script src="libs_newWindow/jquery.maskloader.js"></script>
         <!-- For WebCola layout -->
-        <!--<script src="libs_networkViewer/cola/cola.v3.min.js"></script>
-        <script src="libs_networkViewer/cola/cytoscape-cola.js"></script> -->
-        <script src="http://marvl.infotech.monash.edu/webcola/cola.v3.min.js"></script>
-	<script src="libs_010916/cola/cytoscape-cola.js"></script>
-        <!-- For CoSE-Bilkent layout -->
-        <script src="libs_networkViewer/cose_bilkent/cytoscape-cose-bilkent.js"></script>
+        <script src="libs_newWindow/cola/cola.v3.min.js"></script>
+        <script src="libs_newWindow/cola/cytoscape-cola.js"></script>
         <!-- For Arbor layout -->
-        <script src="libs_networkViewer/arbor/arbor.js"></script>
-        <script src="libs_networkViewer/arbor/cytoscape-arbor.js"></script>
+        <script src="libs_newWindow/arbor/arbor.js"></script>
+        <script src="libs_newWindow/arbor/cytoscape-arbor.js"></script>
         <!-- For Dagre (Tree) layout -->
-        <script src="libs_networkViewer/dagre/dagre.js"></script>
-        <script src="libs_networkViewer/dagre/cytoscape-dagre.js"></script>
-        <!-- For Spread layout -->
-        <script src="libs_networkViewer/spread/cytoscape-spread.js"></script>
+        <script src="libs_newWindow/dagre/dagre.js"></script>
+        <script src="libs_newWindow/dagre/cytoscape-dagre.js"></script>
         <!-- For Springy layout -->
-        <script src="libs_networkViewer/springy/springy.js"></script>
-        <script src="libs_networkViewer/springy/cytoscape-springy.js"></script>
-        <!-- For ngraph.force layout -->
-        <script src="libs_010916/ngraph_forceLayout/cytoscape-ngraph.forcelayout.js"></script>
-
+        <script src="libs_newWindow/springy/springy.js"></script>
+        <script src="libs_newWindow/springy/cytoscape-springy.js"></script>
+        <!-- For Spread layout -->
+        <script src="libs_newWindow/spread/cytoscape-spread.js"></script>
+        <!-- For CoSE-Bilkent layout -->
+        <script src="libs_newWindow/cose_bilkent/cytoscape-cose-bilkent.js"></script>
         <!-- URL mappings config file used for generating url's in Item Info table -->
         <script type="text/javascript" src="config/url_mappings.json"></script>
 
-        <script src="javascript/cytoJS_Layouts.js"></script>
-        <script src="javascript/networkView_cyjs.js"></script>
+        <script src="js_newWindow/cytoJS_Layouts.js"></script>
+        <script src="js_newWindow/networkView_cyjs.js"></script>
         <!-- for handling for adding split panes, added using jQuery-ui-layout -->
-        <script src="javascript/splitPane_code.js"></script>
+        <script src="js_newWindow/splitPane_code.js"></script>
 
         <title>Network Viewer</title>
     </head>
@@ -59,7 +53,6 @@
   <body>
     <!-- North pane of split pane added using jquery-ui-layout -->
     <div class="ui-layout-north" onmouseover="myLayout.allowOverflow('north')" onmouseout="myLayout.resetOverflow(this)">
-        <b>KNETviewer</b><br/>
         <div id=layouts_container>
             <div id="animationCheckbox">Enable Animation:<input type="checkbox" name="layoutAnimation_Chkbx" id="animateLayout" value="Enable Layout Animation" onclick="setLayoutAnimationSetting();" ondblclick="setLayoutAnimationSetting();" onmousedown="setLayoutAnimationSetting();" checked title="Check to enable layout Animation and uncheck to disable."><br/></div>
             <table id=layouts_table cellspacing=1>
@@ -75,7 +68,6 @@
                     <td align=center><input type="radio" name="layoutButton" id="grid" value="Grid_layout" onclick="setGridLayout($('#cy').cytoscape('get').$(':visible'));">Grid</td>
                     <td align=center><input type="radio" name="layoutButton" id="spread" value="Spread_layout" onclick="setSpreadLayout($('#cy').cytoscape('get').$(':visible'));" title="using foograph.js & rhill-voronoi-core.js">Spread</td>
 <!--                    <td align=center><input type="radio" name="layoutButton" id="springy" value="Springy_layout" onclick="setSpringyLayout($('#cy').cytoscape('get').$(':visible'));" title="using Springy layout algorithm (not suitable for larger networks)">Springy</td> -->
-                    <td align=center><input type="radio" name="layoutButton" id="ngraph_force" value="ngraph_force_layout" onclick="setNgraphForceLayout($('#cy').cytoscape('get').$(':visible'));" title="works well on planar graphs">ngraph_force</td>
                 </tr>
             </table>
         </div><hr>

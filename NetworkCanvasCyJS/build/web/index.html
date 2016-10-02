@@ -1,23 +1,194 @@
 <html>
     <head>
-<!--        <link href="css/indexStyle.css" rel="stylesheet" /> -->
-<!--        <link href="css/old_style.css" rel="stylesheet" /> -->
+        <link href="css/index-style.css" rel="stylesheet" /> <!-- page stylesheet -->
+        <link href="css/knet-style.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
+        <!-- jQuery-UI: CSS for dropdowns -->
+    <!--    <link href="css/jquery-ui.css" rel="stylesheet" /> -->
+        <!-- jQuery Selectric: CSS for dropdowns -->
+    <!--    <link href="css/selectric.css" rel="stylesheet" /> -->
+        <!-- jQuery Ajax MaskLoader: CSS for Loader overlay -->
+        <link href="css/maskloader.css" rel="stylesheet">
 
         <meta charset=utf-8 />
         <script src="libs/jquery-1.11.2.min.js"></script>
-<!--        <script src="./javascript/networkView_cyjs.js"></script> -->
-        <script src="./javascript/mainPage_js_winTest.js"></script>
-<!--        <script src="./javascript/homePage.js"></script> -->
-        <title>Network Viewer</title>
+        <script src="libs/cytoscapejs_2.4.0/cytoscape.min.js"></script>
+        <!-- jQuery-UI: for dropdowns & modal dialogs -->
+        <script src="libs/jquery-ui.js"></script>
+        <!-- jQuery Selectric: CSS for dropdowns -->
+	<!--<script src="libs/jquery.selectric.min.js"></script> -->
+        <script src="libs/cytoscape-cxtmenu.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
+        <script src="libs/cytoscape-qtip.js"></script>
+        <!-- jQuery Ajax MaskLoader: for Loader overlay, for the container while the network loads -->
+        <script src="libs/jquery.maskloader.js"></script>
+        <!-- For CoSE-Bilkent layout -->
+        <script src="libs/cose_bilkent/cytoscape-cose-bilkent.js"></script>
+        <!-- For ngraph.force layout -->
+        <script src="libs/ngraph_forceLayout/cytoscape-ngraph.forcelayout.js"></script>
+
+        <!-- URL mappings config file used for generating url's in Item Info table -->
+        <script type="text/javascript" src="config/url_mappings.json"></script>
+
+	<!-- KNETviewer code -->
+        <script src="javascript/knet-maskLoader.js"></script>
+        <script src="javascript/knet-layouts-defaultParams.js"></script>
+        <script src="javascript/knet-layouts.js"></script>
+        <script src="javascript/knet-menu.js"></script>
+        <script src="javascript/knet-counts-legend.js"></script>
+        <script src="javascript/knet-container.js"></script>
+        <script src="javascript/knet-toggleFullScreen.js"></script>
+        <script src="javascript/knet-itemInfo.js"></script>
+        <script src="javascript/knet-generator.js"></script>
+
+	<!-- test page js -->
+        <script src="js/launchNetwork.js"></script>
+
+        <title>Network Viewer demo</title>
     </head>
     <body>
-        <div>
-            Show Network: <input type="button" id="genNetwork" value="Launch KNETviewer" 
-                                     onclick="generateCyJSNetwork('./sampleFiles/wheat_eq4_ShowAll_ColaIssue.json');" title="Show network graph using cytoscapeJS">
+    	<div id="wrapper">
+            <br/><br/>
+            <div>A cytoscapeJS Network Viewer demo using pre-generated example JSON datasets.
+                <br/><br/>
+                Select dataset: <select id="dataset_dropdown" class="knet_dropdowns">
+                    <option value="networkGraph_20160929025512" selected="selected">Dataset1_new</option>
+                    <option value="wheat_eq4_ShowAll_ColaIssue">Dataset2_wheat</option>
+                    <option value="colaLayout_issue">Dataset3</option>
+                    <option value="result_ara_geneNames">Dataset4_arabidopsis</option>
+                    <option value="ondex_Barley_Seed-size-QTL_2">Dataset5_barley</option>
+                    <option value="result_poplar_qs2_2_showLinks1">Dataset6_poplar</option>
+                    <option value="showLinks_bug_Wheat">Dataset7_wheat</option>
+                </select>
+            </div>
+            <br/><br/>
+             
+            <div id="tabviewer_buttons">
+                <div class="menu_button button_off" id="resultsTable_button"><a href="javascript:;" onclick="activateButton('resultsTable');">Launch</a> </div>
+        	<div class="menu_button button_on" id="NetworkCanvas_button"><a href="javascript:;" onclick="activateButton('NetworkCanvas');">KNETviewer</a> </div>
+        	<div class="button_filler"></div>
+            </div>
+            
+            <div id="tabviewer_content">
+                <div id="resultsTable" class="resultViewer">
+                    <br/>Show Network (in tab):
+                    <input class="button" type="button" id="generateNetwork" value="Launch KNETviewer" 
+                        onclick="launchNetwork($('#dataset_dropdown').val());" title="Show network in KNETviewer tab">
+                    <div id="loadingNetworkDiv" style="font-weight: bold; color: red"></div>
+                    <br/>
+                    Show Network (in new window):
+                    <input class="button" type="button" id="generateNetwork_Old" value="Launch NetworkViewer" 
+                        onclick="generateCyJSNetwork($('#dataset_dropdown').val());" title="Show network graph in new window using cytoscapeJS">
+               </div>
+
+                <!-- Network View -->
+                <div id="NetworkCanvas" class="resultViewer" style="display:none;">
+                    <div id="knet-viewer" style="display:none;">
+                        <!-- Item Info pane -->
+                        <div id="itemInfo" class="infoDiv" style="display:none;">
+                            <table id="itemInfo_Table" class="infoTable" cellspacing=1>
+                                <thead>
+                                    <th>Item Info:</th>
+                                    <th><button id="btnCloseItemInfoPane" onclick="closeItemInfoPane();">Close</button></th>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <!-- KNETviewer Menubar -->
+                        <div id="knetviewer-menu">
+                            <input type="image" id="maximizeOverlay" src="image/maximizeOverlay.png" title="Toggle full screen" onclick="OnMaximizeClick();" onmouseover="onHover($(this));" onmouseout="offHover($(this));">
+                            <input type="image" id="showAll" src="image/showAll.png" onclick="showAll();" title="Show all the concept & relations in the Network" onmouseover="onHover($(this));" onmouseout="offHover($(this));">
+                            <input type="image" id="relayoutNetwork" src="image/relayoutNetwork.png" onclick="rerunLayout();" title="Re-run the Layout" onmouseover="onHover($(this));" onmouseout="offHover($(this));">
+                            <span class="knet-dropdowns">
+                                <select id="layouts_dropdown" class="knet-dropdowns" onChange="rerunLayout();" title="Select network layout">
+                                    <option value="Cose_layout" selected="selected" title="using CoSE layout algorithm (useful for larger networks with clustering)">CoSE layout</option>
+                                    <option value="ngraph_force_layout" title="using ngraph_force layout (works well on planar graphs)">Force layout</option>
+                                    <option value="Circle_layout">Circular layout</option>
+                                    <option value="Concentric_layout">Concentric layout</option>
+                                    <option value="Cose_Bilkent_layout" title="using CoSE-Bilkent layout (with node clustering, but performance-intensive for larger networks)">CoSE-Bilkent layout</option>
+                                </select>
+                                <!--Animation:<input type="checkbox" name="layoutAnimation_Chkbx" id="animateLayout" value="Enable Layout Animation" onclick="setLayoutAnimationSetting();" checked title="Check to enable layout Animation and uncheck to disable."> -->
+                                <select id="changeLabelVisibility" class="knet-dropdowns" onChange="showHideLabels(this.value);" title="Select label visibility">
+                                    <option value="None" selected="selected">Labels: None</option>
+                                    <option value="Concepts">Labels: Concepts</option>
+                                    <option value="Relations">Labels: Relations</option>
+                                    <option value="Both">Labels: Both</option>
+                                </select>
+                                <select id="changeLabelFont" class="knet-dropdowns" onChange="changeLabelFontSize(this.value);" title="Select label font size">
+                                    <option value="8">Label size: 8px</option>
+                                    <option value="12">Label size: 12px</option>
+                                    <option value="16" selected="selected">Label size: 16px</option>
+                                    <option value="20">Label size: 20px</option>
+                                    <option value="24">Label size: 24px</option>
+                                    <option value="28">Label size: 28px</option>
+                                    <option value="32">Label size: 32px</option>
+                                    <option value="36">Label size: 36px</option>
+                                    <option value="40">Label size: 40px</option>
+                                </select>
+			    </span>
+                            <input type="image" id="resetNetwork" src="image/resetNetwork.png" onclick="resetGraph();" title="Reposition (reset and re-fit) the graph" onmouseover="onHover($(this));" onmouseout="offHover($(this));">
+                            <input type="image" id="savePNG" src="image/savePNG.png" onclick="exportAsImage();" title="Export the network as a .png image" onmouseover="onHover($(this));" onmouseout="offHover($(this));">
+                            <input type="image" id="helpURL" src="image/help.png" onclick="openKnetHelpPage();" title="Go to help documentation" onmouseover="onHover($(this));" onmouseout="offHover($(this));">
+                            <!-- <input type="text" id="knet_txtSearch" class="knet-dropdowns" placeholder="Search..." /> <input type="image" id="searchNetwork" value="Search" src="image/searchNetwork.png" value="Search" onclick="findConcept($('#knet_txtSearch').val());" title="Search for concept by name" onmouseover="onHover($(this));" onmouseout="offHover($(this));"> -->
+                            <input type="image" id="saveJSON" src="image/saveJSON.png" onclick="exportAsJson();" title="Export the network in JSON format" onmouseover="onHover($(this));" onmouseout="offHover($(this));">
+			    <!-- Button to launch advanced menu -->
+                            <!-- <input type="image" id="knetAdvancedMenu" src="image/gearAdvanced.png" onclick="$('.knet-advanced-menu').modalPopover('toggle');" title="Open advanced menu" onmouseover="onHover($(this));" onmouseout="offHover($(this));"> -->
+                        </div>
+                        <!-- The core cytoscapeJS container -->
+                        <div id="cy"></div>
+                        <br/>
+                        <!-- dynamically updated Legend to show number of shown/ hidden concepts; and by type -->
+			<div id="countsLegend"><span>KNETviewer</span></div>
+                        <!-- popup dialog -->
+                        <div id="infoDialog"></div>
+                    </div>
+                    
+                    <!-- Legend -->
+                    <div id="legend_container">
+                        <table id="legend_frame" cellspacing=1>
+                            <tr><td align=center><img src="image/Gene.png"></td>
+                                <td align=center><img src="image/Protein.png"></td>
+                                <td align=center><img src="image/Pathway.png"></td>
+                                <td align=center><img src="image/Compound.png"></td>
+                                <td align=center><img src="image/Enzyme.png"></td>
+                                <td align=center><img src="image/Reaction.png"></td>
+                                <td align=center><img src="image/QTL.png"></td>
+                                <td align=center><img src="image/Publication.png"></td>
+                            </tr><tr>
+                                <td align=center><font size=1.8px>Gene</font></td>
+                                <td align=center><font size=1.8px>Protein</font></td>
+                                <td align=center><font size=1.8px>Pathway</font></td>
+                                <td align=center><font size=1.8px>SNP</font></td>
+                                <td align=center><font size=1.8px>Enzyme</font></td>
+                                <td align=center><font size=1.8px>Reaction</font></td>
+                                <td align=center><font size=1.8px>QTL</font></td>
+                                <td align=center><font size=1.8px>Publication</font></td>
+                            </tr><tr>
+                                <td align=center></td></tr><tr>
+                                <td align=center><img src="image/Phenotype.png"></td>
+                                <td align=center><img src="image/Biological_process.png"></td>
+                                <td align=center><img src="image/Cellular_component.png"></td>
+                                <td align=center><img src="image/Protein_domain.png"></td>
+                                <td align=center><img src="image/Trait_ontology.png"></td>
+                                <td align=center><img src="image/Molecular_function.png"></td>
+                                <td align=center><img src="image/Trait.png"></td>
+                                <td align=center><img src="image/Enzyme_classification.png"></td>
+                            </tr><tr>
+                                <td align=center><font size=1.8px>Phenotype</font></td>
+                                <td align=center><font size=1.8px>Biol. Process</font></td>
+                                <td align=center><font size=1.8px>Cell. Component</font></td>
+                                <td align=center><font size=1.8px>Protein Domain</font></td>
+                                <td align=center><font size=1.8px>Trait Ontology</font></td>
+                                <td align=center><font size=1.8px>Mol. Function</font></td>
+                                <td align=center><font size=1.8px>Trait</font></td>
+                                <td align=center><font size=1.8px>Enzyme Classification</font></td>
+                            </tr>
+                        </table>
+                    </div>
+                        
+                </div>
+            </div>
         </div>
-        <!-- div to show NetworkCanvas iframe -->
-<!--        <div id='NetworkCanvas'></div> -->
-    <div id="loadingNetworkDiv" style="font-weight: bold; color: red"></div>
     </body>
 </html>
 
