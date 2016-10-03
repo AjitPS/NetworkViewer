@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/layouts_defaultParams.js</file>
-            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/cytoJS_Layouts.js</file>
-            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/networkView_cyjs.js</file>
-            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/launchNetwork.js</file>
             <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/index.html</file>
-            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/css/style.css</file>
-            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/css/cyjsNetworkViewer_Style.css</file>
+            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/knet-itemInfo.js</file>
+            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/knet-menu.js</file>
+            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/knet-toggleFullScreen.js</file>
         </group>
     </open-files>
 </project-private>

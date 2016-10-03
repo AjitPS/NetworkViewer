@@ -1,7 +1,7 @@
 function load_reload_Network(network_json, network_style/*, runNetLayout*/) {
 
-console.log("style: "+ JSON.stringify(network_style, null, 4));
-console.log("load_reload_Network: elements: "+ JSON.stringify(network_json, null, 4));
+//console.log("style: "+ JSON.stringify(network_style, null, 4));
+//console.log("load_reload_Network: elements: "+ JSON.stringify(network_json, null, 4));
 
 // Initialise a cytoscape container instance on the HTML DOM using JQuery.
 $('#cy').cytoscape({

@@ -18,7 +18,7 @@ function onHover(thisBtn) {
 
   // Reset: Re-position the network graph.
   function resetGraph() {
-   console.log("resetGraph...");
+   //console.log("resetGraph...");
    /*cy*/$('#cy').cytoscape('get').reset().fit(); // reset the graph's zooming & panning properties.
 //   /*cy*/$('#cy').cytoscape('get').fit();
   }
@@ -119,7 +119,7 @@ function onHover(thisBtn) {
   
   // Re-run the entire graph's layout.
   function rerunLayout() {
-   console.log("rerunLayout...");
+   //console.log("rerunLayout...");
    // Get the cytoscape instance as a Javascript object from JQuery.
    var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
    var selected_elements= cy.$(':visible'); // get only the visible elements.
@@ -151,7 +151,7 @@ function onHover(thisBtn) {
    else if(ld_selected === "ngraph_force_layout") {
            setNgraphForceLayout(eles);
           }
-   console.log("Re-run layout complete...");
+   //console.log("Re-run layout complete...");
   }
 
   // Update the label font size for all the concepts and relations.
@@ -197,7 +197,7 @@ function onHover(thisBtn) {
 
   // Show/ Hide labels for concepts and relations.
   function showHideLabels(val) {
-   console.log("cy.hideLabelsOnViewport= "+ $('#cy').cytoscape('get').hideLabelsOnViewport);
+   //console.log("cy.hideLabelsOnViewport= "+ $('#cy').cytoscape('get').hideLabelsOnViewport);
    if(val === "Concepts") {
       displayConceptLabels();
      }
