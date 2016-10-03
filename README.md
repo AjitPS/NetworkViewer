@@ -1,6 +1,2 @@
 # NetworkViewer
-NetworkView demo
-
-@author Ajit Singh
-
-@description A network view example implemented using javascript, jQuery & CytoscapeJS to visualize network graphs of genetic networks
+A network view example implemented using javascript, jQuery, jQueryUI & cytoscapeJS to visualize network graphs of heterogeneous plant networks
