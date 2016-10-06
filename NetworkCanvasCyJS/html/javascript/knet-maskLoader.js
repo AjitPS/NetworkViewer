@@ -1,9 +1,9 @@
  // Network loader (maskloader animation)
  function showNetworkLoader() {
   // Show loader while the Network loads.
-  $('body').maskLoader({
+//  $('body').maskLoader({
 //  $('#cy').maskLoader({
-//  $('#knet-viewer').maskLoader({
+  $('#knet-maps').maskLoader({
       // fade effect
       'fade': true,
       'z-index': '999',
@@ -23,8 +23,8 @@
 
  function removeNetworkLoader() {
   // Remove Network loader.
-  var maskloader = $('body').maskLoader();
+//  var maskloader = $('body').maskLoader();
 //  var maskloader = $('#cy').maskLoader();
-//  var maskloader = $('#knet-viewer').maskLoader();
+  var maskloader = $('#knet-maps').maskLoader();
   maskloader.destroy();
  }

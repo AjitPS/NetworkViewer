@@ -19,7 +19,7 @@ function launchNetwork(jsonFileName) {
     console.log("generateCyJSNetwork>> input dataset: "+ jsonFile);
 
     try {
-        $(/*"#knetviewer-menu"*/"#knet-viewer").css("display","block"); // show the KNETviewer menubar.
+        $(/*"#knetmaps-menu"*/"#knet-maps").css("display","block"); // show the KNETviewer menubar.
 
         // Show maskloader.
         showNetworkLoader();
