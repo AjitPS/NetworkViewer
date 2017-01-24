@@ -5,8 +5,8 @@
         CSS for the Network Viewer, in tab.
 */
 
-#knet-viewer {
-    width: 90%;
+#knet-maps {
+    /*width: 90%;*/
     height: 90%;
 	padding-left: 10px;
     /*border: 1px dashed grey;*/

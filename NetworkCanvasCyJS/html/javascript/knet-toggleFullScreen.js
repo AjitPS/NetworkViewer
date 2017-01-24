@@ -5,24 +5,24 @@
      var currentStylesheet_json= cy_target.style().json(); //cy_target.style().json();
      if(!$('#knet-viewer').hasClass('full_screen')) {
         $('#maximizeOverlay').attr('src', 'image/minimizeOverlay.png'); // toggle image
-  	// Maximize
-        $('#knet-viewer').addClass('full_screen');
+		// Maximize
+        $('#knet-maps').addClass('full_screen');
 
-	// reload the network
-	load_reload_Network(currentEles_jsons, currentStylesheet_json/*, false*/);
+   	    // reload the network
+	    load_reload_Network(currentEles_jsons, currentStylesheet_json/*, false*/);
 
-	// toggle label visibility
-	showHideLabels($('#changeLabelVisibility').val());
+	    // toggle label visibility
+	    showHideLabels($('#changeLabelVisibility').val());
        }
-       else {
+     else {
         $('#maximizeOverlay').attr('src', 'image/maximizeOverlay.png'); // toggle image
-  	// Minimize
-        $('#knet-viewer').removeClass('full_screen');
+  	    // Minimize
+        $('#knet-maps').removeClass('full_screen');
 
         // reload the network
-	load_reload_Network(currentEles_jsons, currentStylesheet_json/*, false*/);
+	    load_reload_Network(currentEles_jsons, currentStylesheet_json/*, false*/);
 
-	// toggle label visibility
-	showHideLabels($('#changeLabelVisibility').val());
+    	// toggle label visibility
+	    showHideLabels($('#changeLabelVisibility').val());
        }
   }
