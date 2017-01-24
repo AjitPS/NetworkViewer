@@ -1,26 +1,52 @@
 /*
- * Generates a lightweight Network graph, using cytoscapeJS and jQuery.
+ * Generates a lightweight Network graph, using cytoscapeJS, jQuery and jQuery UI.
  * @author: Ajit Singh.
  */
+window.onload= function() {
+ // Add KnetMaps menu bar
+ var knet_menu= "<input type='image' id='maximizeOverlay' src='image/maximizeOverlay.png' title='Toggle full screen' onclick='OnMaximizeClick();' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='showAll' src='image/showAll.png' onclick='showAll();' title='Show all the concept & relations in the Network' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='relayoutNetwork' src='image/relayoutNetwork.png' onclick='rerunLayout();' title='Re-run the Layout' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='openItemInfoBtn' src='image/openItemInfoBtn.png' onclick='popupItemInfo();' title='Show Info box' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<span class='knet-dropdowns'>"+
+                        "<select id='layouts_dropdown' class='knet-dropdowns' onChange='rerunLayout();' title='Select network layout'>"+
+                            "<option value='Cose_layout' selected='selected' title='using CoSE layout algorithm (useful for larger networks with clustering)'>CoSE layout</option>"+
+                            "<option value='ngraph_force_layout' title='using ngraph_force layout (works well on planar graphs)'>Force layout</option>"+
+                            "<option value='Circle_layout'>Circular layout</option>"+
+                            "<option value='Concentric_layout'>Concentric layout</option>"+
+                            "<option value='Cose_Bilkent_layout' title='using CoSE-Bilkent layout (with node clustering, but performance-intensive for larger networks)'>CoSE-Bilkent layout</option>"+
+                        "</select>"+
+                        "<select id='changeLabelVisibility' class='knet-dropdowns' onChange='showHideLabels(this.value);' title='Select label visibility'>"+
+                            "<option value='None' selected='selected'>Labels: None</option>"+
+                            "<option value='Concepts'>Labels: Concepts</option>"+
+                            "<option value='Relations'>Labels: Relations</option>"+
+                            "<option value='Both'>Labels: Both</option>"+
+                        "</select>"+
+                        "<select id='changeLabelFont' class='knet-dropdowns' onChange='changeLabelFontSize(this.value);' title='Select label font size'>"+
+                            "<option value='8'>Label size: 8px</option>"+
+                            "<option value='12'>Label size: 12px</option>"+
+                            "<option value='16' selected='selected'>Label size: 16px</option>"+
+                            "<option value='20'>Label size: 20px</option>"+
+                            "<option value='24'>Label size: 24px</option>"+
+                            "<option value='28'>Label size: 28px</option>"+
+                            "<option value='32'>Label size: 32px</option>"+
+                            "<option value='36'>Label size: 36px</option>"+
+                            "<option value='40'>Label size: 40px</option>"+
+                        "</select>"+
+			        "</span>"+
+                    "<input type='image' id='resetNetwork' src='image/resetNetwork.png' onclick='resetGraph();' title='Reposition (reset and re-fit) the graph' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='savePNG' src='image/savePNG.png' onclick='exportAsImage();' title='Export the network as a .png image' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='saveJSON' src='image/saveJSON.png' onclick='exportAsJson();' title='Export the network in JSON format' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='helpURL' src='image/help.png' onclick='openKnetHelpPage();' title='Go to help documentation' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>";
+ $('#knetmaps-menu').html(knet_menu);
 
-function activateButton(option){
-$('.resultViewer:visible').fadeOut(0,function(){
-		$('.button_off').attr('class','button_on');
-		$('#'+option).fadeIn();
-		$('#'+option+'_button').attr('class','button_off');
-	});
+ launchNetwork($('#dataset_dropdown').val());
 }
 
 function launchNetwork(jsonFileName) {
-    // Add notification to the loading div.
-    $("#loadingNetworkDiv").html("Loading, please wait...");
-
-    var jsonFile= jsonFileName; // the JSON file received from index.html.
-    console.log("generateCyJSNetwork>> input dataset: "+ jsonFile);
-
+    var jsonFile= jsonFileName; // the JSON file selected by the user.
+	//console.log("generateCyJSNetwork>> input dataset: "+ jsonFile);
     try {
-        $(/*"#knetmaps-menu"*/"#knet-maps").css("display","block"); // show the KNETviewer menubar.
-
         // Show maskloader.
         showNetworkLoader();
 
@@ -29,66 +55,9 @@ function launchNetwork(jsonFileName) {
         
         // Remove maskloader.
         removeNetworkLoader();
-
-        // Remove the preloader message for the new Network Viewer
-	$("#loadingNetworkDiv").replaceWith('<div id="loadingNetworkDiv"></div>');
-        
-        activateButton('NetworkCanvas');
        }
     catch(err) {
           var errorMsg= err.stack;
           console.log("Error: <br/>"+"Details: "+ errorMsg);
          }
-}
-
-/*
- * Generates the new lightweight Network graph, using cytoscapeJS.
- * @author: Ajit Singh.
- */
-var cyjs_networkView= false;
-
-function generateCyJSNetwork(jsonFileName) {
-    // Add notification to the loading div.
-    $("#loadingNetworkDiv").html("Loading, please wait...");
-
-    var jsonFile= "sampleFiles/"+ jsonFileName+ ".json"; // the JSON file received from index.html.
-    console.log("generateCyJSNetwork>> jsonFile from index.html: "+ jsonFile);
-
-  //  try {
-         if(cyjs_networkView && !cyjs_networkView.closed) {
-            // If the window is already open.
-            console.log("WindowAlreadyOpen...");
-/*            cyjs_networkView.jsonFile= jsonFile; // re-assign the JSON file path.
-//            cyjs_networkView.onLoad();
-            cyjs_networkView.focus();
-            // clear the cytoscapeJS container <div>.
-            cyjs_networkView.document.getElementById('cy').innerHTML= "";
-            console.log("WindowAlreadyOpen>> cyjs_networkView.jsonFile= "+ cyjs_networkView.jsonFile);
-//            cyjs_networkView.location.reload(); // reload the window
-*/
-//            cyjs_networkView.document.location.reload(true); // reload the graph window using new graph.
-
-            // trigger the Load() event of the Network Graph window to call the function that generates 
-            // the network graph to generate a new one using the new JSON file (dataset).
-//            $(cyjs_networkView).trigger('load');
-
-            // re-generate the network graph using the new JSON dataset (file) in the already open window.
-//            generateNetworkGraph(cyjs_networkView.jsonFile);
-
-            // close the window to reopen it later using new JSON dataset (file).
-            cyjs_networkView.close();
-           }
-//         else {
-/*           cyjs_networkView= window.open("networkGraph.html", "Network View", 
-                    "height=600, width=1200, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, titlebar=yes, directories=yes, status=yes");*/
-           cyjs_networkView= window.open("networkGraph.html", "Network View", 
-                    "fullscreen=yes, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, titlebar=yes, status=yes");
-
-           // Pass the JSON file path to a global variable in the new window.
-           cyjs_networkView.jsonFile= jsonFile;
-           console.log("OpenNewWindow>> cyjs_networkView.jsonFile= "+ cyjs_networkView.jsonFile);
-//          }
-
-    // Clear the loading div.
-    $("#loadingNetworkDiv").html("");
 }
