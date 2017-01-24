@@ -3,7 +3,7 @@
      var cy_target= $('#cy').cytoscape('get');
      var currentEles_jsons= cy_target.elements().jsons();
      var currentStylesheet_json= cy_target.style().json(); //cy_target.style().json();
-     if(!$('#knet-viewer').hasClass('full_screen')) {
+     if(!$('#knet-maps').hasClass('full_screen')) {
         $('#maximizeOverlay').attr('src', 'image/minimizeOverlay.png'); // toggle image
 		// Maximize
         $('#knet-maps').addClass('full_screen');

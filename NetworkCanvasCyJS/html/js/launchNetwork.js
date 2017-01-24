@@ -47,8 +47,6 @@ function launchNetwork(jsonFileName) {
     var jsonFile= jsonFileName; // the JSON file selected by the user.
 	//console.log("generateCyJSNetwork>> input dataset: "+ jsonFile);
     try {
-        $(/*"#knetviewer-menu"*/"#knet-viewer").css("display","block"); // show the KNETviewer menubar.
-
         // Show maskloader.
         showNetworkLoader();
 
