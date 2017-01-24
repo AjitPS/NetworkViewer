@@ -1,0 +1,135 @@
+<html>
+    <head>
+        <link href="css/index-style.css" rel="stylesheet" /> <!-- page stylesheet -->
+        <link href="css/knet-style.css" rel="stylesheet" /> <!-- Network Viewer stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/maskloader.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Kanit|Play" rel="stylesheet">
+        <!-- favicon added -->
+        <link rel="shortcut icon" href="image/favicon.ico" >
+
+        <meta charset=utf-8 />
+        <script src="libs/jquery-1.11.2.min.js"></script>
+        <script src="libs/cytoscapejs_2.4.0/cytoscape.min.js"></script>
+        <script src="libs/jquery-ui.js"></script>
+        <script src="libs/cytoscape-cxtmenu.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
+        <script src="libs/cytoscape-qtip.js"></script>
+        <script src="libs/jquery.maskloader.js"></script>
+        <!-- Layouts -->
+        <script src="libs/cose_bilkent/cytoscape-cose-bilkent.js"></script>
+        <script src="libs/ngraph_forceLayout/cytoscape-ngraph.forcelayout.js"></script>
+        <!-- URL mappings config file used for generating url's in Item Info table -->
+        <script type="text/javascript" src="config/url_mappings.json"></script>
+
+	<!-- KNETviewer code -->
+        <script src="javascript/knet-maskLoader.js"></script>
+        <script src="javascript/knet-layouts-defaultParams.js"></script>
+        <script src="javascript/knet-layouts.js"></script>
+        <!-- Network Viewer menubar -->
+        <script src="javascript/knet-menu.js"></script>
+        <script src="javascript/knet-counts-legend.js"></script>
+        <!-- Network Viewer -->
+        <script src="javascript/knet-container.js"></script>
+        <script src="javascript/knet-toggleFullScreen.js"></script>
+        <script src="javascript/knet-itemInfo.js"></script>
+        <script src="javascript/knet-generator.js"></script>
+
+	<!-- test page js -->
+        <script src="js/launchNetwork.js"></script>
+
+        <title>KnetMaps.js demo</title>
+    </head>
+ 
+    <body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">	  
+    	<a href="#"><img class="logo-top" src="image/knetmaps.jpg" height="48" alt="Logo"></a>   
+       <ul class="nav navbar-nav" id="top">
+          <li><a target="_blank" href="https://github.com/Rothamsted/knetmaps.js">GitHub</a>
+          <a target="_blank" href="http://ondex.rothamsted.ac.uk/QTLNetMiner/releasenotes/guides/QTLNetMiner_UserGuide.pdf">User Guide</a></li>
+    </ul>
+ 	</nav>  <!-- end navbar -->
+ 
+ 
+ <div id="content">
+            <div>Select dataset: <select id="dataset_dropdown" onChange="launchNetwork($('#dataset_dropdown').val());">
+                    <option value="ara1" title="ara1">Dataset 1</option>
+                    <option value="ara2" title="ara2">Dataset 2</option>
+                    <option value="ara5_dormancy" selected="selected" title="ara5_dormancy">Dataset 3</option>
+                    <option value="ara6_dormancy_flowering" title="ara6_dormancy_flowering">Dataset 4</option>
+                    <option value="ara7_dormancy_anthocyanin" title="ara7_dormancy_anthocyanin">Dataset 5</option>
+                    <option value="ara8_dormancy_anthocyanin_storage_top10" title="ara8_dormancy_anthocyanin_storage_top10">Dataset 6</option>
+                    <option value="ara4" title="ara4">Dataset 7</option>
+                    <option value="ara3_eq1_At4g18330" title="ara3_eq1_At4g18330">Dataset 8</option>
+                </select>
+            </div><br/>
+            <!-- KnetMaps -->
+            
+            <div id="knet-maps">
+		<div id="itemInfo" class="infoDiv" style="display:none;"><!-- Item Info pane -->
+                    <table id="itemInfo_Table" class="infoTable" cellspacing=1>
+                        <thead><th>Info box:</th>
+                            <!-- <th><button id="btnCloseItemInfoPane" onclick="closeItemInfoPane();">Close</button></th> -->
+                            <th><input type="image" id="btnCloseItemInfoPane" src="image/close-icon.png" onClick="closeItemInfoPane();"></th>
+                        </thead><tbody></tbody></table>
+                </div>
+                <!-- KnetMaps Menubar -->
+                <div id="knetmaps-menu"></div>
+                <!-- The core cytoscapeJS container -->
+                <div id="cy"></div><br/>
+                <!-- dynamically updated Legend to show number of shown/ hidden concepts; and by type -->
+		<div id="countsLegend" style="width: 350px; margin: auto;"><span>KnetMaps</span></div>
+                <!-- popup dialog -->
+                <div id="infoDialog"></div>
+            </div>
+            <!-- Legend -->
+            <div id="networkLegend_container">
+                <table id="networkLegend_frame" cellspacing=1>
+                    <tr><td align=center><img src="image_legend/Gene.png"></td>
+                        <td align=center><img src="image_legend/Protein.png"></td>
+                        <td align=center><img src="image_legend/Pathway.png"></td>
+                        <td align=center><img src="image_legend/Compound.png"></td>
+                        <td align=center><img src="image_legend/Enzyme.png"></td>
+                        <td align=center><img src="image_legend/Reaction.png"></td>
+                        <td align=center><img src="image_legend/QTL.png"></td>
+                        <td align=center><img src="image_legend/Publication.png"></td>
+                    </tr><tr>
+                        <td align=center><font size=1.8px>Gene</font></td>
+                        <td align=center><font size=1.8px>Protein</font></td>
+                        <td align=center><font size=1.8px>Pathway</font></td>
+                        <td align=center><font size=1.8px>SNP</font></td>
+                        <td align=center><font size=1.8px>Enzyme</font></td>
+                        <td align=center><font size=1.8px>Reaction</font></td>
+                        <td align=center><font size=1.8px>QTL</font></td>
+                        <td align=center><font size=1.8px>Publication</font></td>
+                    </tr><tr>
+                        <td align=center></td></tr><tr>
+                        <td align=center><img src="image_legend/Phenotype.png"></td>
+                        <td align=center><img src="image_legend/Biological_process.png"></td>
+                        <td align=center><img src="image_legend/Cellular_component.png"></td>
+                        <td align=center><img src="image_legend/Protein_domain.png"></td>
+                        <td align=center><img src="image_legend/Trait_ontology.png"></td>
+                        <td align=center><img src="image_legend/Molecular_function.png"></td>
+                        <td align=center><img src="image_legend/Trait.png"></td>
+                        <td align=center><img src="image_legend/Enzyme_classification.png"></td>
+                    </tr><tr>
+                        <td align=center><font size=1.8px>Phenotype</font></td>
+                        <td align=center><font size=1.8px>Biol. Process</font></td>
+                        <td align=center><font size=1.8px>Cell. Component</font></td>
+                        <td align=center><font size=1.8px>Protein Domain</font></td>
+                        <td align=center><font size=1.8px>Trait Ontology</font></td>
+                        <td align=center><font size=1.8px>Mol. Function</font></td>
+                        <td align=center><font size=1.8px>Trait</font></td>
+                        <td align=center><font size=1.8px>Enzyme Classification</font></td>
+                    </tr>
+                </table>
+            </div><br/><br/>
+            </div>  <!-- content -->
+           
+       <div class="contact-footer"> 
+      	<img class="knetminer-logo" src="image/knetmaps.jpg" alt="Logo" with="201.5" height="66.3">
+        <p id="text-logo">Supported by BBSRC SABR and TRDF awards BB/F006039/1 and BB/I023860/1</p> 
+       </div> 
+    </body>
+</html>
+
