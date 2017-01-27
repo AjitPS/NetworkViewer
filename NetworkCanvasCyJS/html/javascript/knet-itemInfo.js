@@ -8,7 +8,7 @@
 /*    console.log("Display Item Info. for id: "+ selectedElement.id() +", isNode ?= "+ 
             selectedElement.isNode() +", isEdge ?= "+ selectedElement.isEdge());*/
     try {
-		 var cy= $('#cy').cytoscape('get');
+         var cy= $('#cy').cytoscape('get');
          // Display the Item Info table in its parent div.
          document.getElementById("itemInfo_Table").style.display= "inline";
          // Display item information in the itemInfo <div> in a <table>.
@@ -249,8 +249,7 @@
  });*/
  
  function closeItemInfoPane() {
-     console.log("Close ItemInfo pane...");
-     $("#itemInfo").hide();
+  $("#itemInfo").hide();
  }
 
   // Remove shadow effect from nodes, if it exists.
