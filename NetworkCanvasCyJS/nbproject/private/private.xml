@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/js/launchNetwork.js</file>
+            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/knet-container.js</file>
+            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/css/knet-style.css</file>
+            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/knet-generator.js</file>
+            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/index.html</file>
+            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/knet-itemInfo.js</file>
+            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/knet-menu.js</file>
+            <file>file:/D:/GitHub_repos/NetworkViewer/NetworkCanvasCyJS/html/javascript/knet-toggleFullScreen.js</file>
+        </group>
     </open-files>
 </project-private>

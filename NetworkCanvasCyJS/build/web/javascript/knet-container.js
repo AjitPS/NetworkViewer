@@ -171,14 +171,10 @@ cy.elements().qtip({
     if(thisElement.isNode()) {
        info= "Concept selected: "+ thisElement.data('value') +", type: "+ thisElement.data('conceptType')
                +", PID: "+ thisElement.data('pid');
-       // Also update the Item Info table & display it.
-//       showItemInfo(thisElement);
       }
       else if(thisElement.isEdge()) {
               info= "Relation selected: "+ thisElement.data('label');
              }
-       // Also update the Item Info table & display it.
-//       showItemInfo(thisElement);
       }
       catch(err) { info= "Selected element is neither a Concept nor a Relation"; }
     console.log(info);
