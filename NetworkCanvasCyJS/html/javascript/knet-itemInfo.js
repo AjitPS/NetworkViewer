@@ -110,6 +110,9 @@
                                      }
                                   }
                               }
+                            else if(attrName === "flagged") { 
+                                    // don't show in Item Info
+                                   }
                             // For Aminoacid sequence (AA).
                             else if(attrName === "AA") {
                                     attrName= "Aminoacid sequence (AA)";
@@ -166,7 +169,7 @@
                 var cell1= row.insertCell(0);
                 var cell2= row.insertCell(1);
                 // Store the necessary data in the cells.
-                cell1.innerHTML= "Relation Label:";
+                cell1.innerHTML= "Type:";
                 cell2.innerHTML= selectedElement.data('label'); // relation label
                 // Relation 'source'.
                 row= table.insertRow(1);
