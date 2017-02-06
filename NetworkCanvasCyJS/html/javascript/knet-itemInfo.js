@@ -31,7 +31,7 @@
             cell1.innerHTML= "Concept Type:";
             cell2.innerHTML= selectedElement.data('conceptType'); // concept Type
             // Concept 'value'.
-            row= table.insertRow(1);
+        /*    row= table.insertRow(1);
             cell1= row.insertCell(0);
             cell2= row.insertCell(1);
             cell1.innerHTML= "Value:";
@@ -41,9 +41,9 @@
             cell1= row.insertCell(0);
             cell2= row.insertCell(1);
             cell1.innerHTML= "PID:";
-            cell2.innerHTML= selectedElement.data('pid');
+            cell2.innerHTML= selectedElement.data('pid');*/
             // Concept 'Annotation'.
-            row= table.insertRow(3);
+            row= table.insertRow(1/*3*/);
             cell1= row.insertCell(0);
             cell2= row.insertCell(1);
             cell1.innerHTML= "Annotation:";
