@@ -136,16 +136,17 @@ cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning
  * e.g, cy.elements('node').qtip({ }); or cy.elements('edge').qtip({ }); */
 cy.elements().qtip({
   content: function() {
-      var qtipMsg= "";
-	  console.log("qtip...");
+     var qtipMsg= "";
      try {
       if(this.isNode()) {
-         qtipMsg= "Concept: "+ this.data('value') +", type: "+ this.data('conceptType') +", PID: "+ 
-                  this.data('pid') +" , flagged: "+ this.data('flagged') +"<br>"+"Annotation: "+ 
-                  this.data('annotation');
+         qtipMsg= "<b>Concept:</b> "+ this.data('value') +", <b>Type:</b> "+ this.data('conceptType');
         }
       else if(this.isEdge()) {
-              qtipMsg= "Relation: "+ this.data('label');
+              qtipMsg= "<b>Relation:</b> "+ this.data('label');
+              var fromID= this.data('source'); // relation source ('fromConcept')
+              qtipMsg= qtipMsg +", <b>From:</b> "+ cy.$('#'+fromID).data('value') +" ("+ cy.$('#'+fromID).data('conceptType').toLowerCase() +"), ";
+              var toID= this.data('target'); // relation source ('toConcept')
+              qtipMsg= qtipMsg +"<b>To:</b> "+ cy.$('#'+toID).data('value') +" ("+ cy.$('#'+toID).data('conceptType').toLowerCase() +")";
              }
       }
       catch(err) { qtipMsg= "Selected element is neither a Concept nor a Relation"; }
@@ -164,20 +165,21 @@ cy.elements().qtip({
  * Note: Specify 'node' or 'edge' to bind an event to a specific type of element.
  * e.g, cy.on('tap', 'node', function(e){ }); or cy.on('tap', 'edge', function(e){ }); */
  cy.on('tap', function(e) {
-	console.log("mouse tap...");
     var thisElement= e.cyTarget;
     var info= "";
     try {
     if(thisElement.isNode()) {
-       info= "Concept selected: "+ thisElement.data('value') +", type: "+ thisElement.data('conceptType')
-               +", PID: "+ thisElement.data('pid');
+       info= "<b>Concept:</b> "+ thisElement.data('value') +", <b>Type:</b> "+ thisElement.data('conceptType');
       }
       else if(thisElement.isEdge()) {
-              info= "Relation selected: "+ thisElement.data('label');
+              info= "<b>Relation:</b> "+ this.data('label');
+              var fromID= this.data('source'); // relation source ('fromConcept')
+              info= info +", <b>From:</b> "+ cy.$('#'+fromID).data('value') +" ("+ cy.$('#'+fromID).data('conceptType').toLowerCase() +"), ";
+              var toID= this.data('target'); // relation source ('toConcept')
+              info= info +"<b>To:</b> "+ cy.$('#'+toID).data('value') +" ("+ cy.$('#'+toID).data('conceptType').toLowerCase() +")";
              }
       }
-      catch(err) { info= "Selected element is neither a Concept nor a Relation"; }
-    console.log(info);
+    catch(err) { info= "Selected element is neither a Concept nor a Relation"; }
     showItemInfo(thisElement);
    });
 // cxttap - normalised right click or 2-finger tap event.

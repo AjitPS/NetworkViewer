@@ -93,7 +93,8 @@
                     cell1.innerHTML= "<b>Attributes:</b>"; // sub-heading
                     for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
                         if((metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "size")
-                            && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "visible")) {
+                            && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "visible")
+                            && (metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname !== "flagged")) {
                             row= table.insertRow(table.rows.length/* - 1*/); // new row.
                             cell1= row.insertCell(0);
                             cell2= row.insertCell(1);
@@ -110,9 +111,6 @@
                                      }
                                   }
                               }
-                            else if(attrName === "flagged") { 
-                                    // don't show in Item Info
-                                   }
                             // For Aminoacid sequence (AA).
                             else if(attrName === "AA") {
                                     attrName= "Aminoacid sequence (AA)";

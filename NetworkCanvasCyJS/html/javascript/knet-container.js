@@ -139,14 +139,14 @@ cy.elements().qtip({
      var qtipMsg= "";
      try {
       if(this.isNode()) {
-         qtipMsg= "Concept: "+ this.data('value') +", type: "+ this.data('conceptType');
+         qtipMsg= "<b>Concept:</b> "+ this.data('value') +", <b>Type:</b> "+ this.data('conceptType');
         }
       else if(this.isEdge()) {
-              qtipMsg= "Relation: "+ this.data('label');
+              qtipMsg= "<b>Relation:</b> "+ this.data('label');
               var fromID= this.data('source'); // relation source ('fromConcept')
-              qtipMsg= qtipMsg +", From: "+ cy.$('#'+fromID).data('value') +" ("+ cy.$('#'+fromID).data('conceptType').toLowerCase() +"), ";
+              qtipMsg= qtipMsg +", <b>From:</b> "+ cy.$('#'+fromID).data('value') +" ("+ cy.$('#'+fromID).data('conceptType').toLowerCase() +"), ";
               var toID= this.data('target'); // relation source ('toConcept')
-              qtipMsg= qtipMsg +"To: "+ cy.$('#'+toID).data('value') +" ("+ cy.$('#'+toID).data('conceptType').toLowerCase() +")";
+              qtipMsg= qtipMsg +"<b>To:</b> "+ cy.$('#'+toID).data('value') +" ("+ cy.$('#'+toID).data('conceptType').toLowerCase() +")";
              }
       }
       catch(err) { qtipMsg= "Selected element is neither a Concept nor a Relation"; }
@@ -169,18 +169,17 @@ cy.elements().qtip({
     var info= "";
     try {
     if(thisElement.isNode()) {
-       info= "Concept selected: "+ thisElement.data('value') +", type: "+ thisElement.data('conceptType');
+       info= "<b>Concept:</b> "+ thisElement.data('value') +", <b>Type:</b> "+ thisElement.data('conceptType');
       }
       else if(thisElement.isEdge()) {
-              info= "Relation: "+ this.data('label');
+              info= "<b>Relation:</b> "+ this.data('label');
               var fromID= this.data('source'); // relation source ('fromConcept')
-              info= info +", From: "+ cy.$('#'+fromID).data('value') +" ("+ cy.$('#'+fromID).data('conceptType').toLowerCase() +"), ";
+              info= info +", <b>From:</b> "+ cy.$('#'+fromID).data('value') +" ("+ cy.$('#'+fromID).data('conceptType').toLowerCase() +"), ";
               var toID= this.data('target'); // relation source ('toConcept')
-              info= info +"To: "+ cy.$('#'+toID).data('value') +" ("+ cy.$('#'+toID).data('conceptType').toLowerCase() +")";
+              info= info +"<b>To:</b> "+ cy.$('#'+toID).data('value') +" ("+ cy.$('#'+toID).data('conceptType').toLowerCase() +")";
              }
       }
-      catch(err) { info= "Selected element is neither a Concept nor a Relation"; }
-    console.log(info);
+    catch(err) { info= "Selected element is neither a Concept nor a Relation"; }
     showItemInfo(thisElement);
    });
 // cxttap - normalised right click or 2-finger tap event.
