@@ -4,6 +4,8 @@
         <link href="css/knet-style.css" rel="stylesheet" /> <!-- Network Viewer stylesheet -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
         <link href="css/maskloader.css" rel="stylesheet">
+        <link href="css/jquery.restable.min.css" rel="stylesheet"> <!-- for mobile-responsive infoBox table -->
+
         <link href="https://fonts.googleapis.com/css?family=Kanit|Play" rel="stylesheet">
         <!-- favicon added -->
         <link rel="shortcut icon" href="image/favicon.ico" >
@@ -16,6 +18,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
         <script src="libs/cytoscape-qtip.js"></script>
         <script src="libs/jquery.maskloader.js"></script>
+        <script src="libs/jquery.restable.min.js"></script> <!-- for mobile-responsive infoBox table -->
         <!-- Layouts -->
         <script src="libs/cose_bilkent/cytoscape-cose-bilkent.js"></script>
         <script src="libs/ngraph_forceLayout/cytoscape-ngraph.forcelayout.js"></script>
@@ -65,6 +68,8 @@
             <!-- KnetMaps -->
             
             <div id="knet-maps">
+                <!-- KnetMaps Menubar -->
+                <div id="knetmaps-menu"></div>
 		<div id="itemInfo" class="infoDiv" style="display:none;"><!-- Item Info pane -->
                     <table id="itemInfo_Table" class="infoTable" cellspacing=1>
                         <thead><th>Info box:</th>
@@ -72,8 +77,6 @@
                             <th><input type="image" id="btnCloseItemInfoPane" src="image/close-icon.png" onClick="closeItemInfoPane();"></th>
                         </thead><tbody></tbody></table>
                 </div>
-                <!-- KnetMaps Menubar -->
-                <div id="knetmaps-menu"></div>
                 <!-- The core cytoscapeJS container -->
                 <div id="cy"></div><br/>
                 <!-- dynamically updated Legend to show number of shown/ hidden concepts; and by type -->

@@ -92,7 +92,9 @@ function initializeNetworkView() {
 $(function() { // on dom ready
   // load the cytoscapeJS network
   load_reload_Network(networkJSON, networkStylesheet/*, true*/);
-  
+
+  // infoBox table
+ // $("#itemInfo_Table").ReStable({ keepHtml : true });
 }); // on dom ready
 }
 

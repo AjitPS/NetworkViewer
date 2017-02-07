@@ -55,11 +55,11 @@
       /* CytoscapeJS "core" container */
       #cy {
         height: 85%; /*98%;*/ /*750px;*/
-        width: 98%; /*450px;*/
+        width: /*98*/95%; /*450px;*/
         position: relative;
         background: white;
         border: 1px solid black;
-		/*overflow: hidden;
+        /*overflow: hidden;
         margin: auto;*/
         /*margin-top: 10px;*/
        }
@@ -77,11 +77,11 @@
       #itemInfo {
        /*display:none;*/
 /*       position: fixed; background-color: white; top:100px; right:0; z-index:1; width: 350px; height:550px;*/
-       position: absolute; right: 0; z-index: 5; width: 30%; height:88%; background-color: white; 
-       border: 1px dashed black;
-       margin-top: 1px;
-       margin-bottom: 1px;
-	   resize: horizontal; max-width: 90%;
+       position: absolute; right: 0; z-index: 5; width: 30%; height:/*88*/85%; background-color: white; 
+       border: 2px /*dashed black*/solid #444444;
+       margin-top: /*1*/2px;
+       margin-bottom: /*1*/2px;
+       resize: horizontal; max-width: /*90*/60%;
       }
 
       #itemInfo_Table {
@@ -97,20 +97,20 @@
       }
       
       div.infoDiv {
-	    width:/*100;%*/ 40%;       /* table width will be 99% of this*/
-	    max-height: 100%; /*95%;*/ /*600px;*/ /*400px;*/    /* must be greater than tbody*/
-	    overflow:auto;
-	    margin:0 auto;
+	width:/*100;%*/ 40%;       /* table width will be 99% of this*/
+	max-height: 100%; /*95%;*/ /*600px;*/ /*400px;*/    /* must be greater than tbody*/
+	overflow:auto;
+	margin:0 auto;
         border: 1px;
        }
 
       div.infoDiv table {
         width:99%;  /*100% of container produces horiz. scroll in Mozilla*/
-	    border:none;
-	    border-spacing: 0px;
-	    background-color: transparent;
-	    border: 1px solid #C2C2C2;
-	    border-collapse: collapse;
+	border:none;
+	border-spacing: 0px;
+	background-color: transparent;
+	border: 1px solid #C2C2C2;
+	border-collapse: collapse;
         /* Table not visible, by default. */
         display: none;
       }
