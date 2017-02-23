@@ -76,7 +76,7 @@ function onHover(thisBtn) {
       });
 
    // Refresh network legend.
-   updateCyLegend();
+   updateKnetStats();
   }
   
   // Re-run the entire graph's layout.

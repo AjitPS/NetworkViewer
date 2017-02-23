@@ -15,8 +15,11 @@ function generateNetworkGraph(jsonFileName) {
 
      // Set the default layout.
 //     setDefaultLayout();
-     // update "cy" legend with some stats.
-     updateCyLegend();
+     // update network stats <div>.
+     updateKnetStats();
+     
+     // dynamically populate interactive concept legend.
+     populateConceptLegend();
    });
   }
 
