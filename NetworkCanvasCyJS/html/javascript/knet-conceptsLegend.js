@@ -23,7 +23,7 @@
           console.log(con +": "+ conceptsHashmap[con]);
          }
 
-        // update legendHtmlContainer as well
+        // update networkLegend_container as well
 //        var evidence = '<td>';
         // loop
         // get total visible and total concept count per conceptType and show concept Type icon (with total visible count displayed within) and total count next to it.
