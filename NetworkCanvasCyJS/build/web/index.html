@@ -55,7 +55,7 @@
  
  <div id="content">
             <div>Select dataset: <select id="dataset_dropdown" onChange="launchNetwork($('#dataset_dropdown').val());">
-                    <option value="ara1" title="ara1">Dataset 1</option>
+                    <option value="ara1" selected="selected" title="ara1">Dataset 1</option>
                     <option value="ara2" title="ara2">Dataset 2</option>
                     <option value="ara5_dormancy" title="ara5_dormancy">Dataset 3</option>
                     <option value="ara6_dormancy_flowering" title="ara6_dormancy_flowering">Dataset 4</option>
@@ -63,7 +63,10 @@
                     <option value="ara8_dormancy_anthocyanin_storage_top10" title="ara8_dormancy_anthocyanin_storage_top10">Dataset 6</option>
                     <option value="ara4" title="ara4">Dataset 7</option>
                     <option value="ara3_eq1_At4g18330" title="ara3_eq1_At4g18330">Dataset 8</option>
-                    <option value="ara9_dormancy_anthocyanin15_singleJson" selected="selected" title="ara9_dormancy_anthocyanin15_singleJson">Dataset 9 (new)</option>
+                    <option value="ara9_dormancy_anthocyanin15_singleJson" title="ara9_dormancy_anthocyanin15_singleJson">Dataset 9 (new)</option>
+                    <option value="neuroNet_subset" title="neuroNet_subset">Dataset 10 (neuroNet)</option>
+                    <option value="iiBug_240217" title="iiBug_240217">Dataset 11 (Human)</option>
+                    <option value="urlAttr" selected="selected" title="urlAttr">Dataset 12 (Human)</option>
                 </select>
             </div><br/>
             <!-- KnetMaps -->
@@ -80,12 +83,15 @@
                 </div>
                 <!-- The core cytoscapeJS container -->
                 <div id="cy"></div><br/>
-                <!-- dynamically updated Legend to show number of shown/ hidden concepts; and by type -->
-		<div id="countsLegend" style="width: 350px; margin: auto;"><span>KnetMaps</span></div>
+                <!-- dynamically updated Legend to show number of shown/ hidden concepts and relations -->
+		<div id="statsLegend" style="width: 350px; margin: auto;"><span>KnetMaps</span></div>
+                <!-- interactive, dynamic Legend to show all concept of a particular type -->
+		<div id="countsLegend" style="width: 90%; margin: auto;"><span>Concepts:</span></div>
                 <!-- popup dialog -->
                 <div id="infoDialog"></div>
             </div>
             <!-- Legend -->
+            <!-- replace with div -->
             <div id="networkLegend_container">
                 <table id="networkLegend_frame" cellspacing=1>
                     <tr><td align=center><img src="image_legend/Gene.png"></td>
