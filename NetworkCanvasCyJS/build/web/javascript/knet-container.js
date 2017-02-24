@@ -210,8 +210,8 @@ cy.elements().qtip({
          select: function() {
              if(this.isNode()) {
                 showLinks(this);
-  			    // Refresh network legend.
-                updateCyLegend();
+                // Refresh network Stats.
+                updateKnetStats();
                }
            }
         },
@@ -220,10 +220,10 @@ cy.elements().qtip({
          content: 'Hide',
          select: function() {
              //this.hide(); // hide the selected 'node' or 'edge' element.
-			 this.removeClass('ShowItAll');
-			 this.addClass('HideThis');
-			 // Refresh network legend.
-             updateCyLegend();
+             this.removeClass('ShowItAll');
+             this.addClass('HideThis');
+             // Refresh network Stats.
+             updateKnetStats();
             }
         },
 
@@ -256,8 +256,8 @@ cy.elements().qtip({
                 // Relayout the graph.
                 rerunLayout();
                }
-  			// Refresh network legend.
-            updateCyLegend();
+            // Refresh network Stats.
+            updateKnetStats();
            }
         },
 

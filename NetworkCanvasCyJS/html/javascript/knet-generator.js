@@ -15,8 +15,11 @@ function generateNetworkGraph(jsonFileName) {
 
      // Set the default layout.
 //     setDefaultLayout();
-     // update "cy" legend with some stats.
-     updateCyLegend();
+     // update network stats <div>.
+     updateKnetStats();
+     
+     // dynamically populate interactive concept legend.
+     populateConceptLegend();
    });
   }
 
@@ -92,7 +95,9 @@ function initializeNetworkView() {
 $(function() { // on dom ready
   // load the cytoscapeJS network
   load_reload_Network(networkJSON, networkStylesheet/*, true*/);
-  
+
+  // infoBox table
+ // $("#itemInfo_Table").ReStable({ keepHtml : true });
 }); // on dom ready
 }
 
