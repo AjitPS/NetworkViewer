@@ -10,5 +10,5 @@
 	cyLegend= cyLegend +"; Relations: "+ edges_shown +" ("+ totalEdges +")";
 
 //	console.log(cyLegend);
-	$('#countsLegend span').text(cyLegend); // update
+	$('#statsLegend span').text(cyLegend); // update
    }
