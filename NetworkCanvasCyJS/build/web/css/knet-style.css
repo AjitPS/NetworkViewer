@@ -54,8 +54,8 @@
  
       /* CytoscapeJS "core" container */
       #cy {
-        height: 85%; /*98%;*/ /*750px;*/
-        width: /*98*/95%; /*450px;*/
+        height: 80%/*85%*/; /*750px;*/
+        width: 95%/*98*/; /*450px;*/
         position: relative;
         background: white;
         border: 1px solid black;
@@ -67,19 +67,9 @@
    #statsLegend {
      height: 20px;
      /*overflow-y: auto;*/
-     font-size: 12px;
-	 font-weight: bold;
-	 color: darkBlue;
-     /*margin-bottom: 25px;
-	 position: absolute;*/
-   }
-
-   #countsLegend {
-     height: 40px;
-     /*overflow-y: auto;*/
-     font-size: 12px;
-	 font-weight: bold;
-	 color: darkBlue;
+     font-size: /*12*/14px;
+     font-weight: bold;
+     color: darkBlue;
      /*margin-bottom: 25px;
 	 position: absolute;*/
    }
@@ -196,34 +186,10 @@
        font-size: 12px;
       }
 
-/* Legend */
-/*#evidenceSummary {position:relative; width:100%}*/
-/*#evidenceSummary .knetLegend {position:relative;float:left;width:50px;font-size:11px;}*/
+/* Interactive Legend */
 #knetLegend {
-    border: 1px solid gray; 
-    padding: 10px; 
-    border-radius: 6px;
-    left:30px;
-    height:90%;width:90%
+    border: 1px dotted gray;
+    width: 90%; margin: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
-
-.knetLegend_Gene {background:url(../image_legend/Gene.png) no-repeat;padding-top:6px;height:16px;}
-.knetLegend_Biological_Process {background:url(../image_legend/Biological_process.png) no-repeat;}
-.knetLegend_Cellular_Component {background:url(../image_legend/Cellular_component.png) no-repeat;}
-.knetLegend_Compound {background:url(../image_legend/Compound.png) no-repeat;}
-.knetLegend_SNP {background:url(../image_legend/Compound.png) no-repeat;}
-.knetLegend_Enzyme {background:url(../image_legend/Enzyme.png) no-repeat;}
-.knetLegend_Enzyme_Classification {background:url(../image_legend/Enzyme_classification.png) no-repeat;}
-.knetLegend_Molecular_Function {background:url(../image_legend/Molecular_function.png) no-repeat;}
-.knetLegend_Pathway {background:url(../image_legend/Pathway.png) no-repeat;}
-.knetLegend_Protein {background:url(../image_legend/Protein.png) no-repeat;}
-.knetLegend_Protein_Domain {background:url(../image_legend/Protein_fomain.png) no-repeat;}
-.knetLegend_Publication {background:url(../image_legend/Publication.png) no-repeat;}
-.knetLegend_Reaction {background:url(../image_legend/Reaction.png) no-repeat;}
-.knetLegend_QTL {background:url(../image_legend/QTL.png) no-repeat;}
-.knetLegend_Trait_Ontology {background:url(../image_legend/Trait_ontology.png) no-repeat;}
-.knetLegend_Phenotype {background:url(../image_legend/Phenotype.png) no-repeat;}
-.knetLegend_Trait {background:url(../image_legend/Trait.png) no-repeat;}
-.knetLegend_Scaffold {background:url(../image_legend/Scaffold.png) no-repeat;}
-.knetLegend_Drug {background:url(../image_legend/Drug.png) no-repeat;}
-.knetLegend_Disease {background:url(../image_legend/Disease.png) no-repeat;}
