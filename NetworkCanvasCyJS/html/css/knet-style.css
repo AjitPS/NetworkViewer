@@ -1,5 +1,5 @@
 /* 
-    Created on : 03-Oct-2016
+    Last Modified on : 27-Feb-2017
     Author     : Ajit Singh
     Description:
         CSS for the Network Viewer, in tab.
@@ -192,4 +192,5 @@
     width: 90%; margin: auto;
     padding-top: 5px;
     padding-bottom: 5px;
+    background:white;
 }

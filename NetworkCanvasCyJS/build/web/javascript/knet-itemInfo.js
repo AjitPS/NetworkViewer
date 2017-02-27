@@ -293,11 +293,15 @@
     // Remove css style changes occurring from a 'tapdragover' ('mouseover') event.
 //    resetRelationCSS(selectedNode);
 
-    // Show concept neighborhood.
 //    selectedNode.neighborhood().nodes().show();
 //    selectedNode.neighborhood().edges().show();
-    selectedNode.connectedEdges().connectedNodes().show();
-    selectedNode.connectedEdges().show();
+    // Show concept neighborhood.
+//    selectedNode.connectedEdges().connectedNodes().show(); // DISABLED 27/02/17
+    selectedNode.connectedEdges().connectedNodes().removeClass('HideThis');
+    selectedNode.connectedEdges().connectedNodes().addClass('ShowItAll');
+//    selectedNode.connectedEdges().show(); // DISABLED 27/02/17
+    selectedNode.connectedEdges().removeClass('HideThis');
+    selectedNode.connectedEdges().addClass('ShowItAll');
 
     // Remove shadow effect from the nodes that had hidden nodes in their neighborhood.
     removeNodeBlur(selectedNode);
