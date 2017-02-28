@@ -54,17 +54,28 @@
   var cy= $('#cy').cytoscape('get');
   console.log("showConnectedByType: "+ conType);
 
-  var hiddenNodes_ofSameType= cy.nodes().filter('node[conceptDisplay="none"]').filter('node[conceptType="'+conType+'"]');
-  console.log("hiddenNodes_ofSameType size: "+ hiddenNodes_ofSameType);
-  hiddenNodes_ofSameType.forEach(function( ele ) {
-	  console.log("hiddenNodes_ofSameType: "+ ele.data('conceptType') +": "+ ele.data('value'));
+//  var hiddenNodes_ofSameType= cy.nodes().filter('node[conceptDisplay="none"]').filter('node[conceptType="'+conType+'"]');
+  /*hiddenNodes_ofSameType.forEach(function( ele ) { console.log("hiddenNodes_ofSameType: "+ ele.data('conceptType') +": "+ ele.data('value')); });*/
+
+//  var currently_visibleNodes= cy.nodes().filter('node[conceptDisplay="element"]');
+  /*currently_visibleNodes.forEach(function( ele ) { console.log("currently_visibleNodes: "+ ele.data('value') +", type: "+ ele.data('conceptType')); });*/
+
+//  console.log("hiddenNodes_ofSameType size: "+ hiddenNodes_ofSameType.size() +", \t currently_visibleNodes size: "+ currently_visibleNodes.size());
+
+  var hiddenNodes_ofSameType= cy.collection();
+  cy.nodes().filter('node[conceptType="'+conType+'"]').forEach(function( conc ) {
+       if(conc.hasClass('HideThis')) {
+          hiddenNodes_ofSameType= hiddenNodes_ofSameType.add(conc);
+         }
     });
 
-  var currently_visibleNodes= cy.nodes().filter('node[conceptDisplay="element"]');
-  console.log("currently_visibleNodes size: "+ currently_visibleNodes);
-  currently_visibleNodes.forEach(function( ele ) {
-	  console.log("currently_visibleNodes: "+ ele.data('value') +", type: "+ ele.data('conceptType'));
+  var currently_visibleNodes= cy.collection();
+  cy.nodes().forEach(function( conc ) {
+       if(conc.hasClass('ShowItAll')) {
+          currently_visibleNodes= currently_visibleNodes.add(conc);
+         }
     });
+  console.log("hiddenNodes_ofSameType size: "+ hiddenNodes_ofSameType.size() +", \t currently_visibleNodes size: "+ currently_visibleNodes.size());
 
   // Display hidden nodes of same Type which are connected to currently visible Nodes.
   hiddenNodes_ofSameType.edgesWith(currently_visibleNodes).connectedNodes().addClass('ShowItAll').removeClass('HideThis');
