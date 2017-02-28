@@ -95,11 +95,34 @@ function initializeNetworkView() {
 $(function() { // on dom ready
   // load the cytoscapeJS network
   load_reload_Network(networkJSON, networkStylesheet/*, true*/);
+  
+  addVisibilityClasses(); // to all network nodes/ edges.
 
   // infoBox table
  // $("#itemInfo_Table").ReStable({ keepHtml : true });
 }); // on dom ready
 }
+
+ function addVisibilityClasses() {
+  var cy= $('#cy').cytoscape('get'); // now we have a global reference to `cy`
+
+    cy.nodes().forEach(function( conc ) { // for concepts
+       if(conc.data('conceptDisplay') === 'element') {
+          conc.addClass('ShowItAll');
+         }
+       else {
+         conc.addClass('HideThis');
+        }
+    });
+    cy.edges().forEach(function( rel ) { // for relations
+       if(rel.data('relationDisplay') === 'element') {
+          rel.addClass('ShowItAll');
+         }
+       else {
+         rel.addClass('HideThis');
+        }
+    });
+ }
 
   // Show shadow effect on nodes with connected, hidden elements in their neighborhood.
   function blurNodesWithHiddenNeighborhood() {
