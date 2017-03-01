@@ -43,6 +43,7 @@ var url_mappings= {
      {"cv": "UNIPROTKB", "weblink": "http://www.uniprot.org/uniprot/", "cc_restriction": ""},
      {"cv": "DrugBank", "weblink": "https://www.drugbank.ca/drugs/", "cc_restriction": ""}
  ],
+  "comment2": "For humanDisease instance, replace the ENSEMBL, ENSV url's above with the 2 url's below. This is a temporary fix until we rename data sources to be ENSEMBL_HUMAN, ENSEMBL_WHEAT, etc.",
   "human_acc": [
      {"cv": "ENSEMBL", "weblink": "http://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g=", "cc_restriction": ""},
      {"cv": "ENSV", "weblink": "http://www.ensembl.org/Homo_sapiens/Variation/Explore?db=core;v=", "cc_restriction": ""},
