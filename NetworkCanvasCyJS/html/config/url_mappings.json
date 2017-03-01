@@ -42,5 +42,9 @@ var url_mappings= {
      {"cv": "TX", "weblink": "http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=", "cc_restriction": ""},
      {"cv": "UNIPROTKB", "weblink": "http://www.uniprot.org/uniprot/", "cc_restriction": ""},
      {"cv": "DrugBank", "weblink": "https://www.drugbank.ca/drugs/", "cc_restriction": ""}
- ]
+ ],
+  "human_acc": [
+     {"cv": "ENSEMBL", "weblink": "http://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g=", "cc_restriction": ""},
+     {"cv": "ENSV", "weblink": "http://www.ensembl.org/Homo_sapiens/Variation/Explore?db=core;v=", "cc_restriction": ""},
+  ]
 };
