@@ -136,17 +136,17 @@ cy.boxSelectionEnabled(false); // to disable box selection & hence allow Panning
  * e.g, cy.elements('node').qtip({ }); or cy.elements('edge').qtip({ }); */
 cy.elements().qtip({
   content: function() {
-     var qtipMsg= "";
+      var qtipMsg= "";
      try {
       if(this.isNode()) {
-         qtipMsg= "<b>Concept:</b> "+ this.data('value') +", <b>Type:</b> "+ this.data('conceptType');
+         qtipMsg= "<b>Concept:</b> "+ this.data('value') +"<br/><b>Type:</b> "+ this.data('conceptType');
         }
       else if(this.isEdge()) {
               qtipMsg= "<b>Relation:</b> "+ this.data('label');
               var fromID= this.data('source'); // relation source ('fromConcept')
-              qtipMsg= qtipMsg +", <b>From:</b> "+ cy.$('#'+fromID).data('value') +" ("+ cy.$('#'+fromID).data('conceptType').toLowerCase() +"), ";
+              qtipMsg= qtipMsg +"<br/><b>From:</b> "+ cy.$('#'+fromID).data('value') +" ("+ cy.$('#'+fromID).data('conceptType').toLowerCase() +")";
               var toID= this.data('target'); // relation source ('toConcept')
-              qtipMsg= qtipMsg +"<b>To:</b> "+ cy.$('#'+toID).data('value') +" ("+ cy.$('#'+toID).data('conceptType').toLowerCase() +")";
+              qtipMsg= qtipMsg +"<br/><b>To:</b> "+ cy.$('#'+toID).data('value') +" ("+ cy.$('#'+toID).data('conceptType').toLowerCase() +")";
              }
       }
       catch(err) { qtipMsg= "Selected element is neither a Concept nor a Relation"; }
