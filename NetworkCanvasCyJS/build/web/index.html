@@ -57,7 +57,7 @@
             <div>Select dataset: <select id="dataset_dropdown" onChange="launchNetwork($('#dataset_dropdown').val());">
                     <option value="ara1" selected="selected" title="ara1">Dataset 1</option>
                     <option value="ara2" title="ara2">Dataset 2</option>
-                    <option value="ara5_dormancy" title="ara5_dormancy">Dataset 3</option>
+                    <option value="ara5_dormancy" selected="selected" title="ara5_dormancy">Dataset 3 (dormancy)</option>
                     <option value="ara6_dormancy_flowering" title="ara6_dormancy_flowering">Dataset 4</option>
                     <option value="ara7_dormancy_anthocyanin" title="ara7_dormancy_anthocyanin">Dataset 5</option>
                     <option value="ara8_dormancy_anthocyanin_storage_top10" title="ara8_dormancy_anthocyanin_storage_top10">Dataset 6</option>
@@ -66,7 +66,7 @@
                     <option value="ara9_dormancy_anthocyanin15_singleJson" title="ara9_dormancy_anthocyanin15_singleJson">Dataset 9 (new)</option>
                     <option value="neuroNet_subset" title="neuroNet_subset">Dataset 10 (neuroNet)</option>
                     <option value="iiBug_240217" title="iiBug_240217">Dataset 11 (Human)</option>
-                    <option value="urlAttr" selected="selected" title="urlAttr">Dataset 12 (Human)</option>
+                    <option value="urlAttr" title="urlAttr">Dataset 12 (Human)</option>
                 </select>
             </div><br/>
             <!-- KnetMaps -->
@@ -84,7 +84,7 @@
                 <!-- The core cytoscapeJS container -->
                 <div id="cy"></div><br/>
                 <!-- interactive, dynamic Legend to show all concept of a particular type -->
-		<div id="knetLegend" title="Hover over a image to see Concept type & click to show all such concepts connected to visible Concepts of this network"><span>Concepts:</span></div><br/>
+		<div id="knetLegend" title="Hover over icons to see corresponding Concept type & click an icon to show all such Concepts connected to visible Concepts in this network"><span>Concepts:</span></div><br/>
                 <!-- dynamically updated Legend to show number of shown/ hidden concepts and relations -->
 		<div id="statsLegend" style="width: 350px; margin: auto;"><span>KnetMaps</span></div>
                 <!-- popup dialog -->

@@ -275,12 +275,11 @@
   function removeNodeBlur(ele) {
     var thisElement= ele;
     try {
-      if(thisElement.hasClass('BlurNode')) {
-         // Remove any shadow created around the node.
-         thisElement.removeClass('BlurNode');
-        }
 /*      thisElement.neighborhood().nodes().style({'opacity': '1'});
       thisElement.neighborhood().edges().style({'opacity': '1'});*/
+      if(thisElement.hasClass('BlurNode')) { // Remove any shadow created around the node.
+         thisElement.removeClass('BlurNode');
+        }
      }
     catch(err) {
           console.log("Error occurred while removing Shadow from concepts with connected, hidden elements. \n"+"Error Details: "+ err.stack);
@@ -297,11 +296,11 @@
 //    selectedNode.neighborhood().edges().show();
     // Show concept neighborhood.
 //    selectedNode.connectedEdges().connectedNodes().show(); // DISABLED 27/02/17
-    selectedNode.connectedEdges().connectedNodes().removeClass('HideThis');
-    selectedNode.connectedEdges().connectedNodes().addClass('ShowItAll');
+    selectedNode.connectedEdges().connectedNodes().removeClass('HideEle');
+    selectedNode.connectedEdges().connectedNodes().addClass('ShowEle');
 //    selectedNode.connectedEdges().show(); // DISABLED 27/02/17
-    selectedNode.connectedEdges().removeClass('HideThis');
-    selectedNode.connectedEdges().addClass('ShowItAll');
+    selectedNode.connectedEdges().removeClass('HideEle');
+    selectedNode.connectedEdges().addClass('ShowEle');
 
     // Remove shadow effect from the nodes that had hidden nodes in their neighborhood.
     removeNodeBlur(selectedNode);

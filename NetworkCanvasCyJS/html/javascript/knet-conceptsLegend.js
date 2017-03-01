@@ -22,7 +22,7 @@
       for(var con in conceptsHashmap) { console.log(con +": "+ conceptsHashmap[con]); }*/
 
       // update knetLegend.
-      var knetLegend= '<b><u>Show by type:</u></b> ';
+      var knetLegend= '<b><u>Concepts</u> (show connected):</b> ';
    //   var cnt= 0;
       // Show concept Type icons (with total count displayed alongside).
       for(var con in conceptsHashmap) {
@@ -39,7 +39,7 @@
 //  console.log("ShowByType: "+ conType);
   cy.nodes().forEach(function( ele ) {
       if(ele.data('conceptType') === conType) {
-         ele.removeClass('HideThis');
+         ele.removeClass('HideEle');
          ele.addClass('ShowItAll');
       //   ele.connectedEdges().connectedNodes().show();
       //   ele.connectedEdges().show();
@@ -52,7 +52,7 @@
 
  function showConnectedByType(conType) {
   var cy= $('#cy').cytoscape('get');
-  console.log("showConnectedByType: "+ conType);
+//  console.log("showConnectedByType: "+ conType);
 
 //  var hiddenNodes_ofSameType= cy.nodes().filter('node[conceptDisplay="none"]').filter('node[conceptType="'+conType+'"]');
   /*hiddenNodes_ofSameType.forEach(function( ele ) { console.log("hiddenNodes_ofSameType: "+ ele.data('conceptType') +": "+ ele.data('value')); });*/
@@ -64,23 +64,23 @@
 
   var hiddenNodes_ofSameType= cy.collection();
   cy.nodes().filter('node[conceptType="'+conType+'"]').forEach(function( conc ) {
-       if(conc.hasClass('HideThis')) {
+       if(conc.hasClass('HideEle')) {
           hiddenNodes_ofSameType= hiddenNodes_ofSameType.add(conc);
          }
     });
 
   var currently_visibleNodes= cy.collection();
   cy.nodes().forEach(function( conc ) {
-       if(conc.hasClass('ShowItAll')) {
+       if(conc.hasClass('ShowEle')) {
           currently_visibleNodes= currently_visibleNodes.add(conc);
          }
     });
-  console.log("hiddenNodes_ofSameType size: "+ hiddenNodes_ofSameType.size() +", \t currently_visibleNodes size: "+ currently_visibleNodes.size());
+//  console.log("hiddenNodes_ofSameType size: "+ hiddenNodes_ofSameType.size() +", \t currently_visibleNodes size: "+ currently_visibleNodes.size());
 
   // Display hidden nodes of same Type which are connected to currently visible Nodes.
-  hiddenNodes_ofSameType.edgesWith(currently_visibleNodes).connectedNodes().addClass('ShowItAll').removeClass('HideThis');
+  hiddenNodes_ofSameType.edgesWith(currently_visibleNodes).connectedNodes().addClass('ShowEle').removeClass('HideEle');
   // Display edges between such connected Nodes too.
-  hiddenNodes_ofSameType.edgesWith(currently_visibleNodes).addClass('ShowItAll').removeClass('HideThis');
+  hiddenNodes_ofSameType.edgesWith(currently_visibleNodes).addClass('ShowEle').removeClass('HideEle');
 
   updateKnetStats(); // Refresh network Stats.
  }

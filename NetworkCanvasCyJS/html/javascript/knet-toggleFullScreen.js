@@ -12,7 +12,7 @@
 	load_reload_Network(currentEles_jsons, currentStylesheet_json/*, false*/);
 
 	// toggle label visibility
-	showHideLabels($('#changeLabelVisibility').val());
+    //    showHideLabels($('#changeLabelVisibility').val());
         
         // Show Item Info table
         openItemInfoPane();
@@ -26,7 +26,7 @@
 	load_reload_Network(currentEles_jsons, currentStylesheet_json/*, false*/);
 
     	// toggle label visibility
-	showHideLabels($('#changeLabelVisibility').val());
+    //    showHideLabels($('#changeLabelVisibility').val());
 
         // Hide Item Info table
         closeItemInfoPane();
