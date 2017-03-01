@@ -29,7 +29,7 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Thumbnails
-# ._* #DISABLED
+._*
 
 # Files that might appear on external disk
 .Spotlight-V100
