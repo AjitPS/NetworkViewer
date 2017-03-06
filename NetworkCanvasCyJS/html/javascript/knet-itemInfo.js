@@ -189,7 +189,7 @@
                        cell1= row.insertCell(0);
                        cell1.innerHTML= "<b>Gene Expression:</b>"; // sub-heading
                        for(var k=0; k < metadataJSON.ondexmetadata.concepts[j].attributes.length; k++) {
-                           if(metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname.contains("exp_")) {
+                           if(metadataJSON.ondexmetadata.concepts[j].attributes[k].attrname.includes("exp_")) {
                               // Insert Gene Expression Data
                               row= table.insertRow(table.rows.length/* - 1*/); // new row.
                               cell1= row.insertCell(0);
