@@ -1,5 +1,5 @@
 /* 
-    Last Modified on : 02-Mar-2017
+    Last Modified on : 06-Mar-2017
     Author     : Ajit Singh
     Description: CSS for KnetMaps
 */
@@ -107,11 +107,11 @@
 
       div.infoDiv table {
         width:99%;  /*100% of container produces horiz. scroll in Mozilla*/
-	    border:none;
-	    border-spacing: 0px;
-	    background-color: transparent;
-	    border: 1px solid #C2C2C2;
-	    border-collapse: collapse;
+        border:none;
+	border-spacing: 0px;
+	background-color: transparent;
+	border: 1px solid #C2C2C2;
+	border-collapse: collapse;
         /* Table not visible, by default. */
         display: none;
       }
@@ -195,10 +195,11 @@
       padding-bottom: 5px;
       margin-bottom: 5px;
       margin-left: 5px;*/
+      margin-left: 5px;
       background: white;
       font-size: 14px;
       color: #2A2A2A;
-	  display: table/*table-row*/;
+      display: table/*table-row*/;
      }
 
      .knetLegend_row {
@@ -216,5 +217,5 @@
 
      .icon_caption {
       display: block;/*float:left;*/
-	  font-size: 12px;
+      font-size: 12px;
      }

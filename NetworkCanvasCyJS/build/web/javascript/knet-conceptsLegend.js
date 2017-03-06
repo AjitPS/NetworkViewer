@@ -51,14 +51,14 @@
 			      conText= "Domain";
 		      }
           knetLegend= knetLegend +'<div class="knetLegend_cell"><input type="image" id="'+ con +'" title="Show All '+ con +'(s)" src="./image_legend/'+ con +'.png'+'" style="vertical-align:middle" onclick="showConnectedByType(this.id);">'+ 
-		                conceptsHashmap[con] +'<span class="icon_caption">'+ conText +'</span></div>';//+'&nbsp;&nbsp;&nbsp;';
+		                conceptsHashmap[con] +'<span class="icon_caption">'+ conText +'</span></div>';
         /*  cnt= cnt+1;
           if(cnt%12===0) { 
 		    // knetLegend= knetLegend +'<br/>';
 			 knetLegend= knetLegend +'</div><div class="knetLegend_row">';
 			}*/
          }
-		knetLegend= knetLegend +'</div></div>';
+        knetLegend= knetLegend +'</div></div>';
 	$('#knetLegend').html(knetLegend); // update knetLegend
    }
 
